@@ -4,15 +4,30 @@
  * Colours are placeholders until the drafted logo colours are added.
  */
 :root {
-  /* Brand (TODO: seed from the undulate logo colours) */
-  --color-brand: #5b3a5e;
-  --color-brand-contrast: #ffffff;
-  --color-accent: #f2c230;
+  /* undulate logo palette (docs/BRIEF.md). Variations map roles to these. */
+  --palette-yellow: #f2d833;
+  --palette-red: #f24a33;
+  --palette-mint: #33f5bc;
+  --palette-violet: #4c33f2;
+  --palette-dusk: #5f559d;
+  --palette-sand: #d4c5b4;
+  --palette-ink: #191a18;
+  --palette-white: #ffffff;
+  --gradient-mint: linear-gradient(135deg, #33f5bc, #008fa5);
+  --gradient-ink: linear-gradient(135deg, #191a18, #686b6a);
+  --gradient-violet: linear-gradient(135deg, #4c33f2, #b893ff);
+  --gradient-red: linear-gradient(135deg, #f24a33, #ff2191);
+  --gradient-dusk: linear-gradient(135deg, #5f559d, #f2a0df);
+
+  /* Brand roles */
+  --color-brand: var(--palette-violet);
+  --color-brand-contrast: var(--palette-white);
+  --color-accent: var(--palette-mint);
 
   /* Neutral frame */
   --color-bg: #f7f5f2;
   --color-surface: #ffffff;
-  --color-text: #1a1a1d;
+  --color-text: var(--palette-ink);
   --color-text-muted: #5f5d66;
   --color-border: #e2dfda;
 
