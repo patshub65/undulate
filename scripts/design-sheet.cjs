@@ -11,7 +11,7 @@ const { chromium } = require('playwright');
 (async () => {
   const args = process.argv.slice(2);
   const pi = args.indexOf('--pages');
-  const pages = pi >= 0 ? args.splice(pi, 2)[1].split(',') : ['/', '/projects/bananas-are-berries/', '/projects/texture-studies/'];
+  const pages = pi >= 0 ? args.splice(pi, 2)[1].split(',') : ['/', '/projects/bananas-are-berries/', '/projects/open-air-festival/'];
   const [out, ...vs] = args;
   if (!out || !vs.length) { console.error('Usage: node scripts/design-sheet.cjs <out.png> label=url [label=url ...] [--pages /,/projects/]'); process.exit(1); }
   const variants = vs.map(v => { const i = v.indexOf('='); return { label: v.slice(0, i), base: v.slice(i + 1).replace(/\/$/, '') }; });
