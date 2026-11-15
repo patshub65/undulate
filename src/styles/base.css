@@ -138,18 +138,18 @@ a.tag[aria-current='true'] { background: var(--palette-ink); color: var(--palett
 @media (min-width: 60rem) { .project-grid { grid-template-columns: 1fr 1fr; gap: var(--space-7) var(--space-6); } }
 
 /* Stacked flyer sheets: a tinted sheet offset behind each flyer */
-.sheets { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-4); }
+.sheets { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-4); align-items: start; }
 .event-card__trigger { all: unset; cursor: pointer; display: block; width: 100%; }
 .event-card__trigger:focus-visible { outline: 3px solid var(--palette-violet); outline-offset: 8px; }
-.event-card__flyer { position: relative; display: block; aspect-ratio: 4 / 5; }
+.event-card__flyer { position: relative; display: block; }
 .event-card__flyer::before { content: ''; position: absolute; inset: 0; background: var(--project-accent, var(--sheet)); transform: rotate(-3deg); transition: transform 600ms var(--ease-paper); }
 .sheets > li:nth-child(odd) { --sheet: var(--palette-yellow); }
 .sheets > li:nth-child(even) { --sheet: var(--palette-violet); }
 .sheets > li:nth-child(even) .event-card__flyer::before { transform: rotate(3deg); }
-.event-card__flyer img, .event-card__noflyer { position: relative; width: 100%; height: 100%; object-fit: cover; box-shadow: 0 2px 12px rgb(25 26 24 / 0.2); pointer-events: none; }
+.event-card__flyer img, .event-card__noflyer { position: relative; width: 100%; height: auto; box-shadow: 0 2px 12px rgb(25 26 24 / 0.2); pointer-events: none; }
 .event-card__trigger:hover .event-card__flyer::before { transform: rotate(-6deg); transition-duration: 200ms; }
 .sheets > li:nth-child(even) .event-card__trigger:hover .event-card__flyer::before { transform: rotate(6deg); }
-.event-card__noflyer { display: grid; place-items: center; padding: var(--space-3); text-align: center; background: var(--palette-white); font-family: var(--font-display); text-transform: uppercase; font-size: 2rem; line-height: 1; }
+.event-card__noflyer { display: grid; place-items: center; aspect-ratio: 3 / 4; padding: var(--space-3); text-align: center; background: var(--palette-white); font-family: var(--font-display); text-transform: uppercase; font-size: 2rem; line-height: 1; }
 .event-card__meta { display: grid; padding-top: var(--space-3); font-size: var(--text-sm); line-height: 1.5rem; color: var(--color-text-muted); }
 .event-card__name { color: var(--color-text); font-weight: 500; font-size: 1rem; }
 @media (min-width: 60rem) { .sheets { grid-template-columns: repeat(4, 1fr); gap: var(--space-6); } }
@@ -194,14 +194,14 @@ main:not(:has(.closing, .project__cta)) + .site-footer { margin-top: var(--secti
 main > .section:first-child { padding-top: var(--space-5); }
 
 /* Project page: the header as a flyer in the project's own colour */
-.project__header { background: var(--project-accent, var(--palette-yellow)); color: var(--palette-ink); padding-block: var(--space-5) var(--space-6); }
+.project__header { background: var(--project-accent, var(--palette-yellow)); color: var(--project-on-accent, var(--palette-ink)); padding-block: var(--space-5) var(--space-6); }
 .project__header .container { display: grid; gap: var(--space-4); justify-items: start; }
 .project__logo { width: 6rem; height: 6rem; object-fit: cover; border-radius: 50%; }
 .project__header h1 { font-size: clamp(4rem, 1rem + 11vw, 11rem); line-height: 0.9; }
 .project__summary { margin: 0; font-size: var(--text-lg); line-height: 2rem; font-weight: 500; max-width: 36rem; }
 .project__cover img { width: 100%; aspect-ratio: 16 / 9; max-height: 80vh; object-fit: cover; }
 .project__programme { display: grid; gap: var(--space-5); }
-.programme-group { display: grid; gap: var(--space-3); justify-items: start; }
+.programme-group { display: grid; gap: var(--space-3); justify-items: start; align-content: start; }
 .programme-group ul { display: grid; gap: 0.75rem; }
 .programme-group li a { display: block; }
 .programme-group__category { font-family: var(--font-display); font-size: 2rem; line-height: 1; text-transform: uppercase; }
