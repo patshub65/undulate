@@ -22,58 +22,65 @@ const { specialties, pillars } = await getProjectServices(project);
 const { email } = await getSettings();
 const hasEvents = events.length > 0;
 const hasWriteup = project.body?.trim();
+// Two tall images run to the frame beside the text column: a series leads with its two latest flyers,
+// a case study with its cover and first photo. Whatever is left follows below.
+const leadFlyers = template === 'series' ? Math.min(2, events.length) : 0;
+const leadPhotos = leadFlyers ? [] : [cover, ...photos.map((p) => p.image)].filter(Boolean).slice(0, 2);
+const restPhotos = leadFlyers ? photos : photos.filter((p) => p.image && !leadPhotos.includes(p.image));
+const hasLead = leadFlyers > 0 || leadPhotos.length > 0;
 ---
 <BaseLayout title={title} description={summary}>
   <article class={`project project--${template}`} style={identity.accent ? `--project-accent: ${identity.accent}` : undefined}>
-    <header class="section container project__header">
-      {identity.logo && <Image class="project__logo" src={identity.logo} alt={`${title} logo`} width={160} />}
-      <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
-      <h1>{title}</h1>
-      <p class="project__summary">{summary}</p>
-      <ul class="tags" aria-label="Services">
-        {pillars.map((p) => <li><a class="tag" href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
-        {specialties.map((s) => <li><a class="tag" href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
-      </ul>
-    </header>
-
-    {cover && template === 'case-study' && (
-      <div class="container"><Image class="project__cover" src={cover} alt="" widths={[800, 1600]} sizes="100vw" /></div>
-    )}
-
-    {template === 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
-        <EventGrid project={project} />
-      </section>
-    )}
-
-    {hasWriteup && <section class="section container"><Prose entry={project} /></section>}
-
-    {photos.length > 0 && (
-      <section class="section container" aria-label="Photos">
-        <div class="grid project__photos">
-          {photos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[600, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />)}
+    <div class={hasLead ? 'profile' : 'profile profile--text'}>
+      {leadFlyers > 0 && (
+        <div class="profile__media" data-count={leadFlyers}><EventGrid project={project} only={leadFlyers} /></div>
+      )}
+      {leadPhotos.length > 0 && (
+        <div class="profile__media profile__media--photos" data-count={leadPhotos.length}>
+          {leadPhotos.map((img) => img && <Image src={img} alt="" widths={[600, 1200]} sizes="(min-width: 60rem) 33vw, 50vw" />)}
         </div>
+      )}
+      <div class="profile__text">
+        <header class="project__header">
+          {identity.logo && <Image class="project__logo" src={identity.logo} alt={`${title} logo`} width={160} />}
+          <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
+          <h1>{title}</h1>
+          <p class="project__summary">{summary}</p>
+        </header>
+        <section aria-labelledby="services-heading">
+          <h2 id="services-heading">Services</h2>
+          <ul role="list" class="project__services">
+            {pillars.map((p) => <li><a href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
+            {specialties.map((s) => <li><a href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
+          </ul>
+        </section>
+        {hasWriteup && (
+          <section class="project__writeup" aria-labelledby="about-heading">
+            <h2 id="about-heading">About</h2>
+            <Prose entry={project} />
+          </section>
+        )}
+      </div>
+    </div>
+
+    {events.length > leadFlyers && (
+      <section class="section container project__events" aria-labelledby="events-heading">
+        <h2 id="events-heading" class="rule-head">Events</h2>
+        <EventGrid project={project} skip={leadFlyers} />
       </section>
     )}
 
-    {template !== 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
-        <EventGrid project={project} />
+    {restPhotos.length > 0 && (
+      <section class="section project__photos" data-count={restPhotos.length} aria-label="Photos">
+        {restPhotos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[800, 1600]} sizes="(min-width: 60rem) 50vw, 100vw" data-reveal />)}
       </section>
     )}
 
-    <section class="section container project__cta">
-      <p>Want something like this for your company?</p>
-      <a class="button" href={mailto(email, `Enquiry about ${title}`)} data-track="Email Click" data-track-location="project" data-track-label={title}>Get in touch</a>
+    <section class="project__cta">
+      <div class="container">
+        <p>Want something like this for your company?</p>
+        <a class="button button--onbrand" href={mailto(email, `Enquiry about ${title}`)} data-track="Email Click" data-track-location="project" data-track-label={title}>Get in touch</a>
+      </div>
     </section>
   </article>
 </BaseLayout>
-<style>
-  .project__header { border-top: 4px solid var(--project-accent, transparent); }
-  .project__summary { font-size: var(--text-lg); max-width: 40rem; }
-  .project__logo { margin-bottom: var(--space-3); }
-  .project__cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); }
-  .project__photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-sm); }
-</style>

@@ -7,14 +7,14 @@ const { pillars: intros } = await getSettings();
   <h2 id="services-heading" class="visually-hidden">Services</h2>
   <div class="pillars">
     {pillars.map((pillar) => (
-      <article class="pillar">
-        <h3><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
-        {intros[pillar.id] && <p class="muted">{intros[pillar.id]}</p>}
+      <article class={`pillar pillar--${pillar.id}`}>
+        <h3 class="pillar__name"><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
+        {intros[pillar.id] && <p class="pillar__intro">{intros[pillar.id]}</p>}
         <ul class="pillar__specialties" role="list">
           {pillar.specialties.map((s) => (
             <li>
-              <a href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}><strong>{s.data.name}</strong></a>
-              {s.data.description && <span class="muted"> · {s.data.description}</span>}
+              <a href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}>{s.data.name}</a>
+              {s.data.description && <span class="muted">{s.data.description}</span>}
             </li>
           ))}
         </ul>
@@ -22,7 +22,3 @@ const { pillars: intros } = await getSettings();
     ))}
   </div>
 </section>
-<style>
-  .pillars { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
-  .pillar__specialties { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
-</style>

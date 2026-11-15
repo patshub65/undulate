@@ -2,17 +2,17 @@
 import EventCard from './EventCard.astro';
 import type { Project } from '../lib/content';
 
-interface Props { project: Project }
-const { project } = Astro.props;
-const events = [...project.data.events].sort((a, b) => b.date.getTime() - a.date.getTime());
+interface Props { project: Project; skip?: number; only?: number }
+const { project, skip = 0, only } = Astro.props;
+const events = [...project.data.events]
+  .map((event, i) => ({ event, i }))
+  .sort((a, b) => b.event.date.getTime() - a.event.date.getTime())
+  .slice(skip, only ? skip + only : undefined);
 ---
 {events.length > 0 && (
-  <ul class="grid event-grid" role="list">
-    {events.map((event, i) => (
+  <ul class={only ? 'flyers flyers--lead' : 'flyers'} role="list">
+    {events.map(({ event, i }) => (
       <li><EventCard event={event} id={`${project.id}-${i}`} /></li>
     ))}
   </ul>
 )}
-<style>
-  .event-grid { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
-</style>

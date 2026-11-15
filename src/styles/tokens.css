@@ -1,10 +1,9 @@
 /*
- * Design tokens. Every design variation restyles the site mainly by changing
- * these values; components should use tokens, not raw values.
- * Colours are placeholders until the drafted logo colours are added.
+ * Design tokens: direction 5, Editorial.
+ * Mostly white and ink, dusk as the brand colour, magazine typography.
  */
 :root {
-  /* undulate logo palette (docs/BRIEF.md). Variations map roles to these. */
+  /* undulate logo palette (docs/BRIEF.md). */
   --palette-yellow: #f2d833;
   --palette-red: #f24a33;
   --palette-mint: #33f5bc;
@@ -19,54 +18,44 @@
   --gradient-red: linear-gradient(135deg, #f24a33, #ff2191);
   --gradient-dusk: linear-gradient(135deg, #5f559d, #f2a0df);
 
-  /* Brand roles */
-  --color-brand: var(--palette-violet);
-  --color-brand-contrast: var(--palette-white);
-  --color-accent: var(--palette-mint);
-
-  /* Neutral frame */
-  --color-bg: #f7f5f2;
-  --color-surface: #ffffff;
+  /* Roles: white paper, ink type, dusk as the brand colour */
+  --color-bg: var(--palette-white);
+  --color-surface: #f3f1f6;
   --color-text: var(--palette-ink);
-  --color-text-muted: #5f5d66;
-  --color-border: #e2dfda;
+  --color-text-muted: #5a5a5f;
+  --color-brand: var(--palette-dusk);
+  --color-brand-contrast: var(--palette-white);
+  --color-accent: var(--palette-dusk);
+  --color-border: var(--palette-ink);
 
-  /* Type (self-hosted fonts only: place files in /public/fonts and add @font-face) */
-  --font-display: ui-sans-serif, system-ui, sans-serif;
-  --font-body: ui-sans-serif, system-ui, sans-serif;
-  --text-xs: 0.875rem; /* 14px: the smallest size design-check allows */
-  --text-sm: 0.9rem;
+  /* Type: self-hosted through @fontsource (imported in BaseLayout). */
+  --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
+  --font-body: 'Albert Sans', ui-sans-serif, system-ui, sans-serif;
+  --text-xs: 0.875rem;
+  --text-sm: 0.875rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;
-  --text-xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
-  --text-hero: clamp(2.25rem, 1.5rem + 4vw, 4.5rem);
+  --text-xl: clamp(2.25rem, 1.25rem + 3.5vw, 4rem);
+  --text-hero: clamp(2.25rem, 1rem + 4.4vw, 4.5rem);
   --leading-tight: 1.1;
-  --leading-body: 1.55;
+  --leading-body: 1.5;
 
-  /* Space and shape */
+  /* Space (8pt grid) and shape */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
   --space-4: 1.5rem;
   --space-5: 2.5rem;
   --space-6: 4rem;
-  --space-7: 6rem;
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --content-width: 72rem;
-  --gutter: 32px; /* breathing room: 32px phone, 64px desktop (design skill) */
+  --space-7: 8rem;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-pill: 999px;
+  --content-width: 84rem;
+  --gutter: 32px;
+  --section-air: 5rem;
 }
 
 @media (min-width: 60rem) {
-  :root { --gutter: 64px; }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #121114;
-    --color-surface: #1c1b20;
-    --color-text: #f1eff4;
-    --color-text-muted: #a9a6b2;
-    --color-border: #2e2c34;
-  }
+  :root { --gutter: 64px; --section-air: 10rem; }
 }
