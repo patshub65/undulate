@@ -5,13 +5,12 @@ const projects = await getFeaturedProjects();
 ---
 {projects.length > 0 && (
   <section class="section container" aria-labelledby="featured-heading">
-    <h2 id="featured-heading">Selected projects</h2>
-    <div class="grid featured">
+    <div class="section-head">
+      <h2 id="featured-heading">Selected projects</h2>
+      <a class="section-head__link" href="/projects/">All projects →</a>
+    </div>
+    <div class="project-rows">
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
-    <p><a href="/projects/">All projects →</a></p>
   </section>
 )}
-<style>
-  .featured { margin-bottom: var(--space-4); }
-</style>

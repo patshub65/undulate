@@ -2,21 +2,26 @@
 import { Image } from 'astro:assets';
 import { getSettings, mailto } from '../../lib/content';
 const { email, hero } = await getSettings();
+// The headline mixes two faces per word: small joining words stay in the light sans,
+// the words that carry the meaning are set in the bold serif. Works on whatever Jasmin writes.
+const joiners = new Set(['a', 'an', 'and', 'the', 'for', 'that', 'than', 'of', 'to', 'in', 'on', 'at', 'with', 'by', 'or', 'as', 'is', 'are', 'it', 'its', 'we', 'our', 'your', 'you', 'want', 'who', 'from', 'not', 'but']);
+const words = hero.headline.split(/\s+/).map((w) => ({ w, light: joiners.has(w.toLowerCase().replace(/[^\p{L}]/gu, '')) }));
 ---
 <section class="hero">
-  {hero.image && (
-    <Image class="hero__image" src={hero.image} alt={hero.imageAlt ?? ''} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" />
-  )}
-  <div class="container hero__content">
-    <h1>{hero.headline}</h1>
-    {hero.subline && <p class="hero__subline">{hero.subline}</p>}
-    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <h1 data-reveal>
+        {words.map(({ w, light }, i) => <>{i > 0 && ' '}{light ? w : <span class="hero__bold">{w}</span>}</>)}
+      </h1>
+      <div class="hero__foot" data-reveal>
+        {hero.subline && <p class="hero__subline">{hero.subline}</p>}
+        <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+      </div>
+    </div>
   </div>
+  {hero.image && (
+    <div class="hero__media">
+      <Image class="hero__image" src={hero.image} alt={hero.imageAlt ?? ''} widths={[800, 1600, 2400]} sizes="(min-width: 60rem) 45vw, 100vw" loading="eager" fetchpriority="high" data-parallax data-parallax-range="24" />
+    </div>
+  )}
 </section>
-<style>
-  .hero { position: relative; display: grid; min-height: min(85vh, 50rem); align-items: end; color: #fff; overflow: hidden; }
-  .hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgb(0 0 0 / 0.65)); }
-  .hero__content { position: relative; z-index: 1; padding-block: var(--space-6); }
-  .hero__subline { font-size: var(--text-lg); max-width: 38rem; }
-</style>

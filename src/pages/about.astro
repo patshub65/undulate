@@ -9,16 +9,16 @@ if (!about) throw new Error('Missing src/content/pages/about.mdoc');
 const { email } = await getSettings();
 ---
 <BaseLayout title={about.data.title ?? 'About'}>
-  <section class="section container about">
-    {about.data.portrait && <Image src={about.data.portrait} alt={about.data.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
-    <div>
+  <section class="container about">
+    {about.data.portrait && (
+      <div class="about__media" data-reveal>
+        <Image src={about.data.portrait} alt={about.data.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 60rem) 40vw, 100vw" />
+      </div>
+    )}
+    <div class="about__text" data-reveal>
       <h1>{about.data.title ?? 'About'}</h1>
       <Prose entry={about} />
       <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">Get in touch</a>
     </div>
   </section>
 </BaseLayout>
-<style>
-  .about { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
-  .about img { border-radius: var(--radius-sm); }
-</style>

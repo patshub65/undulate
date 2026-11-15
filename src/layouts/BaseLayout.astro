@@ -1,7 +1,12 @@
 ---
+import '@fontsource/gloock/400';
+import '@fontsource/hanken-grotesk/300';
+import '@fontsource/hanken-grotesk/400';
+import '@fontsource/hanken-grotesk/500';
+import '@fontsource/hanken-grotesk/600';
 import '../styles/tokens.css';
-import '../styles/base.css';
 import '../motion/motion.css';
+import '../styles/base.css';
 import { getSettings, mailto } from '../lib/content';
 
 interface Props {
@@ -28,6 +33,7 @@ const nav = [
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={new URL(path, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#d4c5b4" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <script is:inline>
@@ -42,16 +48,16 @@ const nav = [
     <a class="visually-hidden" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="container site-header__inner">
-        <a class="site-header__logo" href="/" aria-label="undulate home">undulate</a>
-        <nav aria-label="Main">
-          <ul class="site-header__nav">
+        <a class="wordmark" href="/" aria-label="undulate home">undulate</a>
+        <nav aria-label="Main" class="site-nav">
+          <ul role="list">
             {nav.map((item) => (
               <li>
                 <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
               </li>
             ))}
             <li>
-              <a class="button" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="header">
+              <a class="button button--ghost" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="header">
                 Get in touch
               </a>
             </li>
@@ -60,20 +66,34 @@ const nav = [
       </div>
     </header>
 
+    <!-- Phones: the nav is a pill docked at the thumb. -->
+    <nav aria-label="Main, docked" class="dock">
+      <ul role="list">
+        {nav.map((item) => (
+          <li><a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+        <li>
+          <a class="dock__cta" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="dock">Get in touch</a>
+        </li>
+      </ul>
+    </nav>
+
     <main id="main">
       <slot />
     </main>
 
     <footer class="site-footer">
       <div class="container site-footer__inner">
-        <p>
+        <p class="site-footer__contact">
           <a href={mailto(settings.email)} data-track="Email Click" data-track-location="footer">{settings.email}</a>
-          {settings.instagram && <> · <a href={settings.instagram} rel="noopener">Instagram</a></>}
+          {settings.instagram && <a href={settings.instagram} rel="noopener">Instagram</a>}
         </p>
-        <p class="muted">
-          <a href="/impressum/">Impressum</a> · <a href="/datenschutz/">Datenschutz</a>
+        <p class="site-footer__legal">
+          <a href="/impressum/">Impressum</a>
+          <a href="/datenschutz/">Datenschutz</a>
         </p>
       </div>
+      <div class="container site-footer__mark"><p class="wordmark wordmark--giant" aria-hidden="true">undulate</p></div>
     </footer>
 
     <!-- Motion layer (public/motion/): classic scripts, as Lenis breaks when bundled as a module. -->
@@ -107,18 +127,5 @@ const nav = [
       }, { threshold: 0.4 });
       document.querySelectorAll<HTMLElement>('[data-track-view]').forEach((el) => io.observe(el));
     </script>
-
-    <style>
-      .site-header__inner, .site-footer__inner {
-        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-        gap: var(--space-3); padding-block: var(--space-3);
-      }
-      .site-header__logo { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); text-decoration: none; }
-      .site-header__nav { display: flex; align-items: center; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
-      .site-header__nav a:not(.button) { text-decoration: none; }
-      .site-header__nav a[aria-current='page'] { text-decoration: underline; }
-      .site-footer { border-top: 1px solid var(--color-border); margin-top: var(--space-6); font-size: var(--text-sm); }
-      .site-footer p { margin: 0; }
-    </style>
   </body>
 </html>
