@@ -27,6 +27,7 @@ const { pillars: intros } = await getSettings();
   .pillar { padding-block: var(--space-6); }
   .pillar--production { background: var(--palette-yellow); }
   .pillar--curation { background: var(--palette-violet); color: #fff; }
+  .pillar--curation :focus-visible { outline-color: #fff; outline-offset: 3px; }
   .pillar h3 { font-size: var(--d-lg); margin: var(--space-3) 0 var(--space-4); }
   .pillar h3 a { text-decoration: none; }
   .pillar h3 a:hover { text-decoration: underline; text-decoration-thickness: 0.08em; }
