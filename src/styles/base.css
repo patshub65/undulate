@@ -194,7 +194,7 @@ main:not(:has(.closing, .project__cta)) + .site-footer { margin-top: var(--secti
 main > .section:first-child { padding-top: var(--space-5); }
 
 /* Project page: the header as a flyer in the project's own colour */
-.project__header { background: var(--project-accent, var(--palette-yellow)); color: var(--project-on-accent, var(--palette-ink)); padding-block: var(--space-5) var(--space-6); }
+.project__header { background: var(--project-field, var(--palette-yellow)); color: var(--project-on-accent, var(--palette-ink)); padding-block: var(--space-5) var(--space-6); }
 .project__header .container { display: grid; gap: var(--space-4); justify-items: start; }
 .project__logo { width: 6rem; height: 6rem; object-fit: cover; border-radius: 50%; }
 .project__header h1 { font-size: clamp(4rem, 1rem + 11vw, 11rem); line-height: 0.9; }
