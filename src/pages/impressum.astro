@@ -1,0 +1,10 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Prose from '../components/Prose.astro';
+const page = await getEntry('pages', 'impressum');
+if (!page) throw new Error('Missing src/content/pages/impressum.mdoc');
+---
+<BaseLayout title="Impressum">
+  <section class="section container"><Prose entry={page} /></section>
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+/**
+ * Next events across all projects. Built at deploy time; a small script also
+ * hides events whose date has passed, in case the site hasn't been rebuilt.
+ */
+import EventCard from '../EventCard.astro';
+import { getSettings, getUpcomingEvents } from '../../lib/content';
+const { upcomingCount } = await getSettings();
+// Render a few extra so the strip stays full after client-side hiding.
+const limit = upcomingCount ?? 4;
+const events = await getUpcomingEvents(limit + 4);
+---
+{events.length > 0 && (
+  <section class="section container upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+    <h2 id="upcoming-heading">Coming up</h2>
+    <ul class="grid upcoming__list" role="list">
+      {events.map((event, i) => (
+        <li><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly /></li>
+      ))}
+    </ul>
+  </section>
+)}
+<script>
+  const today = new Date().toISOString().slice(0, 10);
+  document.querySelectorAll<HTMLElement>('[data-upcoming]').forEach((section) => {
+    const limit = Number(section.dataset.limit);
+    let shown = 0;
+    section.querySelectorAll<HTMLElement>('[data-event-date]').forEach((card) => {
+      const keep = card.dataset.eventDate! >= today && shown < limit;
+      (card.closest('li') ?? card).hidden = !keep;
+      if (keep) shown++;
+    });
+    section.hidden = shown === 0;
+  });
+</script>
+<style>
+  .upcoming__list { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+</style>

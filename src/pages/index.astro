@@ -1,0 +1,20 @@
+---
+// Homepage section order is fixed by docs/PLAN.md §4.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import Pillars from '../components/home/Pillars.astro';
+import CompanyFormats from '../components/home/CompanyFormats.astro';
+import FeaturedProjects from '../components/home/FeaturedProjects.astro';
+import UpcomingStrip from '../components/home/UpcomingStrip.astro';
+import AboutTeaser from '../components/home/AboutTeaser.astro';
+import Closing from '../components/home/Closing.astro';
+---
+<BaseLayout>
+  <Hero />
+  <Pillars />
+  <CompanyFormats />
+  <FeaturedProjects />
+  <UpcomingStrip />
+  <AboutTeaser />
+  <Closing />
+</BaseLayout>

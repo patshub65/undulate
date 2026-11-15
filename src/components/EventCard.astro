@@ -1,0 +1,63 @@
+---
+/**
+ * A single event: its flyer as a button that opens a native popover with
+ * the details and optional link. Events never have pages of their own.
+ */
+import { Image } from 'astro:assets';
+import { formatDate, isoDate, type EventItem } from '../lib/content';
+
+interface Props {
+  event: Omit<EventItem, 'project'> & { project?: EventItem['project'] };
+  id: string;
+  /** Show the project name (used in the cross-project upcoming strip). */
+  showProject?: boolean;
+  /** Hide on the client once the date passes (for the upcoming strip). */
+  upcomingOnly?: boolean;
+}
+const { event, id, showProject = false, upcomingOnly = false } = Astro.props;
+const popoverId = `event-${id}`;
+---
+<article class="event-card" data-event-date={upcomingOnly ? isoDate(event.date) : undefined}>
+  <button class="event-card__trigger" popovertarget={popoverId} data-track="Event Open" data-track-label={event.name}>
+    {event.flyer ? (
+      <Image src={event.flyer} alt={`Flyer: ${event.name}`} widths={[320, 540, 800]} sizes="(min-width: 60rem) 25vw, 50vw" />
+    ) : (
+      <span class="event-card__noflyer">{event.name}</span>
+    )}
+    <span class="event-card__meta">
+      <time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
+      <span class="event-card__name">{event.name}</span>
+      {showProject && event.project && <span class="muted">{event.project.title}</span>}
+    </span>
+  </button>
+
+  <div id={popoverId} popover class="event-popover">
+    <button class="event-popover__close" popovertarget={popoverId} popovertargetaction="hide" aria-label="Close">×</button>
+    <p class="eyebrow"><time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>{event.venue && ` · ${event.venue}`}</p>
+    <h3>{event.name}</h3>
+    {event.details && <p class="event-popover__details">{event.details}</p>}
+    {showProject && event.project && (
+      <p><a href={`/projects/${event.project.id}/`}>More from {event.project.title}</a></p>
+    )}
+    {event.link && (
+      <a class="button" href={event.link} rel="noopener" target="_blank" data-track="Event Link" data-track-label={event.name}>Tickets & info</a>
+    )}
+  </div>
+</article>
+
+<style>
+  .event-card__trigger { all: unset; cursor: pointer; display: block; width: 100%; }
+  .event-card__trigger:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+  .event-card__trigger img, .event-card__noflyer { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius-sm); }
+  .event-card__noflyer { display: grid; place-items: center; background: var(--color-surface); border: 1px solid var(--color-border); }
+  .event-card__meta { display: grid; gap: 0.1rem; padding-top: var(--space-2); font-size: var(--text-sm); }
+  .event-card__name { font-weight: 600; }
+  .event-popover {
+    max-width: min(28rem, 100% - 2 * var(--gutter));
+    padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    background: var(--color-surface); color: var(--color-text);
+  }
+  .event-popover::backdrop { background: rgb(0 0 0 / 0.5); }
+  .event-popover__close { position: absolute; top: var(--space-2); right: var(--space-2); background: none; border: 0; font-size: 1.5rem; cursor: pointer; color: inherit; }
+  .event-popover__details { white-space: pre-line; }
+</style>

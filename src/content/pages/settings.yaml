@@ -1,0 +1,31 @@
+email: hello@undulate.example
+instagram: https://www.instagram.com/
+hero:
+  headline: Events for companies that want more than a venue and a DJ.
+  subline: >-
+    undulate brings years of club culture, concept events and festival work to
+    your company’s moments: curated, produced and genuinely cool.
+  cta: Plan your company event
+  image: ../../assets/site/hero.png
+  imageAlt: Crowd at an undulate night (placeholder)
+pillars:
+  production: >-
+    Everything that makes an event run: from festival sites to artist care,
+    hospitality and the bar.
+  curation: >-
+    Who plays, who comes and why it matters: booking and promotion rooted in
+    real scenes.
+companies:
+  heading: Events for companies
+  intro: >-
+    The same curation behind our club nights and concept events, for your
+    company’s moments.
+  cta: Plan your company event
+aboutTeaser: >-
+  undulate is run by Jasmin, who has spent years producing, curating and
+  promoting events across club culture, art and food. [Placeholder: Jasmin to
+  write.]
+closing:
+  heading: Let’s make something people talk about.
+  text: Tell us about your event, your team and your budget, and we’ll take it from there.
+upcomingCount: 4

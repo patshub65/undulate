@@ -1,0 +1,13 @@
+---
+import { getSettings, mailto } from '../../lib/content';
+const { email, closing } = await getSettings();
+---
+<section class="section container closing">
+  {closing.heading && <h2>{closing.heading}</h2>}
+  {closing.text && <p class="muted">{closing.text}</p>}
+  <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
+</section>
+<style>
+  .closing { text-align: center; }
+  .closing p { max-width: 34rem; margin-inline: auto; }
+</style>

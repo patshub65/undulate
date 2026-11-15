@@ -1,0 +1,7 @@
+---
+/** Renders a Markdoc entry body (project write-up, About, legal pages). */
+import { render, type CollectionEntry } from 'astro:content';
+interface Props { entry: CollectionEntry<'projects'> | CollectionEntry<'pages'> }
+const { Content } = await render(Astro.props.entry);
+---
+<div class="prose"><Content /></div>

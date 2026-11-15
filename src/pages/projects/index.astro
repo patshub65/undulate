@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getPillars, getProjects, projectsUrl } from '../../lib/content';
+const projects = await getProjects();
+const pillars = await getPillars();
+---
+<BaseLayout title="Projects" description="Series, concept events, festivals and company events by undulate.">
+  <section class="section container">
+    <h1>Projects</h1>
+    <nav class="filters" aria-label="Filter projects">
+      <ul class="tags">
+        <li><a class="tag" href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
+        {pillars.map((pillar) => (
+          <li><a class="tag" href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
+        ))}
+      </ul>
+      {pillars.map((pillar) => (
+        <ul class="tags filters__specialties" data-for-pillar={pillar.id}>
+          {pillar.specialties.map((s) => (
+            <li><a class="tag" href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
+          ))}
+        </ul>
+      ))}
+    </nav>
+    <div class="grid" data-project-list>
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+    <p class="muted" data-empty hidden>No projects with this specialty yet.</p>
+  </section>
+</BaseLayout>
+
+<script>
+  // Progressive enhancement: without JS every project shows and filter links reload.
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-project-list] > *')];
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-filter]')];
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+
+  function apply(params: URLSearchParams) {
+    const pillar = params.get('pillar');
+    const specialty = params.get('specialty');
+    let visible = 0;
+    for (const card of cards) {
+      const match =
+        (!pillar || card.dataset.pillars?.split(' ').includes(pillar)) &&
+        (!specialty || card.dataset.specialties?.split(' ').includes(specialty));
+      card.hidden = !match;
+      if (match) visible++;
+    }
+    const active = pillar ? `pillar:${pillar}` : specialty ? `specialty:${specialty}` : '';
+    links.forEach((a) => a.setAttribute('aria-current', String(a.dataset.filter === active)));
+    empty.hidden = visible > 0;
+  }
+
+  links.forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = new URL(a.href);
+      history.pushState(null, '', url);
+      apply(url.searchParams);
+    }),
+  );
+  addEventListener('popstate', () => apply(new URLSearchParams(location.search)));
+  apply(new URLSearchParams(location.search));
+</script>
+<style>
+  .filters { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
+  .filters__specialties { font-size: var(--text-sm); }
+</style>

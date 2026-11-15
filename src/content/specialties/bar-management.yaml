@@ -1,0 +1,4 @@
+name: Bar management
+pillar: production
+description: Bar concepts, staffing and stock, run smoothly from first drink to last call.
+order: 4
