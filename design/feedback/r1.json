@@ -1,0 +1,21 @@
+{
+  "round": "r1",
+  "reviewer": "Patrick",
+  "date": "2026-11-15",
+  "shortlist": [],
+  "verdict": "No real winners. Overuse of the large capital font, looks like a conference. Directions are mostly variations in colour and some layout; the section patterns are practically the same, like the company event formats section.",
+  "kept": [
+    { "direction": "4-gradient-wave", "element": "Closing band: full-width vertical violet-to-lilac gradient, centred headline, email as a solid dark pill", "note": "potential, but not with that headline font" },
+    { "direction": "4-gradient-wave", "element": "Project header (Future Boutique): soft radial gradient in the series accent, label, big title, intro, outline pill specialties, wavy underline on the active nav item", "note": "potential, but not with that headline font" },
+    { "direction": "3-poster", "element": "Pillars as two full colour fields (yellow, violet), specialty count label, big pillar name, intro, specialties in two columns under hairline rules", "note": "potential, but not with that headline font" }
+  ],
+  "wanted": [
+    "Break out of the grid; stay approachable, a little subversive, avant-garde, minimal, with some brutalist touch",
+    "No generic serif and sans serif fonts",
+    "No wave backgrounds; gradients good if subtle and full width; grainy abstract gradient",
+    "Keep the palette but use fewer colours: a neutral background and bold button colours",
+    "Feel editorial, boutique, specialist and creative",
+    "Expand the About page into several sections, loosely based on Jasmin's LinkedIn and Instagram",
+    "Avoid AI-generated design patterns"
+  ]
+}
