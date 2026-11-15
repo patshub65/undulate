@@ -2,27 +2,45 @@
 import { getPillars, getSettings, projectsUrl } from '../../lib/content';
 const pillars = await getPillars();
 const { pillars: intros } = await getSettings();
+// Footnote numbers run on across both pillars.
+let n = 0;
+const numbered = pillars.map((p) => ({ ...p, specialties: p.specialties.map((s) => ({ s, n: ++n })) }));
 ---
-<section class="section container" id="services" aria-labelledby="services-heading">
+<section class="pillars wrap" id="services" aria-labelledby="services-heading">
   <h2 id="services-heading" class="visually-hidden">Services</h2>
-  <div class="pillars">
-    {pillars.map((pillar) => (
-      <article class="pillar">
-        <h3><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
-        {intros[pillar.id] && <p class="muted">{intros[pillar.id]}</p>}
-        <ul class="pillar__specialties" role="list">
-          {pillar.specialties.map((s) => (
-            <li>
-              <a href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}><strong>{s.data.name}</strong></a>
-              {s.data.description && <span class="muted"> · {s.data.description}</span>}
-            </li>
-          ))}
-        </ul>
-      </article>
-    ))}
-  </div>
+  {numbered.map((pillar) => (
+    <article class="pillar" data-reveal>
+      <h3 class="kicker"><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
+      {intros[pillar.id] && <p class="pillar__intro">{intros[pillar.id]}</p>}
+      <p class="pillar__line">
+        {pillar.specialties.map(({ s, n }, i) => (
+          <><a href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}>{s.data.name}</a><sup>{n}</sup>{i < pillar.specialties.length - 1 ? ', ' : '.'}</>
+        ))}
+      </p>
+      <ol class="pillar__notes">
+        {pillar.specialties.map(({ s, n }) => s.data.description && (
+          <li><span class="date">{n}</span><span>{s.data.description}</span></li>
+        ))}
+      </ol>
+    </article>
+  ))}
 </section>
 <style>
-  .pillars { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
-  .pillar__specialties { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .pillars { padding-top: var(--space-7); padding-bottom: var(--space-6); display: grid; gap: var(--space-6); }
+  .pillar h3 a { text-decoration: none; }
+  .pillar h3 a:hover { color: var(--palette-violet); }
+  .pillar__intro { max-width: 26rem; margin: var(--space-2) 0 var(--space-4); color: var(--color-text-muted); }
+  .pillar__line { font-family: var(--font-display); font-size: var(--d-lg); line-height: 1.08; margin-bottom: var(--space-5); text-wrap: balance; }
+  .pillar__line a { text-decoration: none; transition: color 500ms var(--ease-paper); }
+  .pillar__line a:hover { color: var(--palette-violet); transition-duration: 120ms; }
+  .pillar__line sup { font-family: var(--font-mono); font-size: max(0.26em, 0.875rem); vertical-align: 1.2em; margin-left: 0.1em; line-height: 0; }
+  @media (min-width: 60rem) { sup { vertical-align: 1.8em; } }
+  .pillar__notes { display: grid; gap: var(--space-3) var(--space-5); max-width: 44rem; }
+  .pillar__notes li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); color: var(--color-text-muted); }
+  @media (min-width: 60rem) {
+    .pillars { padding-top: 16rem; padding-bottom: var(--space-7); gap: var(--space-7); }
+    .pillar { max-width: 62%; }
+    .pillar:nth-child(odd) { margin-left: 30%; max-width: 70%; }
+    .pillar__notes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 </style>
