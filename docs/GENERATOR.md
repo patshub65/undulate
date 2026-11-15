@@ -7,8 +7,8 @@ The website generator builds each design direction on this skeleton. All variati
 - `src/styles/tokens.css`: colours, type, spacing and radii. **Start here.** Seed the brand colours from the undulate logo.
 - `src/styles/base.css`: global styles.
 - Markup and styles in `src/components/**` and `src/layouts/BaseLayout.astro`.
-- Fonts, which must be self-hosted in `public/fonts/` with no Google Fonts links.
-- Client-side motion or interaction, as long as it's lightweight and the content still works without JavaScript.
+- Fonts. Google Fonts are allowed while exploring a round. Self-host them in `public/fonts/` once a face is agreed, and always before merging to `main`.
+- Motion, through the motion layer's attributes (`data-reveal`, `data-parallax`, `data-tuck`, `data-hscroll` and others; see `public/motion/motion.js`) and CSS. The content still works without JavaScript and under reduced motion.
 - Imagery treatment (crops, overlays, filters).
 
 ## Variations must not change
@@ -29,7 +29,7 @@ The website generator builds each design direction on this skeleton. All variati
 - **Positioning:** the hero speaks to **companies** in words, while the imagery comes from undulate's own subcultural events. The look should be cool, never generic corporate.
 - **Series identity:** a series' accent colour (`--project-accent`) and logo should sit inside the undulate frame, not replace it.
 - **Events** have no pages of their own: they are a flyer plus a popover.
-- **Phones first:** most visitors arrive from Instagram. A 16px side gutter and no horizontal scroll.
+- **Phones first:** most visitors arrive from Instagram. Side margins of at least 32px on a phone and 64px on desktop, and no horizontal scroll. `npm run design:check` enforces this.
 - **Contact** is only the email link, through `mailto()`.
 
 ## Judging checklist
@@ -41,6 +41,8 @@ The website generator builds each design direction on this skeleton. All variati
 - [ ] Does it work well on a phone?
 
 ## Workflow
+
+The full process is in the skill under "Process". In short:
 
 - Build each variation on its own branch, `design/<n>-<name>`. Netlify branch deploys give each one a preview URL.
 - **Round 1:** five directions, from which Jasmin shortlists two.

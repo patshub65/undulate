@@ -1,0 +1,48 @@
+/* Motion layer, taken from Ladenkit (ported there from Tinker & Borrow).
+   Variations may override the tokens, not the rules.
+   Everything hidden here is only hidden under html.motion, which motion.js sets
+   when JS runs and the visitor has not asked for reduced motion. */
+
+:root{
+  --ease-paper:cubic-bezier(.22,1,.36,1);   /* weighted ease-out: reveals, lifts */
+  --ease-inout:cubic-bezier(.65,0,.35,1);   /* symmetric: hover zooms, underline draws */
+  --dur-reveal:900ms;
+  --dur-fade:800ms;
+  --dur-hover:220ms;
+  --reveal-distance:24px;                    /* T&B used 26px; rounded to the 8pt grid */
+  --reveal-step:90ms;                        /* stagger between siblings */
+}
+
+/* Lenis */
+html.lenis,html.lenis body{height:auto}
+.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-smooth iframe{pointer-events:none}
+
+/* Reveal: rise and fade in when entering the viewport */
+html.motion [data-reveal]{
+  opacity:0;transform:translateY(var(--reveal-distance));
+  transition:opacity var(--dur-reveal) var(--ease-paper),transform var(--dur-reveal) var(--ease-paper);
+  transition-delay:var(--reveal-delay,0ms);
+}
+html.motion [data-reveal].is-visible{opacity:1;transform:none}
+
+/* Image fade: large images fade in once decoded */
+html.motion img[data-fade]{opacity:0;transition:opacity var(--dur-fade) var(--ease-paper)}
+html.motion img[data-fade].is-loaded{opacity:1}
+
+/* Parallax: motion.js writes --py; apply it where the element's own transform allows */
+[data-parallax]{transform:translate3d(0,var(--py,0px),0)}
+
+/* Tuck: an element that hides on scroll down and returns on scroll up */
+[data-tuck]{transition:transform 520ms var(--ease-paper),opacity 420ms var(--ease-inout)}
+[data-tuck].is-tucked{transform:translateY(-120%);opacity:0}
+
+/* Drag strip: horizontal scroller you can drag with a mouse */
+[data-hscroll]{overflow-x:auto;scroll-snap-type:x proximity;touch-action:pan-x pan-y;cursor:grab}
+[data-hscroll].is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+
+@media (prefers-reduced-motion:reduce){
+  [data-reveal],img[data-fade],[data-tuck]{opacity:1!important;transform:none!important;transition:none!important}
+  [data-parallax]{transform:none!important}
+}

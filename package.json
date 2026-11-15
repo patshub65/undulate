@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "placeholders": "node scripts/make-placeholders.mjs"
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "design:check": "node scripts/design-check.cjs",
+    "design:sheet": "node scripts/design-sheet.cjs"
   },
   "dependencies": {
     "@astrojs/markdoc": "^2.1.5",

@@ -1,6 +1,7 @@
 ---
 import '../styles/tokens.css';
 import '../styles/base.css';
+import '../motion/motion.css';
 import { getSettings, mailto } from '../lib/content';
 
 interface Props {
@@ -29,6 +30,10 @@ const nav = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
+    <script is:inline>
+      // Motion gate: set before render so [data-reveal] content starts hidden instead of flashing.
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
     {plausibleDomain && (
       <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js"></script>
     )}
@@ -70,6 +75,11 @@ const nav = [
         </p>
       </div>
     </footer>
+
+    <!-- Motion layer (public/motion/): classic scripts, as Lenis breaks when bundled as a module. -->
+    <script is:inline src="/motion/lenis.min.js"></script>
+    <script is:inline src="/motion/motion.js"></script>
+    <script is:inline>window.UndulateMotion.init();</script>
 
     <script>
       // Analytics: elements with data-track send a Plausible custom event on click;

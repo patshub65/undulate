@@ -1,6 +1,6 @@
 # Generator brief: undulate
 
-**Build five design directions for the undulate website on this repo's skeleton.** The rules are in `docs/GENERATOR.md`: restyle only, keeping the content model, routes and section order. The background is in `docs/PLAN.md`.
+**Build five design directions for the undulate website on this repo's skeleton.** Load `.claude/skills/undulate-design/SKILL.md` first. It holds the principles learned on Ladenkit, and every direction is checked against them. The rules are in `docs/GENERATOR.md`: restyle only, keeping the content model, routes and section order. The background is in `docs/PLAN.md`.
 
 ## The client
 
@@ -54,8 +54,8 @@ The five should be clearly different from each other:
 - The hero headline addresses companies, and the "Plan your company event" button is visible without scrolling.
 - The "Events for companies" section stands out, since it's the main way companies will convert.
 - Series accent colours (`--project-accent`) and flyers sit inside the undulate frame without clashing.
-- Fonts are self-hosted only, from `public/fonts/`.
-- It works on a phone first: a 16px side gutter and no horizontal scroll.
+- Fonts may come from Google Fonts while exploring, but must be self-hosted from `public/fonts/` before a direction merges.
+- It works on a phone first: side margins of 32px on a phone and 64px on desktop, no horizontal scroll, and `npm run design:check` passes.
 - Passes WCAG AA contrast for text.
 - Light and dark mode are optional. Each direction can be a single mode, but the design must be deliberate.
 

@@ -6,3 +6,11 @@ dist/
 .env.*
 !.env.example
 .DS_Store
+# inspiration originals stay local; agents read the WebP slices in prepared/
+design/inspiration/**/*.png
+design/inspiration/**/*.jpg
+design/inspiration/**/*.jpeg
+design/inspiration/**/*.mov
+design/inspiration/**/*.mp4
+# design check output
+previews/

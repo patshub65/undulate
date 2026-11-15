@@ -1,6 +1,6 @@
 # undulate
 
-This is the website for undulate, Jasmin's event production and curation company. The plan and all the decisions behind it are in [`docs/PLAN.md`](docs/PLAN.md). The rules for design variations are in [`docs/GENERATOR.md`](docs/GENERATOR.md), and the brief for the generator is [`docs/BRIEF.md`](docs/BRIEF.md).
+This is the website for undulate, Jasmin's event production and curation company. The plan and all the decisions behind it are in [`docs/PLAN.md`](docs/PLAN.md). The rules for design variations are in [`docs/GENERATOR.md`](docs/GENERATOR.md), and the brief for the generator is [`docs/BRIEF.md`](docs/BRIEF.md). The generator itself is the design skill in [`.claude/skills/undulate-design/`](.claude/skills/undulate-design/SKILL.md), with references in [`design/inspiration/`](design/inspiration/README.md).
 
 **Stack:** Astro (static) · Keystatic (browser editor at `/keystatic`) · Netlify · Plausible
 
@@ -14,6 +14,7 @@ npm run dev
 - The site runs at http://localhost:4321.
 - The editor runs at http://localhost:4321/keystatic. In development it edits the files in `src/content` directly.
 - `npm run build` creates a production build, and `npm run check` type-checks the project.
+- `npm run design:check [url]` checks a running build for layout faults, third-party requests and cookies, and `npm run design:sheet` makes a contact sheet comparing directions.
 - `npm run placeholders` generates labelled placeholder images for any image path that is referenced in the content but missing on disk.
 
 ## Where things live
