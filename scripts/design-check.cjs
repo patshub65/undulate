@@ -23,7 +23,7 @@ const { chromium } = require('playwright');
 // Keep in sync with "Token system" in .claude/skills/undulate-design/SKILL.md.
 const EDGE = { 375: 32, 1280: 64 };
 const TOP = { 375: 40, 1280: 64 };
-const PAGES = ['/', '/projects/', '/projects/bananas-or-berries/', '/projects/texture-studies/', '/projects/company-summer-party/', '/about/', '/impressum/'];
+const PAGES = ['/', '/projects/', '/projects/bananas-are-berries/', '/projects/texture-studies/', '/projects/company-summer-party/', '/about/', '/impressum/'];
 
 async function check(browser, base, route, width) {
   const origin = new URL(base).host;

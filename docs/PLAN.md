@@ -11,7 +11,7 @@ undulate is a music and cultural event company run by its founder, Jasmin, who i
 - listening sessions
 - festival production and promotion
 
-Some events belong to series that have their own look and feel, for example bananas or berries.
+Some events belong to series that have their own look and feel, for example bananas are berries.
 
 ## 2. Audience and positioning
 
@@ -31,7 +31,7 @@ The content is file-based and edited in Keystatic.
 
 ### Project (the only main content type)
 
-Everything undulate has done is a project. A series such as bananas or berries is one project, and so is a one-off concept event, a festival production or a corporate job.
+Everything undulate has done is a project. A series such as bananas are berries is one project, and so is a one-off concept event, a festival production or a corporate job.
 
 | Field | Notes |
 |---|---|

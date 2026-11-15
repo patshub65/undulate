@@ -2,10 +2,22 @@
 
 These are the picks for undulate's rounds. Originals (png) stay out of git, and agents read `prepared/`.
 
-**Status: DRAFT.** The `Take` and `Ignore` lines below were drafted by the agent and are awaiting confirmation. Confirm, rewrite or cut each one before round 1 is built.
+**Status: confirmed by Patrick on 2026-11-15** (Take lines drafted by the agent, accepted as written).
 
 ## palette-logo.png
 Not a reference: these are undulate's own logo colours and gradients, with the token mapping in `docs/BRIEF.md`.
+
+## poster-bananas-are-berries.png
+Take: undulate's own series flyer, the real identity of *bananas are berries*: liquid psychedelic display type in white over a soft pink gradient, duotone fruit cut-outs in blue around the edges, and the line-up set in a plain bold sans. This is what a series looks like inside the undulate frame, so the frame has to hold it, not compete with it.
+Ignore: as a template for undulate's own look; it belongs to the series. Use it to test how series artwork sits on each direction.
+Source: undulate (bananas are berries), supplied by Patrick
+Scene: undulate's own
+
+## poster-future-boutique.jpg
+Take: a split poster: a dark data-visualisation image on the left, and a pale column on the right holding a programme in tall condensed capitals in two colours (category in ink, names in red), small slider marks as dividers, and house rules at the foot. This is the programme-as-typography move for a concept event.
+Ignore: the cocktail-glass mark and the HUD imagery as a site style; never reproduce the private-event details.
+Source: Future Boutique poster, supplied by Patrick
+Scene: in-scene, concept event
 
 ## events-past-flyers-stacked.png
 Take: past events as flyer cards that look physically stacked (a tinted sheet offset behind each one), with the date and name set small and quiet underneath, so the artwork carries the colour.
