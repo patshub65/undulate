@@ -8,9 +8,18 @@ const { email, closing } = await getSettings();
   <a class="button button--ink" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
 </section>
 <style>
-  /* Kept from round 1: the full-width violet-to-lilac band with the email as a solid ink pill. */
-  .closing { text-align: center; padding-block: var(--space-7); background: linear-gradient(180deg, #4c33f2 0%, #7b5cf6 38%, #b893ff 68%, #b893ff 100%); }
-  .closing h2 { color: #fff; font-size: clamp(2.5rem, 1rem + 6.4vw, 6.5rem); line-height: 1; max-width: 11em; margin: 0 auto var(--space-6); }
+  /* Kept from round 1, now a field that fades in from the paper and out again: lilac haze, violet held low behind the pill.
+     The heading is the page's one giant moment, in ink. */
+  .closing {
+    text-align: center; padding-block: 12rem 10rem;
+    --fade: var(--fade-both);
+    --field:
+      radial-gradient(40% 18% at 50% 84%, rgb(76 51 242 / 0.7) 0%, rgb(76 51 242 / 0) 100%),
+      radial-gradient(40% 40% at 8% 36%, rgb(242 160 223 / 0.85) 0%, rgb(242 160 223 / 0) 100%),
+      linear-gradient(180deg, #d6c6fd 0%, #c7b0fe 100%);
+  }
+  .closing h2 { font-size: var(--d-xl); line-height: 1.02; letter-spacing: var(--track-xl); max-width: 10em; margin: 0 auto var(--space-5); }
   .closing p { max-width: 26rem; margin: 0 auto var(--space-4); font-size: 1.25rem; line-height: 2rem; }
-  .closing .button:hover { background: #fff; color: var(--palette-ink); }
+  .closing .button:hover { background: var(--palette-violet); }
+  @media (min-width: 60rem) { .closing { padding-block: 16rem 14rem; } }
 </style>

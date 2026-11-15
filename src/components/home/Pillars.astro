@@ -19,7 +19,7 @@ const numbered = pillars.map((p) => ({ ...p, specialties: p.specialties.map((s) 
       </p>
       <ol class="pillar__notes">
         {pillar.specialties.map(({ s, n }) => s.data.description && (
-          <li><span class="date">{n}</span><span>{s.data.description}</span></li>
+          <li><span class="date">{String(n).padStart(2, '0')}</span><span>{s.data.description}</span></li>
         ))}
       </ol>
     </article>
@@ -28,19 +28,21 @@ const numbered = pillars.map((p) => ({ ...p, specialties: p.specialties.map((s) 
 <style>
   .pillars { padding-top: var(--space-7); padding-bottom: var(--space-6); display: grid; gap: var(--space-6); }
   .pillar h3 a { text-decoration: none; }
-  .pillar h3 a:hover { color: var(--palette-violet); }
+  .pillar h3 a:hover { text-decoration: underline; text-decoration-color: var(--color-mark); text-decoration-thickness: 2px; }
   .pillar__intro { max-width: 26rem; margin: var(--space-2) 0 var(--space-4); color: var(--color-text-muted); }
-  .pillar__line { font-family: var(--font-display); font-size: var(--d-lg); line-height: 1.08; margin-bottom: var(--space-5); text-wrap: balance; }
+  .pillar__line { font-family: var(--font-display); font-size: clamp(2rem, 1.3rem + 2.8vw, 4rem); line-height: 1.16; letter-spacing: var(--track-d); margin-bottom: var(--space-5); text-wrap: balance; }
   .pillar__line a { text-decoration: none; transition: color 500ms var(--ease-paper); }
   .pillar__line a:hover { color: var(--palette-violet); transition-duration: 120ms; }
-  .pillar__line sup { font-family: var(--font-mono); font-size: max(0.26em, 0.875rem); vertical-align: 1.2em; margin-left: 0.1em; line-height: 0; }
+  .pillar__line sup { font-family: var(--font-mono); color: var(--color-label); letter-spacing: 0; font-size: max(0.26em, 0.875rem); vertical-align: 0.9em; margin-left: 0.1em; line-height: 0; }
   @media (min-width: 60rem) { sup { vertical-align: 1.8em; } }
-  .pillar__notes { display: grid; gap: var(--space-3) var(--space-5); max-width: 44rem; }
-  .pillar__notes li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); color: var(--color-text-muted); }
+  .pillar__notes { display: grid; column-gap: var(--space-5); max-width: 48rem; }
+  /* Footnotes sit on hairlines, the numeral in dusk. */
+  .pillar__notes li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); padding-block: 0.75rem; border-top: var(--hairline); color: var(--color-text-muted); }
   @media (min-width: 60rem) {
     .pillars { padding-top: 16rem; padding-bottom: var(--space-7); gap: var(--space-7); }
     .pillar { max-width: 62%; }
     .pillar:nth-child(odd) { margin-left: 30%; max-width: 70%; }
     .pillar__notes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillar__notes li:nth-last-child(-n + 2):nth-child(odd), .pillar__notes li:last-child { border-bottom: var(--hairline); }
   }
 </style>
