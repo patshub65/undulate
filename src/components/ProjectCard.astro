@@ -5,26 +5,25 @@ import { FORMAT_LABELS, getProjectServices, type Project } from '../lib/content'
 interface Props { project: Project }
 const { project } = Astro.props;
 const { specialties, pillars } = await getProjectServices(project);
-const { title, summary, cover, format, client, identity } = project.data;
+const { title, cover, format, client, identity } = project.data;
 ---
 <article
   class="project-card"
   data-pillars={pillars.map((p) => p.id).join(' ')}
   data-specialties={specialties.map((s) => s.id).join(' ')}
   style={identity.accent ? `--project-accent: ${identity.accent}` : undefined}
+  data-reveal
 >
   <a href={`/projects/${project.id}/`} class="project-card__link">
-    {cover && <Image src={cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />}
-    <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
-    <h3>{title}</h3>
+    <span class="project-card__media">
+      {cover && <Image src={cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 50vw, 100vw" />}
+    </span>
+    <span class="project-card__text">
+      <span class="project-card__format">{FORMAT_LABELS[format]}{client && ` · ${client}`}</span>
+      <h3>{title}</h3>
+    </span>
   </a>
-  <p class="muted">{summary}</p>
   <ul class="tags" aria-label="Specialties">
     {specialties.map((s) => <li class="tag">{s.data.name}</li>)}
   </ul>
 </article>
-<style>
-  .project-card { border-top: 3px solid var(--project-accent, var(--color-border)); padding-top: var(--space-3); }
-  .project-card__link { text-decoration: none; display: block; }
-  .project-card__link img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
-</style>

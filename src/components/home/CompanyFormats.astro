@@ -3,23 +3,21 @@ import { getCompanyFormats, getSettings, mailto } from '../../lib/content';
 const formats = await getCompanyFormats();
 const { email, companies } = await getSettings();
 ---
-<section class="section companies" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
-  <div class="container">
-    <h2 id="companies-heading">{companies.heading}</h2>
-    {companies.intro && <p class="companies__intro">{companies.intro}</p>}
-    <ul class="grid companies__formats" role="list">
-      {formats.map((f) => (
-        <li>
-          <h3>{f.data.name}</h3>
-          {f.data.description && <p class="muted">{f.data.description}</p>}
-        </li>
-      ))}
-    </ul>
-    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="companies">{companies.cta}</a>
+<section class="companies" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
+  <div class="companies__panel">
+    <p class="label" data-reveal>{formats.length} formats</p>
+    <h2 id="companies-heading" data-reveal>{companies.heading}</h2>
+    <div class="companies__pitch" data-reveal>
+      {companies.intro && <p class="companies__intro">{companies.intro}</p>}
+      <a class="button button--yellow" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="companies">{companies.cta}</a>
+    </div>
   </div>
+  <ul class="companies__programme" role="list">
+    {formats.map((f, i) => (
+      <li data-reveal style={`--i: ${(i * 37) % 80}`}>
+        <h3>{f.data.name}</h3>
+        {f.data.description && <p>{f.data.description}</p>}
+      </li>
+    ))}
+  </ul>
 </section>
-<style>
-  .companies { background: var(--color-surface); }
-  .companies__intro { font-size: var(--text-lg); max-width: 38rem; }
-  .companies__formats { list-style: none; padding: 0; margin-block: var(--space-5); }
-</style>
