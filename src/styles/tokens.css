@@ -1,10 +1,9 @@
 /*
- * Design tokens. Every design variation restyles the site mainly by changing
- * these values; components should use tokens, not raw values.
- * Colours are placeholders until the drafted logo colours are added.
+ * Design tokens: direction 4, Gradient Wave.
+ * A white frame with the logo gradients as flowing fields with undulating edges.
  */
 :root {
-  /* undulate logo palette (docs/BRIEF.md). Variations map roles to these. */
+  /* undulate logo palette (docs/BRIEF.md). */
   --palette-yellow: #f2d833;
   --palette-red: #f24a33;
   --palette-mint: #33f5bc;
@@ -19,54 +18,52 @@
   --gradient-red: linear-gradient(135deg, #f24a33, #ff2191);
   --gradient-dusk: linear-gradient(135deg, #5f559d, #f2a0df);
 
-  /* Brand roles */
-  --color-brand: var(--palette-violet);
-  --color-brand-contrast: var(--palette-white);
-  --color-accent: var(--palette-mint);
-
-  /* Neutral frame */
-  --color-bg: #f7f5f2;
+  /* Roles: a white frame; the logo gradients are the fields */
+  --color-bg: var(--palette-white);
   --color-surface: #ffffff;
   --color-text: var(--palette-ink);
-  --color-text-muted: #5f5d66;
-  --color-border: #e2dfda;
+  --color-text-muted: #55574f;
+  --color-brand: var(--palette-ink);
+  --color-brand-contrast: var(--palette-white);
+  --color-accent: var(--palette-violet);
+  --color-border: color-mix(in oklab, var(--palette-ink) 16%, white);
+  --field-hero: radial-gradient(ellipse 95% 80% at 50% 38%, #008fa5 0%, #33f5bc 46%, #ffffff 100%);
+  --field-companies: linear-gradient(180deg, #f24a33, #ff2191);
+  --field-upcoming: linear-gradient(180deg, #5f559d 10%, #f2a0df 90%);
+  --field-closing: linear-gradient(180deg, #4c33f2 20%, #b893ff 85%);
+  /* The undulating edge: a wave used as a mask on the top and bottom of a field */
+  --wave-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 48' preserveAspectRatio='none'%3E%3Cpath d='M0 24C150 0 300 0 450 24S750 48 900 24 1125 0 1200 24V48H0Z'/%3E%3C/svg%3E");
+  --wave-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 48' preserveAspectRatio='none'%3E%3Cpath d='M0 24C150 48 300 48 450 24S750 0 900 24 1125 48 1200 24V0H0Z'/%3E%3C/svg%3E");
 
-  /* Type (self-hosted fonts only: place files in /public/fonts and add @font-face) */
-  --font-display: ui-sans-serif, system-ui, sans-serif;
-  --font-body: ui-sans-serif, system-ui, sans-serif;
-  --text-xs: 0.875rem; /* 14px: the smallest size design-check allows */
-  --text-sm: 0.9rem;
+  /* Type: self-hosted through @fontsource (imported in BaseLayout). */
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --text-xs: 0.875rem;
+  --text-sm: 0.875rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;
-  --text-xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
-  --text-hero: clamp(2.25rem, 1.5rem + 4vw, 4.5rem);
+  --text-xl: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
+  --text-hero: clamp(2.5rem, 1rem + 6vw, 6rem);
   --leading-tight: 1.1;
-  --leading-body: 1.55;
+  --leading-body: 1.5;
 
-  /* Space and shape */
+  /* Space (8pt grid) and shape */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
   --space-4: 1.5rem;
   --space-5: 2.5rem;
   --space-6: 4rem;
-  --space-7: 6rem;
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --content-width: 72rem;
-  --gutter: 32px; /* breathing room: 32px phone, 64px desktop (design skill) */
+  --space-7: 8rem;
+  --radius-sm: 12px;
+  --radius-md: 24px;
+  --radius-pill: 999px;
+  --content-width: 90rem;
+  --gutter: 32px;
+  --header-h: 6.5rem;
+  --section-air: 4rem;
 }
 
 @media (min-width: 60rem) {
-  :root { --gutter: 64px; }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #121114;
-    --color-surface: #1c1b20;
-    --color-text: #f1eff4;
-    --color-text-muted: #a9a6b2;
-    --color-border: #2e2c34;
-  }
+  :root { --gutter: 64px; --header-h: 9rem; --section-air: 8rem; }
 }

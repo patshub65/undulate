@@ -6,7 +6,8 @@ const projects = await getProjects();
 const pillars = await getPillars();
 ---
 <BaseLayout title="Projects" description="Series, concept events, festivals and company events by undulate.">
-  <section class="section container">
+  <section class="projects-index">
+    <div class="projects-index__head"><div class="container">
     <h1>Projects</h1>
     <nav class="filters" aria-label="Filter projects">
       <ul class="tags">
@@ -23,10 +24,13 @@ const pillars = await getPillars();
         </ul>
       ))}
     </nav>
-    <div class="grid" data-project-list>
+    </div></div>
+    <div class="container">
+    <div class="project-grid" data-project-list>
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
     <p class="muted" data-empty hidden>No projects with this specialty yet.</p>
+    </div>
   </section>
 </BaseLayout>
 
@@ -63,7 +67,3 @@ const pillars = await getPillars();
   addEventListener('popstate', () => apply(new URLSearchParams(location.search)));
   apply(new URLSearchParams(location.search));
 </script>
-<style>
-  .filters { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-  .filters__specialties { font-size: var(--text-sm); }
-</style>

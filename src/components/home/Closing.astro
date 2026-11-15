@@ -2,12 +2,10 @@
 import { getSettings, mailto } from '../../lib/content';
 const { email, closing } = await getSettings();
 ---
-<section class="section container closing">
-  {closing.heading && <h2>{closing.heading}</h2>}
-  {closing.text && <p class="muted">{closing.text}</p>}
-  <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
-</section>
-<style>
-  .closing { text-align: center; }
-  .closing p { max-width: 34rem; margin-inline: auto; }
-</style>
+<section class="closing"><div class="container closing__inner">
+  {closing.heading && <h2 data-reveal>{closing.heading}</h2>}
+  <div class="closing__foot" data-reveal>
+    {closing.text && <p>{closing.text}</p>}
+    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
+  </div>
+</div></section>

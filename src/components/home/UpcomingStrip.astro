@@ -11,13 +11,15 @@ const limit = upcomingCount ?? 4;
 const events = await getUpcomingEvents(limit + 4);
 ---
 {events.length > 0 && (
-  <section class="section container upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+  <section class="upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+    <div class="container">
     <h2 id="upcoming-heading">Coming up</h2>
-    <ul class="grid upcoming__list" role="list">
+    <ul class="flyers" role="list" data-reveal-stagger>
       {events.map((event, i) => (
-        <li><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly /></li>
+        <li data-reveal><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly /></li>
       ))}
     </ul>
+    </div>
   </section>
 )}
 <script>
@@ -33,6 +35,3 @@ const events = await getUpcomingEvents(limit + 4);
     section.hidden = shown === 0;
   });
 </script>
-<style>
-  .upcoming__list { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
-</style>

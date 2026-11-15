@@ -1,22 +1,32 @@
 ---
 import { Image } from 'astro:assets';
-import { getSettings, mailto } from '../../lib/content';
+import { getCompanyFormats, getProjects, getSettings, mailto } from '../../lib/content';
 const { email, hero } = await getSettings();
+// The roster: company event formats and the projects, interleaved, as names on the gradient field.
+const formats = (await getCompanyFormats()).map((f) => ({ name: f.data.name, href: '#companies' }));
+const projects = (await getProjects()).map((p) => ({ name: p.data.title, href: `/projects/${p.id}/` }));
+const roster = [];
+for (let i = 0; i < Math.max(formats.length, projects.length); i++) {
+  if (formats[i]) roster.push(formats[i]);
+  if (projects[i]) roster.push(projects[i]);
+}
 ---
 <section class="hero">
   {hero.image && (
-    <Image class="hero__image" src={hero.image} alt={hero.imageAlt ?? ''} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" />
+    <div class="hero__media">
+      <Image class="hero__image" src={hero.image} alt={hero.imageAlt ?? ''} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" />
+    </div>
   )}
   <div class="container hero__content">
-    <h1>{hero.headline}</h1>
-    {hero.subline && <p class="hero__subline">{hero.subline}</p>}
-    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+    <h1 data-reveal>{hero.headline}</h1>
+    <div class="hero__foot">
+      {hero.subline && <p class="hero__subline">{hero.subline}</p>}
+      <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+    </div>
   </div>
+  <nav class="container roster" aria-label="Formats and projects">
+    <ul role="list">
+      {roster.map((r) => <li><a href={r.href}>{r.name}</a></li>)}
+    </ul>
+  </nav>
 </section>
-<style>
-  .hero { position: relative; display: grid; min-height: min(85vh, 50rem); align-items: end; color: #fff; overflow: hidden; }
-  .hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgb(0 0 0 / 0.65)); }
-  .hero__content { position: relative; z-index: 1; padding-block: var(--space-6); }
-  .hero__subline { font-size: var(--text-lg); max-width: 38rem; }
-</style>
