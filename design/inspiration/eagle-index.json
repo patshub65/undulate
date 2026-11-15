@@ -17090,8 +17090,386 @@
         "tag_rationale": "\"Tagged Testimonials for the obvious quote-card content; Animation fits because the staggered, cropped-at-edge columns imply a continuous or scroll-triggered motion rather than a static grid.\"",
         "typography": "\"Grotesk sans-serif throughout: large (~48px) regular-weight headline with tight line-height stacked across three lines, small bold uppercase-style eyebrow label, body quote text in regular weight at readable ~16px, name set slightly larger/medium weight with muted gray subtext for role. Minimal size contrast within cards keeps focus on quote content; strong contrast between headline and card body type establishes hierarchy.\""
       }
+    },
+    "MWHUATGWIC1ZY": {
+      "name": "Murmure - Journal",
+      "url": "https://murmure.me/journal/",
+      "tags": [
+        "Slider",
+        "Gallery",
+        "Projects",
+        "Typography"
+      ],
+      "humanNote": null,
+      "palette": [
+        {
+          "rgb": [
+            22,
+            22,
+            22
+          ],
+          "ratio": 52
+        },
+        {
+          "rgb": [
+            238,
+            238,
+            234
+          ],
+          "ratio": 21
+        },
+        {
+          "rgb": [
+            247,
+            176,
+            36
+          ],
+          "ratio": 8
+        },
+        {
+          "rgb": [
+            25,
+            65,
+            106
+          ],
+          "ratio": 6
+        }
+      ],
+      "size": {
+        "width": 1440,
+        "height": 794
+      },
+      "ai": {
+        "archetypes": [],
+        "borrow": "Take the oversized year numeral as a dividing graphic device and the pill-shaped nav with active-state pill; leave the giant overlapping numerals since they'd eat the whole viewport on a 390px screen. On mobile the numeral would need to shrink drastically or move behind a single-column stacked card list, nav collapses to a hamburger or simplified horizontal scroll strip, and the zoom-slider control likely gets dropped in favor of swipe/tap.",
+        "color_imagery": "Base is near-black with a huge off-white display numeral as the dominant color event; thumbnail cards carry their own saturated palettes (cream, blue, mustard yellow, muted street-art photo) creating contrast blocks against the dark field. Images are full-bleed within their card bounds, no rounding, photographic crops are cropped tight (portrait photo, product shot) while others are flat color fields with centered logotype/wordmark treatments. No duotone or illustration filters applied, just raw photography plus flat brand colors.",
+        "description": "Full-bleed dark homepage/journal hero with a huge oversized year numeral \"2023\" set as a background typographic element, overlapped by a horizontal row of project thumbnail cards of varying width. A slim top navigation bar with pill-shaped menu items (Index, Murmure, Journal, Shop) sits centered, with a logo mark top-left and a circular avatar/icon top-right. The thumbnail cards sit on a loose baseline, overlapping the numeral strokes, each showing a different project (street art photo, editorial wordmark on cream diamond, product shot with a zoom slider control, portfolio typographic card, anniversary logo on yellow). Spacing between cards is tight with slight vertical offset, creating a staggered filmstrip rhythm rather than a strict grid.",
+        "industry": "digital agency",
+        "interaction": "Likely horizontal scroll or drag slider through project cards; visible zoom slider control (- / dot / +) on one card suggests a zoom/pan interaction on that image.",
+        "layout": "Asymmetric overlay layout: giant numeral centered as background type, thumbnail row floats on top in a loose horizontal filmstrip with uneven card widths and heights, slight vertical stagger instead of aligned grid. Top nav is a separate centered strip above the composition. No visible margins/gutter system, cards nearly fill the width and bleed off-screen at left and right edges.",
+        "mood": "Confident, editorial, studio-portfolio energy with a raw dark backdrop.",
+        "note": "- Full-bleed dark background with oversized display-weight year numeral used as a graphic backdrop, not just text\n- Horizontal filmstrip of overlapping project cards, uneven widths/heights, slight vertical stagger instead of grid alignment\n- Pill-style centered nav with active-state highlight, logo mark left, circular icon right\n- Mixed card content: photography, flat-color brand cards, product shot with visible zoom slider UI\n- High contrast between near-black field and saturated card colors (cream, blue, mustard)\n- Mobile adaptation would need single-column stacked cards, shrunk numeral, simplified nav",
+        "patterns": [
+          "card carousel/filmstrip",
+          "oversized background typography",
+          "pill navigation",
+          "overlapping elements",
+          "zoom slider control",
+          "sticky/centered top nav"
+        ],
+        "section": "hero / journal landing",
+        "style": [
+          "editorial"
+        ],
+        "tag_rationale": "Tagged Slider/Gallery/Projects/Typography because the row of varied project cards functions as a horizontal gallery slider, and the dominant design move is the oversized \"2023\" display typography anchoring the whole composition.",
+        "typography": "Dominant oversized serif-leaning display numeral with high stroke contrast (thick verticals, thin joins) spans most of viewport height; nav uses small uppercase sans-serif in pill buttons; card-internal type mixes a bold slab wordmark (HÉLICE HÉLAS), condensed uppercase sans (MATTHIEU MARTIN), and a script-style logotype (20 ans), showing deliberate pairing of multiple type personalities across the portfolio pieces shown."
+      }
+    },
+    "MWHTQYFH75AL8": {
+      "name": "DRĄSA — UX Research, Product Design  Coaching Studio",
+      "url": "https://drasa.uk/?ref=minimal.gallery",
+      "tags": [
+        "About section",
+        "Storytelling",
+        "Navigation"
+      ],
+      "humanNote": null,
+      "palette": [
+        {
+          "rgb": [
+            241,
+            239,
+            238
+          ],
+          "ratio": 87
+        },
+        {
+          "rgb": [
+            51,
+            53,
+            49
+          ],
+          "ratio": 4.77
+        },
+        {
+          "rgb": [
+            156,
+            175,
+            169
+          ],
+          "ratio": 3.35
+        },
+        {
+          "rgb": [
+            197,
+            195,
+            192
+          ],
+          "ratio": 1.25
+        }
+      ],
+      "size": {
+        "width": 1440,
+        "height": 794
+      },
+      "ai": {
+        "archetypes": [],
+        "borrow": "A small shop could borrow the split layout (portrait left, intro copy right) and the floating pill navigation for an about or founder-story page. Keep the generous whitespace and oversized name treatment to add personality to an owner bio. On a 390px screen this must stack: full-width portrait image on top, eyebrow tag, name, paragraph, link below, and the floating nav collapses to a simple bottom bar or hides on scroll — the vertical side tab would need to be dropped or turned into a small badge, as it has no room at that width.",
+        "color_imagery": "Warm off-white/cream background throughout, with a desaturated sage-grey backdrop behind the portrait photo giving it a studio-shoot feel. Single pink accent dot and pink arrow icon are the only saturated color notes, used to mark the eyebrow tag and the CTA link. Portrait image is full-bleed within its rounded container, candid and naturally lit, not cropped tightly to the face, giving a personable rather than corporate feel. Black is reserved for headline text, the floating nav pill, and the vertical side tab, creating strong contrast against the cream.",
+        "description": "A two-column hero/about section pairs a large rounded-corner portrait photo on the left with a right-aligned text block introducing a named founder. An eyebrow label with a pink dot sits above a very large serif-less display name set across two lines, followed by a short descriptive paragraph and an underlined text link with an arrow icon. A pill-shaped floating navigation bar overlaps the bottom edge of the photo, and a vertical black tab labeled with a monogram and a secondary label sits fixed to the right edge of the viewport.",
+        "industry": "coaching / design studio",
+        "interaction": "Floating pill nav likely highlights active state (Home shown filled black); vertical side tab is likely a fixed/sticky element revealing a secondary panel or page (e.g. \"Honors\") on click or hover; arrow-icon link suggests a hover underline or slide animation.",
+        "layout": "Two-column split roughly 40/60, image block anchored left with generous rounded corners, text block right-aligned to a narrower measure with vertical centering. Content stacks tag, headline, paragraph, CTA in a single vertical rhythm with consistent spacing. A floating rounded navbar overlaps the lower boundary between image and background, breaking the strict grid with a layered z-index element. A vertical fixed tab on the far right edge sits outside the main grid, anchored to viewport edge rather than content column.",
+        "mood": "calm, personable, confident minimal",
+        "note": "- Split layout: large rounded-corner portrait photo left, intro text block right\n- Oversized two-line display name as headline, sans-serif, tight line-height, black on cream\n- Small pill-shaped eyebrow tag with colored dot marks a label above headline\n- Floating pill navigation overlaps bottom edge of photo, active item filled black\n- Fixed vertical tab on right viewport edge, black background, rotated text\n- Single pink accent used sparingly for dot and CTA arrow against mostly black/cream palette",
+        "patterns": [
+          "split hero",
+          "overlapping floating nav",
+          "pill navigation",
+          "fixed vertical side tab",
+          "eyebrow label",
+          "underlined CTA link with icon",
+          "rounded-corner image container"
+        ],
+        "section": "about / founder intro hero",
+        "style": [
+          "minimal"
+        ],
+        "tag_rationale": "Tagged About section and Storytelling fit the founder-focused portrait-plus-bio layout; Navigation applies to the distinctive floating pill nav and fixed vertical side tab, both unconventional placements worth noting as patterns.",
+        "typography": "Large-scale sans-serif grotesk for the name, bold weight, tight leading across two lines, mixed case. Body paragraph uses a smaller regular-weight sans at a readable measure, modest line-height. Eyebrow label is small caps with wide letter-spacing. CTA link text is medium weight with an underline and paired arrow icon. Vertical side tab uses small caps/spaced type rotated 90 degrees."
+      }
+    },
+    "MWHTHHLLSWLHJ": {
+      "name": "Introduction  Impact Report 2025 — Driftime",
+      "url": "https://2025.driftime.com/",
+      "tags": [
+        "Projects",
+        "List",
+        "Typography",
+        "Tags"
+      ],
+      "humanNote": null,
+      "palette": [
+        {
+          "rgb": [
+            218,
+            218,
+            211
+          ],
+          "ratio": 85
+        },
+        {
+          "rgb": [
+            48,
+            52,
+            57
+          ],
+          "ratio": 5
+        },
+        {
+          "rgb": [
+            141,
+            141,
+            140
+          ],
+          "ratio": 4.37
+        },
+        {
+          "rgb": [
+            173,
+            174,
+            171
+          ],
+          "ratio": 2.47
+        }
+      ],
+      "size": {
+        "width": 1405,
+        "height": 669
+      },
+      "ai": {
+        "section": "report section list / editorial index",
+        "industry": "digital agency impact report",
+        "archetypes": [],
+        "description": "A repeating horizontal row pattern for a long-form report page, each row divided into four columns: a square cover-style thumbnail with bold stacked poster type, a headline block with section number tag and a short \"themes covered\" list, and two columns of body copy. Thin black rule lines run full-width above each row, separating sections like chapter dividers. A circular arrow button sits bottom-right of each row, implying navigation to the full section. The thumbnails act like editorial covers with oversized condensed type cropped tightly against a gradient background.",
+        "layout": "Four-column grid per row: fixed-width square image, headline column, two equal-width text columns; full-bleed horizontal rules separate rows top and bottom; generous whitespace between columns; left-aligned text throughout; vertical rhythm set by repeating row height.",
+        "typography": "Bold grotesk display type for thumbnail cover text (huge, tight-leading, stacked words) and headline (semi-bold sans, large size); small caps/mono-style tags (SECTION 02, pill-shaped year/report tags) in tiny tracked type; serif body copy for the two text columns, giving contrast between sans display and serif reading text; \"Themes Covered\" list set in small bold sans.",
+        "color_imagery": "Flat warm grey/beige page background; thumbnails use duotone gradients (dark navy-to-grey in first, pink-to-grey in second) with white type overlay; mostly monochrome palette otherwise, black rules and black outline button; pill tags have thin black outline, white fill.",
+        "interaction": "Circular arrow button suggests click-through or hover state per section; likely scroll-triggered row reveals given report-style long scroll format.",
+        "patterns": [
+          "editorial index row",
+          "thumbnail-as-cover",
+          "pill tag",
+          "chapter divider rule",
+          "circular arrow CTA",
+          "two-column body copy",
+          "themes list"
+        ],
+        "style": [
+          "editorial",
+          "swiss",
+          "minimal"
+        ],
+        "mood": "serious, structured, reportorial",
+        "borrow": "For a small shop, borrow the repeating row structure to present a few \"chapters\" (e.g. story, process, values) with a small square image, short headline and two lines of copy instead of long serif paragraphs. On a 390px screen, collapse each row to a stacked single column: thumbnail full-width on top, headline below, then one column of shortened body text; keep the thin rule dividers to preserve the chaptered feel without needing four columns.",
+        "note": "- Repeating 4-column row layout: square cover thumbnail, headline, two body-text columns\n- Thumbnails styled like editorial covers with oversized stacked grotesk type on duotone gradient\n- Thin black horizontal rules act as chapter dividers between rows\n- Pairing of bold sans display type with serif body copy for contrast\n- Small pill-shaped tags and circular outline arrow button as recurring micro-patterns\n- Monochrome beige background keeps focus on type and duotone imagery",
+        "tag_rationale": "Saved for its clear list/index layout and strong typographic hierarchy (tags), and the repeated \"Section\" blocks make it function as a tagged project list despite being a report."
+      }
+    },
+    "MWHTG52J9FQWQ": {
+      "name": "Introduction  Impact Report 2025 — Driftime",
+      "url": "https://2025.driftime.com/",
+      "tags": [
+        "About section",
+        "Mission statement",
+        "Typography",
+        "Motion",
+        "Scroll animation"
+      ],
+      "humanNote": null,
+      "palette": [
+        {
+          "rgb": [
+            229,
+            229,
+            226
+          ],
+          "ratio": 71
+        },
+        {
+          "rgb": [
+            9,
+            9,
+            9
+          ],
+          "ratio": 23
+        },
+        {
+          "rgb": [
+            141,
+            142,
+            139
+          ],
+          "ratio": 2.31
+        },
+        {
+          "rgb": [
+            173,
+            173,
+            171
+          ],
+          "ratio": 2.2
+        }
+      ],
+      "size": {
+        "width": 1440,
+        "height": 794
+      },
+      "ai": {
+        "description": "A full-bleed background of oversized black slab/grotesk letterforms fills the viewport edge-to-edge, so large only fragments of words are legible at once. Centered on top is a folded paper card (illustrated with a subtle crease and curled bottom edge) containing a small circular portrait photo and a block of justified body copy. A minimal top bar holds two pill-shaped icon buttons (menu/list icon and muted speaker icon) on the left, a two-line instruction label upper-left-center, and a right-aligned \"Introduction\" label with pagination dots.",
+        "section": "about / mission statement intro section",
+        "tag_rationale": "Tagged About section, mission statement, typography, motion, scroll animation: the giant background type and foreground card are clearly built to animate on scroll/entry, the whole section is a typographic statement piece, and the layered paper card over cropped huge letters is a strong About/mission-reveal pattern.",
+        "layout": "Centered single-column composition over a full-bleed typographic backdrop; the background headline type is cropped by the viewport on all sides creating an immersive oversized-type layer, while the foreground card sits dead-center with generous negative space around it. Top bar is split into three zones: left icon controls, center-left label, right section label with dot pagination, all aligned to a shared baseline.",
+        "typography": "Background headline uses an extra-bold condensed/slab grotesk at a massive scale (letters crop well beyond cap-height of viewport), all-caps, tight tracking. Foreground card copy is a smaller serif/humanist serif in regular weight, lowercase sentence case, set in a narrow measure with generous line-height for readability against the quiet backdrop. UI labels use a small sans-serif, uppercase, wide letter-spacing.",
+        "color_imagery": "Muted sage/putty green-grey background with solid black oversized type for maximum contrast; the foreground card is off-white/cream paper with a soft fold illustration and subtle shadow, keeping the palette restrained to near-monochrome plus the warm skin tones of the small circular portrait photo, which is the only color accent.",
+        "interaction": "Scroll-driven animation implied: background letters likely shift/reveal as user scrolls, paper card appears to unfold or fade in, pagination dots suggest a stepped/slide-based intro sequence with sound toggle for ambient audio.",
+        "patterns": [
+          "full-bleed oversized typography background",
+          "overlapping card-on-type layout",
+          "folded paper card illustration",
+          "circular avatar portrait",
+          "pill icon buttons",
+          "dot pagination indicator",
+          "sticky minimal top bar",
+          "scroll-triggered reveal"
+        ],
+        "style": [
+          "editorial",
+          "swiss",
+          "minimal"
+        ],
+        "mood": "quiet confidence, editorial, contemplative",
+        "borrow": "A small shop site could reuse the overlapping card-on-oversized-type idea for a founder's note or brand story, but must drastically simplify: drop the giant cropped headline (too abstract/loud for a 390px phone where it would just read as an unreadable texture) and instead keep a single bold word or short phrase as background, scaled down, with the paper-card quote stacked full-width below it rather than overlapping. Keep the circular portrait + serif quote pairing, the muted neutral palette, and the minimal icon-only top bar, but replace pagination dots with a simple progress bar or omit them, and stack the two top-bar label blocks vertically on mobile to avoid crowding.",
+        "industry": "publishing / media report",
+        "archetypes": [],
+        "note": "- Full-bleed, cropped oversized slab/grotesk type fills the entire background as texture, not for reading.\n- Centered folded-paper card overlays the type, holding a circular portrait and serif body copy in sentence case.\n- Minimal top bar: pill icon buttons left, small uppercase label center-left, section label + dot pagination right.\n- Near-monochrome palette: sage-grey backdrop, black type, cream card, single warm photo accent.\n- Mobile adaptation: drop the giant headline texture, stack portrait/quote full-width, simplify top bar to single row of icons.\n- Implies scroll-triggered reveal and stepped intro sequence with ambient sound toggle."
+      }
+    },
+    "MWHTFA93ULGEA": {
+      "name": "Introduction  Impact Report 2025 — Driftime",
+      "url": "https://2025.driftime.com/",
+      "tags": [
+        "Hero",
+        "Report",
+        "Landing Page",
+        "Typography"
+      ],
+      "humanNote": null,
+      "palette": [
+        {
+          "rgb": [
+            226,
+            28,
+            56
+          ],
+          "ratio": 31
+        },
+        {
+          "rgb": [
+            221,
+            211,
+            205
+          ],
+          "ratio": 26
+        },
+        {
+          "rgb": [
+            40,
+            34,
+            35
+          ],
+          "ratio": 12
+        },
+        {
+          "rgb": [
+            210,
+            136,
+            138
+          ],
+          "ratio": 10
+        }
+      ],
+      "size": {
+        "width": 1440,
+        "height": 794
+      },
+      "ai": {
+        "description": "Full-bleed hero screen with a vertical gradient background sliding from black at top through saturated red to pale grey at bottom. Oversized condensed sans headline \"IMPACT REPORT\" stacked on two lines fills nearly the full width of the viewport, broken in the middle by two overlapping pill/ellipse outlines containing \"20\" and \"25\". Top bar holds a menu toggle and a muted sound-icon pill on the left with small instructional copy, and a text label \"Introduction\" plus a 5-dot progress/pagination indicator on the right. A small bold wordmark \"DRIFTIME\" sits centered at the bottom.",
+        "section": "hero",
+        "tag_rationale": "Tagged Hero/Report/Landing Page/Typography because it is an opening full-screen slide for an annual report microsite built almost entirely from giant display type and a single gradient background, with no imagery.",
+        "layout": "Single centered column, symmetric; headline stacked in two huge lines with a center-aligned graphic element (the overlapping ellipses) interrupting the vertical rhythm between them. Utility UI is pinned to the four corners/edges (top-left controls, top-right nav indicator, bottom-center logo), leaving the middle of the frame entirely to type.",
+        "typography": "Heavy condensed grotesk in all-caps for the headline, letterforms nearly touching the frame edges for maximum scale; numerals inside the ellipses use the same condensed weight at a much smaller size. Small UI labels (top corners) use a light-weight sans at a tiny scale for contrast against the display type. Logotype at bottom is a tight bold sans wordmark with a registered trademark mark.",
+        "color_imagery": "No photographic imagery; the entire visual interest comes from a smooth black-to-red-to-off-white vertical gradient acting as atmosphere, with off-white/cream type sitting on top for contrast. Ellipse outlines are thin stroke shapes, not filled, letting the gradient show through. Bottom logo flips to black for contrast against the lightened gradient base.",
+        "interaction": "Likely scroll- or time-driven slide progression (dot indicator suggests a slideshow/scrollytelling structure), with an audio toggle implying ambient sound synced to scroll or animation.",
+        "patterns": [
+          "full-bleed gradient background",
+          "oversized display headline",
+          "overlapping ellipse badges",
+          "pagination dots",
+          "sticky corner utility icons",
+          "centered logotype footer"
+        ],
+        "style": [
+          "brutalist"
+        ],
+        "mood": "Bold, declarative, cinematic, slightly aggressive confidence of a corporate year-in-review.",
+        "borrow": "A small shop site could borrow the single-gradient-background-as-hero trick to get drama without any photography, and the oversized type treatment for a one-word brand statement. On a 390px phone the headline would need to drop to maybe 2-3 words per line and shrink dramatically, the ellipse badges would likely stack or shrink below the two text lines, and the corner UI (sound toggle, nav dots) would move to a single thin top bar to avoid clutter.",
+        "industry": "corporate reporting / agency",
+        "archetypes": [],
+        "note": "- Full-bleed vertical gradient (black → red → cream) as the only background element, no photography\n- Oversized condensed all-caps headline spans almost the full viewport width, split across two lines\n- Thin ellipse/pill outlines overlap mid-headline to hold small numerals, breaking the grid intentionally\n- Tiny utility labels and icon pills pinned to top corners; dot pagination signals slide-based navigation\n- Centered bold wordmark anchors the bottom; color of logo flips for contrast against the lightening gradient\n- Mobile adaptation: shrink headline to 2–3 lines, collapse corner UI into one slim top bar, stack or shrink ellipse badges"
+      }
     }
   },
-  "updated": "2026-10-15T13:25:38.895Z",
+  "updated": "2026-11-15T13:11:01.522Z",
   "model": "claude-sonnet-5"
 }

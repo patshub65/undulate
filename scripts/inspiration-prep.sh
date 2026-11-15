@@ -7,7 +7,7 @@
 # For every <name>.png|jpg in <folder> writes <folder>/prepared/<name>-01.webp, -02.webp, ...
 # Desktop shots (wider than 1000px) become 1000px wide, slices 1150px tall (about 1.15 MP).
 # Phone shots become 600px wide, slices 1500px tall. Slices overlap by 96px so nothing is cut in half unseen.
-# Needs ffmpeg and cwebp.
+# Needs ffmpeg; uses cwebp when installed, else ffmpeg's libwebp encoder.
 set -euo pipefail
 DIR="${1:?folder}"; OUT="$DIR/prepared"; OVERLAP=96
 mkdir -p "$OUT"
@@ -24,7 +24,9 @@ for f in "$DIR"/*.png "$DIR"/*.jpg "$DIR"/*.jpeg; do
     i=$((i + 1)); h=$SLICE
     [ $((y + h)) -gt "$TH" ] && h=$((TH - y))
     ffmpeg -v error -y -i "$f" -vf "scale=${TW}:${TH}:flags=lanczos,crop=${TW}:${h}:0:${y}" "$TMP/s.png"
-    cwebp -quiet -q 82 "$TMP/s.png" -o "$OUT/$(printf '%s-%02d.webp' "$name" "$i")"
+    dest="$OUT/$(printf '%s-%02d.webp' "$name" "$i")"
+    if command -v cwebp >/dev/null; then cwebp -quiet -q 82 "$TMP/s.png" -o "$dest"
+    else ffmpeg -v error -y -i "$TMP/s.png" -c:v libwebp -quality 82 "$dest"; fi
     [ $((y + h)) -ge "$TH" ] && break
     y=$((y + SLICE - OVERLAP))
   done
