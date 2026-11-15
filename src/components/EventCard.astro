@@ -1,7 +1,7 @@
 ---
 /**
- * A single event: its flyer as a button that opens a native popover with
- * the details and optional link. Events never have pages of their own.
+ * A single event: its uncropped flyer as a button that opens a native popover.
+ * The date is stamped in a solid block in the flyer's corner.
  */
 import { Image } from 'astro:assets';
 import { formatDate, isoDate, type EventItem } from '../lib/content';
@@ -9,33 +9,33 @@ import { formatDate, isoDate, type EventItem } from '../lib/content';
 interface Props {
   event: Omit<EventItem, 'project'> & { project?: EventItem['project'] };
   id: string;
-  /** Show the project name (used in the cross-project upcoming strip). */
   showProject?: boolean;
-  /** Hide on the client once the date passes (for the upcoming strip). */
   upcomingOnly?: boolean;
 }
 const { event, id, showProject = false, upcomingOnly = false } = Astro.props;
 const popoverId = `event-${id}`;
 ---
-<article class="event-card" data-event-date={upcomingOnly ? isoDate(event.date) : undefined}>
-  <button class="event-card__trigger" popovertarget={popoverId} data-track="Event Open" data-track-label={event.name}>
-    {event.flyer ? (
-      <Image src={event.flyer} alt={`Flyer: ${event.name}`} widths={[320, 540, 800]} sizes="(min-width: 60rem) 25vw, 50vw" />
-    ) : (
-      <span class="event-card__noflyer">{event.name}</span>
-    )}
-    <span class="event-card__meta">
-      <time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
-      <span class="event-card__name">{event.name}</span>
-      {showProject && event.project && <span class="muted">{event.project.title}</span>}
+<article class="ev" data-event-date={upcomingOnly ? isoDate(event.date) : undefined} style={event.project?.accent ? `--project-accent: ${event.project.accent}` : undefined}>
+  <button class="ev__trigger" popovertarget={popoverId} data-track="Event Open" data-track-label={event.name}>
+    <span class="ev__art">
+      {event.flyer ? (
+        <Image src={event.flyer} alt={`Flyer: ${event.name}`} widths={[320, 540, 800]} sizes="(min-width: 60rem) 25vw, 100vw" />
+      ) : (
+        <span class="ev__noflyer"></span>
+      )}
+      <time class="ev__stamp label" datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
+    </span>
+    <span class="ev__meta">
+      <span class="ev__name">{event.name}</span>
+      {(event.venue || (showProject && event.project)) && <span class="ev__where">{[event.venue, showProject && event.project?.title].filter(Boolean).join(' · ')}</span>}
     </span>
   </button>
 
-  <div id={popoverId} popover class="event-popover">
-    <button class="event-popover__close" popovertarget={popoverId} popovertargetaction="hide" aria-label="Close">×</button>
-    <p class="eyebrow"><time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>{event.venue && ` · ${event.venue}`}</p>
+  <div id={popoverId} popover class="ev-pop">
+    <button class="ev-pop__close label" popovertarget={popoverId} popovertargetaction="hide">Close</button>
+    <p class="label"><time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>{event.venue && ` · ${event.venue}`}</p>
     <h3>{event.name}</h3>
-    {event.details && <p class="event-popover__details">{event.details}</p>}
+    {event.details && <p class="ev-pop__details">{event.details}</p>}
     {showProject && event.project && (
       <p><a href={`/projects/${event.project.id}/`}>More from {event.project.title}</a></p>
     )}
@@ -46,18 +46,24 @@ const popoverId = `event-${id}`;
 </article>
 
 <style>
-  .event-card__trigger { all: unset; cursor: pointer; display: block; width: 100%; }
-  .event-card__trigger:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
-  .event-card__trigger img, .event-card__noflyer { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius-sm); }
-  .event-card__noflyer { display: grid; place-items: center; background: var(--color-surface); border: 1px solid var(--color-border); }
-  .event-card__meta { display: grid; gap: 0.1rem; padding-top: var(--space-2); font-size: var(--text-sm); }
-  .event-card__name { font-weight: 600; }
-  .event-popover {
-    max-width: min(28rem, 100% - 2 * var(--gutter));
-    padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md);
-    background: var(--color-surface); color: var(--color-text);
+  .ev { height: 100%; }
+  .ev__trigger { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-rows: auto 1fr; width: 100%; height: 100%; transition: background-color 500ms var(--ease-paper); }
+  .ev__trigger:hover { background: var(--palette-yellow); transition-duration: 120ms; }
+  .ev__trigger:focus-visible { outline: 3px solid var(--palette-violet); outline-offset: -3px; }
+  .ev__art { position: relative; display: block; border-bottom: var(--line); }
+  .ev__art img { width: 100%; height: auto; }
+  .ev__noflyer { display: block; aspect-ratio: 4 / 5; background: var(--project-accent, var(--palette-sand)); }
+  .ev__stamp { position: absolute; top: 0; left: 0; padding: 0.5rem 1rem 0.5rem var(--gutter); background: var(--palette-yellow); border-right: var(--line); border-bottom: var(--line); font-weight: 700; }
+  .ev__meta { display: grid; align-content: start; gap: var(--space-1); padding: var(--space-3) var(--gutter) var(--space-4); }
+  .ev__name { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.5rem; }
+  @media (min-width: 60rem) {
+    .ev__stamp { padding-left: 1rem; }
+    .ev__meta { padding-inline: var(--pad); }
   }
-  .event-popover::backdrop { background: rgb(0 0 0 / 0.5); }
-  .event-popover__close { position: absolute; top: var(--space-2); right: var(--space-2); background: none; border: 0; font-size: 1.5rem; cursor: pointer; color: inherit; }
-  .event-popover__details { white-space: pre-line; }
+
+  .ev-pop { width: min(30rem, 100% - 2 * var(--gutter)); padding: var(--space-5); border: var(--line); background: var(--color-surface); color: var(--color-text); }
+  .ev-pop::backdrop { background: rgb(25 26 24 / 0.7); }
+  .ev-pop h3 { font-size: 1.5rem; line-height: 2rem; margin: var(--space-3) 0; }
+  .ev-pop__close { all: unset; cursor: pointer; float: right; font-family: var(--font-display); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: underline; }
+  .ev-pop__details { white-space: pre-line; }
 </style>

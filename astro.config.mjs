@@ -10,6 +10,7 @@ import keystatic from '@keystatic/astro';
 export default defineConfig({
   site: process.env.SITE_URL || 'https://undulate.example',
   output: 'static',
-  adapter: netlify(),
+  // Edge Functions emulation fails on Patrick's Mac (round 1), so dev keeps only image emulation.
+  adapter: netlify({ devFeatures: { images: true, environmentVariables: false, edgeFunctions: false } }),
   integrations: [react(), markdoc(), keystatic()],
 });

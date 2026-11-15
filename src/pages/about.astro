@@ -1,24 +1,178 @@
 ---
 import { Image } from 'astro:assets';
-import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Prose from '../components/Prose.astro';
-import { getSettings, mailto } from '../lib/content';
-const about = await getEntry('pages', 'about');
-if (!about) throw new Error('Missing src/content/pages/about.mdoc');
+import { getAbout, getSettings, mailto } from '../lib/content';
+const about = await getAbout();
 const { email } = await getSettings();
+const { scenes, process, series, network, contact } = about;
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
-<BaseLayout title={about.data.title ?? 'About'}>
-  <section class="section container about">
-    {about.data.portrait && <Image src={about.data.portrait} alt={about.data.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
-    <div>
-      <h1>{about.data.title ?? 'About'}</h1>
-      <Prose entry={about} />
-      <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">Get in touch</a>
+<BaseLayout title={about.title ?? 'About'} description={about.lead}>
+  <section class="about-head">
+    {about.portrait && (
+      <div class="about-head__portrait">
+        <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[500, 900, 1400]} sizes="(min-width: 60rem) 34vw, 100vw" loading="eager" />
+      </div>
+    )}
+    <div class="about-head__lead cell cell--r">
+      <h1 class="label">{about.title ?? 'About'}</h1>
+      {about.lead && <p>{about.lead}</p>}
     </div>
+    {about.draftNote && <p class="about-head__draft cell cell--r">{about.draftNote}</p>}
+  </section>
+
+  <section class="story">
+    <p class="label story__bar cell cell--l">Story</p>
+    <div class="cell cell--r"><Prose entry={about.entry} /></div>
+  </section>
+
+  {scenes && scenes.items.length > 0 && (
+    <section class="block" aria-labelledby="scenes-heading">
+      <div class="block__head cell cell--l cell--r">
+        <p class="label">{scenes.items.length} scenes</p>
+        {scenes.heading && <h2 id="scenes-heading">{scenes.heading}</h2>}
+        {scenes.intro && <p class="block__intro">{scenes.intro}</p>}
+      </div>
+      <dl class="scenes">
+        {scenes.items.map((s) => (
+          <div class="cell"><dt>{s.name}</dt>{s.text && <dd>{s.text}</dd>}</div>
+        ))}
+      </dl>
+    </section>
+  )}
+
+  {process && process.steps.length > 0 && (
+    <section class="block block--violet" aria-labelledby="process-heading">
+      <div class="block__head cell cell--l cell--r">
+        <p class="label">{process.steps.length} steps</p>
+        {process.heading && <h2 id="process-heading">{process.heading}</h2>}
+        {process.intro && <p class="block__intro">{process.intro}</p>}
+      </div>
+      <ol class="steps">
+        {process.steps.map((s, i) => (
+          <li>
+            <span class="label cell cell--l">{pad(i + 1)}</span>
+            <h3 class="cell">{s.title}</h3>
+            <p class="cell cell--r">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  {about.series.length > 0 && (
+    <section class="block" aria-labelledby="series-heading">
+      <div class="block__head cell cell--l cell--r">
+        <p class="label">{about.series.length} series</p>
+        {series?.heading && <h2 id="series-heading">{series.heading}</h2>}
+        {series?.intro && <p class="block__intro">{series.intro}</p>}
+      </div>
+      <ul class="series">
+        {about.series.map((p) => (
+          <li style={p.data.identity.accent ? `--project-accent: ${p.data.identity.accent}` : undefined}>
+            <a href={`/projects/${p.id}/`}>
+              <span class="series__swatch"></span>
+              <span class="series__body cell">
+                <span class="series__name">{p.data.title}</span>
+                <span>{p.data.summary}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {network && (network.intro || network.people.length > 0) && (
+    <section class="block" aria-labelledby="network-heading">
+      <div class="block__head cell cell--l cell--r">
+        <p class="label">{network.people.length} names</p>
+        {network.heading && <h2 id="network-heading">{network.heading}</h2>}
+        {network.intro && <p class="block__intro">{network.intro}</p>}
+      </div>
+      <ul class="people">
+        {network.people.map((p) => (
+          <li class="cell"><span class="people__name">{p.name}</span>{p.note && <span>{p.note}</span>}</li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="contact">
+    <a class="contact__band fill cell cell--l cell--r" href={mailto(email)} data-track="Email Click" data-track-location="about">
+      {contact?.heading && <h2>{contact.heading}</h2>}
+      <span class="contact__foot">
+        {contact?.text && <span>{contact.text}</span>}
+        <span class="contact__mail">{email}</span>
+      </span>
+    </a>
   </section>
 </BaseLayout>
 <style>
-  .about { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
-  .about img { border-radius: var(--radius-sm); }
+  .about-head { display: grid; border-top: var(--line); border-bottom: var(--line); }
+  .about-head__portrait img { width: 100%; height: 22rem; object-fit: cover; object-position: 50% 25%; }
+  .about-head__lead { border-top: var(--line); }
+  .about-head__lead p { font-family: var(--font-display); font-weight: 700; font-size: var(--d-md); line-height: 1.2; margin: var(--space-4) 0 0; }
+  .about-head__draft { margin: 0; background: var(--palette-yellow); border-top: var(--line); }
+  .story { display: grid; }
+  .story__bar { border-bottom: var(--line); padding-block: 0.75rem; font-weight: 700; }
+  .story > div { padding-block: var(--space-5) var(--space-6); }
+  .block { border-top: var(--line); border-bottom: var(--line); margin-bottom: var(--space-6); }
+  .block__head { padding-block: var(--space-5); }
+  .block h2 { font-size: var(--d-md); margin: var(--space-3) 0; }
+  .block__intro { font-size: 1.25rem; line-height: 2rem; max-width: 36rem; margin: 0; }
+  .block--violet { background: var(--palette-violet); color: #fff; --line: 1px solid #fff; border-color: var(--palette-ink); }
+  .scenes > div, .people li { border-top: var(--line); }
+  .scenes dt, .people__name { font-family: var(--font-display); font-weight: 700; font-size: var(--d-sm); line-height: 1.25; margin-bottom: var(--space-2); }
+  .people li { display: grid; }
+  .steps li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); border-top: var(--line); }
+  .steps .label { padding-right: 0; }
+  .steps h3 { font-size: var(--d-sm); line-height: 1.25; padding-left: 0; padding-bottom: 0; }
+  .steps p { grid-column: 2; margin: 0; padding-left: 0; padding-top: var(--space-2); }
+  .series li { border-top: var(--line); }
+  .series a { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); text-decoration: none; transition: background-color 500ms var(--ease-paper); }
+  .series a:hover { background: var(--palette-yellow); transition-duration: 120ms; }
+  .series__swatch { background: var(--grain), var(--project-accent, var(--palette-sand)); background-blend-mode: soft-light, normal; border-right: var(--line); }
+  .series__body { display: grid; gap: var(--space-2); padding-left: var(--space-4); }
+  .series__name { font-family: var(--font-display); font-weight: 700; font-size: var(--d-sm); line-height: 1.25; }
+  .contact { border-top: var(--line); }
+  .contact__band { padding-block: var(--space-6); gap: var(--space-6); }
+  .contact h2 { font-size: clamp(2rem, 0.8rem + 5.4vw, 5.5rem); line-height: 1.05; }
+  .contact__foot { display: grid; gap: var(--space-3); font-size: 1.25rem; line-height: 2rem; }
+  .contact__mail { font-family: var(--font-display); font-weight: 700; font-size: var(--d-sm); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.25em; overflow-wrap: anywhere; }
+  @media (min-width: 60rem) {
+    .about-head { grid-template-columns: 4fr 8fr; grid-template-rows: 1fr auto; }
+    .about-head__portrait { grid-row: 1 / span 2; border-right: var(--line); }
+    .about-head__portrait img { height: 100%; min-height: 40rem; }
+    .about-head__lead { border-top: 0; padding-block: var(--space-6); }
+    .about-head__lead p { max-width: 20em; }
+    .about-head__draft { margin-left: 40%; border-left: var(--line); }
+    .story { grid-template-columns: 4fr 8fr; }
+    .story__bar { border-bottom: 0; padding-block: var(--space-6); }
+    .story > div { padding-block: var(--space-6) var(--space-7); }
+    .block { margin-bottom: var(--space-7); }
+    .block__head { padding-block: var(--space-6); }
+    /* Uneven cells: the first scene is twice as wide. */
+    .scenes { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; }
+    .scenes > div { min-height: 16rem; }
+    .scenes > div + div, .people li + li { border-left: var(--line); }
+    .scenes > div:first-child, .people li:first-child { padding-left: var(--gutter); }
+    .scenes > div:last-child { padding-right: var(--gutter); }
+    .steps li { grid-template-columns: 2fr 4fr 6fr; align-items: baseline; }
+    .steps h3 { padding: var(--pad); }
+    .steps p { grid-column: 3; padding: var(--pad) var(--gutter) var(--pad) var(--pad); max-width: 36rem; }
+    .series { display: grid; grid-template-columns: repeat(3, 1fr); border-top: var(--line); }
+    .series li { border-top: 0; }
+    .series li + li { border-left: var(--line); }
+    .series a { grid-template-columns: 1fr; grid-template-rows: 12rem 1fr; height: 100%; }
+    .series__swatch { border-right: 0; border-bottom: var(--line); }
+    .series__body { padding: var(--pad); align-content: start; }
+    .series li:first-child .series__body { padding-left: var(--gutter); }
+    .series li:nth-child(3n) .series__body, .people li:last-child { padding-right: var(--gutter); }
+    .series li:nth-child(2) a { grid-template-rows: 20rem 1fr; }
+    .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+    .contact__band { padding-block: var(--space-7) var(--space-6); gap: var(--space-7); }
+    .contact__foot { grid-template-columns: 1fr auto; align-items: end; }
+  }
 </style>

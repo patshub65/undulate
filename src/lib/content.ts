@@ -31,6 +31,17 @@ export async function getSettings() {
   return entry.data;
 }
 
+/**
+ * The About page: its entry (render the story with <Prose entry={entry} />),
+ * its section fields, and the series it lists (every project on the series template).
+ */
+export async function getAbout() {
+  const entry = await getEntry('pages', 'about');
+  if (!entry) throw new Error('Missing src/content/pages/about.mdoc');
+  const series = (await getProjects()).filter((p) => p.data.template === 'series');
+  return { entry, ...entry.data, series };
+}
+
 export async function getSpecialties() {
   return (await getCollection('specialties')).sort(byOrder);
 }

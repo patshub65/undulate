@@ -3,23 +3,43 @@ import { getCompanyFormats, getSettings, mailto } from '../../lib/content';
 const formats = await getCompanyFormats();
 const { email, companies } = await getSettings();
 ---
-<section class="section companies" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
-  <div class="container">
+<section class="companies" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
+  <div class="companies__head cell cell--l">
+    <p class="label">{formats.length} formats</p>
     <h2 id="companies-heading">{companies.heading}</h2>
     {companies.intro && <p class="companies__intro">{companies.intro}</p>}
-    <ul class="grid companies__formats" role="list">
-      {formats.map((f) => (
-        <li>
-          <h3>{f.data.name}</h3>
-          {f.data.description && <p class="muted">{f.data.description}</p>}
-        </li>
-      ))}
-    </ul>
-    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="companies">{companies.cta}</a>
   </div>
+  <a class="companies__cta fill cell cell--r" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="companies">
+    <span class="label">{email}</span>
+    <span class="fill__word">{companies.cta}</span>
+  </a>
+  <ul class="companies__table">
+    {formats.map((f) => (
+      <li class="cell">
+        <h3>{f.data.name}</h3>
+        {f.data.description && <p>{f.data.description}</p>}
+      </li>
+    ))}
+  </ul>
 </section>
 <style>
-  .companies { background: var(--color-surface); }
-  .companies__intro { font-size: var(--text-lg); max-width: 38rem; }
-  .companies__formats { list-style: none; padding: 0; margin-block: var(--space-5); }
+  .companies { display: grid; margin-top: var(--space-6); border-top: var(--line); border-bottom: var(--line); background: var(--color-surface); }
+  .companies h2 { font-size: var(--d-md); margin: var(--space-3) 0; }
+  .companies__intro { font-size: 1.25rem; line-height: 2rem; max-width: 32rem; margin: 0; }
+  .companies__cta { min-height: 8rem; border-top: var(--line); }
+  .companies__table { display: grid; }
+  .companies__table li { border-top: var(--line); transition: background-color 500ms var(--ease-paper); }
+  .companies__table li:hover { background: var(--palette-yellow); transition-duration: 120ms; }
+  .companies__table h3 { font-size: var(--d-sm); line-height: 1.25; margin: 0 0 var(--space-2); }
+  .companies__table p { margin: 0; max-width: 24rem; }
+  @media (min-width: 60rem) {
+    .companies { grid-template-columns: repeat(3, 1fr); margin-top: 12rem; }
+    .companies__head { grid-column: span 2; padding-block: var(--space-6); }
+    .companies__cta { border-top: 0; border-left: var(--line); }
+    .companies__table { grid-column: 1 / -1; grid-template-columns: subgrid; }
+    .companies__table li { min-height: 13rem; display: grid; align-content: end; }
+    .companies__table li:not(:nth-child(3n + 1)) { border-left: var(--line); }
+    .companies__table li:nth-child(3n + 1) { padding-left: var(--gutter); }
+    .companies__table li:nth-child(3n) { padding-right: var(--gutter); }
+  }
 </style>

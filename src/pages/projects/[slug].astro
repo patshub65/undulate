@@ -25,55 +25,97 @@ const hasWriteup = project.body?.trim();
 ---
 <BaseLayout title={title} description={summary}>
   <article class={`project project--${template}`} style={identity.accent ? `--project-accent: ${identity.accent}` : undefined}>
-    <header class="section container project__header">
-      {identity.logo && <Image class="project__logo" src={identity.logo} alt={`${title} logo`} width={160} />}
-      <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
-      <h1>{title}</h1>
-      <p class="project__summary">{summary}</p>
-      <ul class="tags" aria-label="Services">
-        {pillars.map((p) => <li><a class="tag" href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
-        {specialties.map((s) => <li><a class="tag" href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
+    <header class="project__header">
+      <div class="project__title cell cell--l">
+        <p class="label">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
+        <h1>{title}</h1>
+      </div>
+      <div class="project__swatch">
+        {identity.logo && <Image src={identity.logo} alt={`${title} logo`} width={320} />}
+      </div>
+      <div class="project__summary cell cell--l"><p>{summary}</p></div>
+      <ul class="project__services" aria-label="Services">
+        {pillars.map((p) => <li><a class="project__pillar" href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
+        {specialties.map((s) => <li><a href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
       </ul>
     </header>
 
     {cover && template === 'case-study' && (
-      <div class="container"><Image class="project__cover" src={cover} alt="" widths={[800, 1600]} sizes="100vw" /></div>
+      <Image class="project__cover" src={cover} alt="" widths={[800, 1600, 2400]} sizes="100vw" />
     )}
 
     {template === 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
+      <section class="project__events" aria-labelledby="events-heading">
+        <h2 id="events-heading" class="label project__bar">Events · {events.length}</h2>
         <EventGrid project={project} />
       </section>
     )}
 
-    {hasWriteup && <section class="section container"><Prose entry={project} /></section>}
+    {hasWriteup && <section class="project__writeup cell cell--l cell--r"><Prose entry={project} /></section>}
 
     {photos.length > 0 && (
-      <section class="section container" aria-label="Photos">
-        <div class="grid project__photos">
-          {photos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[600, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />)}
-        </div>
+      <section class="project__photos" aria-label="Photos">
+        {photos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[600, 1200, 1800]} sizes="(min-width: 60rem) 60vw, 100vw" />)}
       </section>
     )}
 
     {template !== 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
+      <section class="project__events" aria-labelledby="events-heading">
+        <h2 id="events-heading" class="label project__bar">Events · {events.length}</h2>
         <EventGrid project={project} />
       </section>
     )}
 
-    <section class="section container project__cta">
-      <p>Want something like this for your company?</p>
-      <a class="button" href={mailto(email, `Enquiry about ${title}`)} data-track="Email Click" data-track-location="project" data-track-label={title}>Get in touch</a>
+    <section class="project__cta">
+      <p class="cell cell--l">Want something like this for your company?</p>
+      <a class="fill cell cell--r" href={mailto(email, `Enquiry about ${title}`)} data-track="Email Click" data-track-location="project" data-track-label={title}>
+        <span class="label">{email}</span>
+        <span class="fill__word">Get in touch</span>
+      </a>
     </section>
   </article>
 </BaseLayout>
 <style>
-  .project__header { border-top: 4px solid var(--project-accent, transparent); }
-  .project__summary { font-size: var(--text-lg); max-width: 40rem; }
-  .project__logo { margin-bottom: var(--space-3); }
-  .project__cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); }
-  .project__photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-sm); }
+  .project__header { display: grid; grid-template-columns: minmax(0, 1fr) 5.5rem; border-top: var(--line); border-bottom: var(--line); }
+  .project__title { padding-block: var(--space-5); padding-right: var(--space-3); }
+  .project__title h1 { font-size: clamp(1.75rem, 0.6rem + 5.6vw, 6rem); line-height: 1.02; margin-top: var(--space-3); }
+  /* The series accent is one filled cell. */
+  .project__swatch { border-left: var(--line); background: var(--grain), var(--project-accent, var(--palette-sand)); background-blend-mode: soft-light, normal; display: grid; align-items: end; }
+  .project__swatch img { width: 100%; aspect-ratio: 1; object-fit: cover; border-top: var(--line); }
+  .project__summary { grid-column: 1 / -1; border-top: var(--line); }
+  .project__summary p { font-size: 1.25rem; line-height: 2rem; max-width: 36rem; margin: 0; }
+  .project__services { grid-column: 1 / -1; border-top: var(--line); }
+  .project__services li + li { border-top: var(--line); }
+  .project__services a { display: block; padding: 0.75rem var(--gutter); text-decoration: none; transition: background-color 500ms var(--ease-paper); }
+  .project__services a:hover { background: var(--palette-yellow); transition-duration: 120ms; }
+  .project__pillar { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xs); line-height: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .project__cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: var(--line); }
+  .project__events { margin-top: var(--space-6); border-bottom: var(--line); }
+  .project--series .project__header + .project__events { margin-top: 0; }
+  .project__bar { padding: 0.75rem var(--gutter); border-top: var(--line); border-bottom: var(--line); font-weight: 700; }
+  .project--series .project__header + .project__events .project__bar { border-top: 0; }
+  .project__writeup { padding-block: var(--space-6); }
+  .project__photos { display: grid; border-top: var(--line); }
+  .project__photos :global(img) { width: 100%; border-bottom: var(--line); }
+  .project__cta { display: grid; margin-top: var(--space-6); border-top: var(--line); }
+  .project__cta p { font-family: var(--font-display); font-weight: 700; font-size: var(--d-md); line-height: 1.15; margin: 0; padding-block: var(--space-5); }
+  .project__cta .fill { min-height: 8rem; border-top: var(--line); }
+  @media (min-width: 60rem) {
+    .project__header { grid-template-columns: minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr); }
+    .project__title { grid-column: 1 / span 2; padding-block: var(--space-6); }
+    .project__title h1 { margin-top: var(--space-5); }
+    .project__swatch { grid-column: 3; }
+    .project__summary { grid-column: 1 / span 2; }
+    .project__services { grid-column: 3; border-left: var(--line); }
+    .project__services a { padding-inline: var(--pad) var(--gutter); }
+    .project__writeup { padding-block: var(--space-7); padding-left: 33.333%; }
+    .project__events { margin-top: var(--space-7); }
+    /* Photos sit in uneven cells: wide then narrow, the second one dropped. */
+    .project__photos { grid-template-columns: 7fr 5fr; align-items: start; border-bottom: var(--line); }
+    .project__photos :global(img) { border-bottom: 0; }
+    .project__photos :global(img:nth-child(even)) { border-left: var(--line); margin-top: var(--space-7); border-top: var(--line); }
+    .project__cta { grid-template-columns: 2fr 1fr; margin-top: var(--space-7); }
+    .project__cta p { padding-block: var(--space-6); max-width: 16em; }
+    .project__cta .fill { border-top: 0; border-left: var(--line); }
+  }
 </style>

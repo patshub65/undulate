@@ -144,6 +144,11 @@ Carried over from Ladenkit's reviews (rounds named `LK ...`). Each says why and,
 - **Colour fields do not sit hard against each other** unless the pair is checked; some pairs clash. *(LK landing-r6)* undulate's palette has several loud pairs (red against pink, mint against yellow): check them.
 - **Motifs from the trade beat abstract patterns.** *(LK landing-r6)* For undulate: waveforms, flyer grids, sound systems, the "undulating" line, not generic blobs.
 
+- **Not a conference.** Large condensed capitals as the default heading style read as a tech conference; giant type is a single moment on a page, not every section's heading. *(undulate r1)*
+- **No stock type.** A generic serif plus a generic sans (Bodoni, Gloock, Hanken, Albert Sans, Manrope, Archivo) or a stock condensed display (Anton, Bebas, Big Shoulders) is a default, not a decision. *(undulate r1)*
+- **Gradients: subtle, grainy, full width.** A soft abstract gradient with grain across the full width works; wave-shaped edges and blobs do not. *(undulate r1)*
+- **A neutral ground with bold buttons.** Use few palette colours: a neutral ground and one or two bold colours for buttons and moments, not every colour on every page. *(undulate r1)*
+
 ### Inspiration
 - **Inspiration is a starting point, not a component library.** No more than one direction per round takes the same element from the same reference; each direction combines at least two picks from different styles. *(LK r3, studio-r4)*
 - **An idea is worth building only if the client would want it.** *(LK retail-r6)*
@@ -169,4 +174,14 @@ References live in `design/inspiration/` (see its README). The Eagle library on 
 
 One entry per reviewed direction. Format: what was tried, what was kept or cut, why, in one or two sentences, naming the references that led there.
 
-*(No undulate rounds reviewed yet.)*
+### r1 (reviewed by Patrick, 2026-11-15)
+
+No direction shortlisted. Round 2 starts over from new directions rather than refining two.
+
+- **Whole round:** five directions shared the same section patterns (the company formats section in particular) and differed mostly in colour and some layout, so the round read as recolours. Large condensed capitals everywhere made all five look like a tech conference.
+- **1 After Dark** (`hero-giant-year-filmstrip`, `listing-shows-grid-genre-tags`): cut. Big Shoulders capitals and the ink-and-neon frame are part of the conference look.
+- **2 Gallery Sand** (`index-project-rows-roles`, `about-founder-split-pill-nav`, `hero-type-scattered-images-rails`): cut. Gloock and Hanken Grotesk are a generic serif-and-sans pairing.
+- **3 Poster** (`events-past-flyers-stacked`, `services-bento-cards`, `poster-future-boutique`): the pillars as two full colour fields (yellow and violet), each listing its specialties under hairline rules in two columns, are **kept as a section with potential**. Bebas Neue is cut.
+- **4 Gradient Wave** (`hero-roster-names-gradient`, `hero-gradient-condensed-type`, `about-card-over-giant-type`): **kept with potential:** the full-width closing band with a vertical violet-to-lilac gradient and the email as a solid pill, and the project header on a soft radial gradient in the series accent with outline pill specialties. The wave-edge masks are cut, and so is Anton.
+- **5 Editorial** (`index-chapter-rows`, `profile-two-photos-text-column`, `about-text-over-portrait`): cut. Bodoni Moda and Albert Sans are a generic serif-and-sans pairing.
+- **About page:** too thin. It needs several sections about Jasmin and how she works, not one text over a portrait.
