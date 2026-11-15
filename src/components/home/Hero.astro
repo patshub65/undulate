@@ -23,7 +23,7 @@ const { email, hero } = await getSettings();
 </section>
 <style>
   /* Text overlapping the hero image (from the reference). The photo sits in flow under the headline and is pulled up
-     by --over, so its top runs behind the headline's last lines. The headline's white copy lives inside the photo,
+     by --over (whole lines: two on a phone, one on desktop), so its top meets a line boundary and runs behind the headline's last lines. The headline's white copy lives inside the photo,
      clipped by it, its bottom aligned to the ink headline's bottom: same width (100cqw), same type, same breaks. */
   .hero__field {
     padding-top: 7.5rem; padding-bottom: 8rem;
@@ -33,9 +33,9 @@ const { email, hero } = await getSettings();
       radial-gradient(60% 40% at 100% 20%, rgb(184 147 255 / 0.9) 0%, rgb(184 147 255 / 0) 100%),
       radial-gradient(60% 30% at 0% 100%, rgb(51 245 188 / 0.35) 0%, rgb(51 245 188 / 0) 100%);
   }
-  .hero__text { --over: 4.5rem; container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); }
+  .hero__text { --h1: clamp(2.125rem, 1rem + 4.8vw, 5.25rem); --over: calc(2 * var(--h1)); container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); }
   .hero h1, .hero__over::before {
-    font-family: var(--font-display); font-weight: 400; font-size: clamp(2.125rem, 1rem + 4.8vw, 5.25rem);
+    font-family: var(--font-display); font-weight: 400; font-size: var(--h1);
     line-height: 1; letter-spacing: var(--track-xl); text-wrap: balance;
   }
   .hero h1 { margin: 0; }
@@ -54,7 +54,7 @@ const { email, hero } = await getSettings();
   .hero__subline { font-size: 1.125rem; line-height: 1.75rem; max-width: 30rem; margin-bottom: var(--space-4); }
   @media (min-width: 60rem) {
     .hero__field { padding-top: 12rem; padding-bottom: 10rem; }
-    .hero__text { --over: 7rem; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); }
+    .hero__text { --over: var(--h1); grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); }
     .hero h1 { grid-column: 1 / -1; }
     .hero__photo { grid-column: 2; grid-row: 2; width: 100%; }
     .hero__photo img { aspect-ratio: 5 / 4; }
