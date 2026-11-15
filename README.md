@@ -1,6 +1,6 @@
 # undulate
 
-This is the website for undulate, Jasmin's event production and curation company. The plan and all the decisions behind it are in [`docs/PLAN.md`](docs/PLAN.md). The rules for design variations are in [`docs/GENERATOR.md`](docs/GENERATOR.md).
+This is the website for undulate, Jasmin's event production and curation company. The plan and all the decisions behind it are in [`docs/PLAN.md`](docs/PLAN.md). The rules for design variations are in [`docs/GENERATOR.md`](docs/GENERATOR.md), and the brief for the generator is [`docs/BRIEF.md`](docs/BRIEF.md).
 
 **Stack:** Astro (static) · Keystatic (browser editor at `/keystatic`) · Netlify · Plausible
 
