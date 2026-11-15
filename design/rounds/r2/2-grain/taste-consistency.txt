@@ -1,0 +1,533 @@
+consistency  http://localhost:4342/
+
+1440x900  11 screens  68 FAIL  22 WARN
+  FAIL hero-fill       section#services  "Services"
+       the next section shows on the first screen: it starts at 864px on a 900px screen (the hero ends at 864px)  [1440-01-hero-fill.jpg]
+       fix: let the hero fill the first screen alone (min-height: 100svh, less above it): nothing of the next section on load
+  FAIL flush           main#main > section.hero > div.hero__photo > img  "img: Crowd at an undulate night (placeho"
+       its last line sits -153px above the lower edge of section.hero, where the ground changes to section#services  [1440-09-flush.jpg]
+       fix: give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)
+  FAIL placeholder     div.featured__strip > div.featured__item:nth-of-type(1) > article.pc > p.pc__summary  "An undulate party series. [Placeholder s"
+       "Placeholder" is a placeholder left on the page (and 4 more like it: "Festival · [Festival nam", "Company event · [Company", "[Venue], [City] · Deep L", "undulate is run by Jasmi")  [1440-33-placeholder.jpg]
+       fix: write the real words: take the name or figure from the brief, or remove the claim; no bracketed placeholder ships
+  FAIL spill           main#main > section.hero > div.hero__photo > img  "img: Crowd at an undulate night (placeho"
+       runs 163px past the bottom edge of the panel it sits on (main#main > section.hero > div.hero__field.field)  [1440-10-spill.jpg]
+       fix: keep the box inside the panel it starts on: shrink it, or grow the panel to hold it
+  FAIL scroll-reveal   section#services > article.pillar:nth-of-type(1)  "Event Production Everything that makes a"
+       2 parts of this section animate in when scrolled into view (fades in from 0.0, rises 24px): article.pillar:nth-of-type(1), article.pillar:nth-of-type(2)  [1440-11-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(1)  "Product launches A launch night with a l"
+       6 parts of this section animate in when scrolled into view (fades in from 0.0, rises 24px): li:nth-of-type(1), li:nth-of-type(2), li:nth-of-type(3), li:nth-of-type(4), li:nth-of-type(5), ...  [1440-21-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#services > article.pillar:nth-of-type(2)  "Event Curation Who plays, who comes and "
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-18-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(2)  "Brand activations Culture-led activation"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-22-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(3)  "Company parties Summer and winter partie"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-26-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(4)  "Team offsites Offsites with a cultural p"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-27-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(5)  "Client and partner nights Intimate eveni"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-28-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(6)  "Conference side events After-parties and"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [1440-31-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL no-visual       section#services  "Services"
+       no picture, effect or mock in this section; a feature section needs a visual  [1440-19-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL no-visual       section#companies  "Events for companies"
+       no picture, effect or mock in this section; a feature section needs a visual  [1440-29-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL no-visual       main#main > section.teaser.wrap  "About undulate"
+       no picture, effect or mock in this section; a feature section needs a visual  [1440-38-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL same-action     section.hero > div.hero__field.field > div.hero__text > a.button.button--ink  "Plan your company event"
+       "Plan your company event" appears 2 times in different looks: pill, fill #191a18 and pill, fill #4c33f2  [1440-02-same-action.jpg]
+       fix: draw one action the same way everywhere (only the nav copy may be one size smaller)
+  FAIL copy-fact       section.hero > div.hero__field.field > div.hero__text > h1  "Events for companies that want more than"
+       the first screen holds no number, price, date, place, platform or genre  [1440-03-copy-fact.jpg]
+       fix: put one hard fact from the brief on the first screen: a number, a price, a date, the place, the platforms it runs on or a game's genre; take it from the brief or remove the claim
+  FAIL copy-headings   section#companies > ul.companies__list > li:nth-of-type(2) > h3  "Brand activations"
+       "Brand activations" names no product, part, place or section (5 headings like it; at most one brand line per page) (and 4 more like it: "Selected projects", "bananas are berries", "Future Boutique", "Coming up")  [1440-23-copy-headings.jpg]
+       fix: name the thing in every heading: the product, a part, the place or a section noun
+  FAIL heading-scale   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       an h2 at 104px, as large as the h1 (80px) or larger  [1440-41-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   section#services > article.pillar:nth-of-type(1) > h3.kicker  "Event Production"
+       an h3 at 18px, as large as the smallest h2 (18px) or larger (and 2 more like it: "Event Curation", "Product launches")  [1440-12-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       h2 headings in 2 sizes, 18px ("Selected projects") to 104px (x5.78)  [1440-42-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   section#companies > ul.companies__list > li:nth-of-type(1) > h3  "Product launches"
+       h3 headings in 3 sizes, 18px ("Event Production") to 80px (x4.44)  [1440-24-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL stagger         section#companies > ul.companies__list  "Product launches A launch night with a l"
+       6 rows start at 3 different left offsets (+0, +146, +65, +146, +0, +65px)  [1440-25-stagger.jpg]
+       fix: start every row of the list on one left edge
+  FAIL top-stagger     main#main > section.featured > div.featured__strip  "Club night bananas are berries An undula"
+       4 boxes side by side start at different heights (+0, +96, +0, +0px)  [1440-34-top-stagger.jpg]
+       fix: align the tops of the boxes in the row (one floor, one ceiling)
+  FAIL off-grid        article.pillar:nth-of-type(1) > ol.pillar__notes > li:nth-of-type(1) > span:nth-of-type(2)  "End-to-end production of festivals and m"
+       left edge at 88px, 24px off the page margin at 64px (12 elements, like span.date); 3 more in this section off the grid too (span.date at 432px, span:nth-of-type(2) at 88px, span.date at 432px)  [1440-20-off-grid.jpg]
+       fix: move it onto the page margin, or the column edge its section uses
+  FAIL text-contrast   section#services > article.pillar:nth-of-type(1) > p.pillar__intro  "Everything that makes an event run: from"
+       body text in #56545c on #faf7f2 reads 6.97:1 (needs 7:1); 11 like it, like "End-to-end production ", "Travel, riders, green ", "Bar concepts, staffing"  [1440-13-text-contrast.jpg]
+       fix: body text in the ink at 7:1 or more; grey (4.5:1 or more) only for captions and labels
+  FAIL section-gaps    main#main > section.hero / section#services
+       95px between these sections, -70% against the median 320px  [1440-14-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL hover-move      section.featured > div.featured__strip > div.featured__item:nth-of-type(1) > article.pc  "Club night bananas are berries An undula"
+       a linked card or photo shows no change on hover (384x746): it does not lift, its photograph does not zoom, nothing darkens or draws (the page carries no data-motion: link assets/motion/motion.css after cards.css and put data-motion on <html>)  [1440-53-hover-move.jpg]
+       fix: every linked card and linked photo answers the pointer: give the card class="card" (or the tile its media class) so motion.css lifts it 2px and zooms its photo; hover a linked card up 2px (translateY(-2px)) and zoom its photo to 1.02-1.03 inside its frame; no rotate, no 3D tilt, no growing card
+  FAIL effect-kind     main#main > section.hero > div.hero__photo > img
+       a service page (--type) moves with the scroll: scroll libraries or timelines (Lenis); parts that drift off the scroll (parallax): main#main > section.hero > div.hero__photo > img 21px: effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)  [1440-04-effect-kind.jpg]
+       fix: take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still
+  FAIL empty-area      section#companies  "Events for companies"
+       55% of the section is empty: 16px above its first content, 192px of empty rows between its content, 144px under its last (p), 36% beside content that covers under half the container, in its 1860px of rows (WARN over 35%, FAIL over 50%)  [1440-30-empty-area.jpg]
+       fix: fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)
+  FAIL empty-area      main#main > section.teaser.wrap  "About undulate"
+       73% of the section is empty: 32px above its first content, 32px under its last (a.more), 57% beside content that covers under half the container, in its 400px of rows (WARN over 35%, FAIL over 50%)  [1440-39-empty-area.jpg]
+       fix: fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)
+  FAIL focus-visible   a.visually-hidden  "Skip to content"
+       Tab stop 1, a "Skip to content": the focus lands on something you cannot see  [1440-52-focus-visible.jpg]
+       fix: keep the kit's ring (system.css :focus-visible, 2px in --action, there at once); a control that hides itself shows on focus
+  WARN placeholder     div#event-upcoming-0 > a.button  "Tickets & info"
+       1 link goes to a stand-in address (https://example.com/tickets)
+       fix: put in the real address, domain and number before the page ships
+  WARN no-visual       main#main > section.upcoming.wrap  "Coming up"
+       pictures, effects and mocks cover 19% of this section; a feature section needs a visual (about 25% or more)  [1440-37-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  WARN copy-headline   section.hero > div.hero__field.field > div.hero__text > h1  "Events for companies that want more than"
+       the h1 has 12 words (2 to 8 read at a glance)  [1440-05-copy-headline.jpg]
+       fix: put the category noun in the h1 (and who it is for, or where), in 2 to 8 words
+  WARN copy-actions    section.hero > div.hero__field.field > div.hero__text > a.button.button--ink  "Plan your company event"
+       2 labels for one target mailto:hello@undulate.example?subject=Company%20event%20enquiry: "Plan your company event", "hello@undulate.example"  [1440-06-copy-actions.jpg]
+       fix: few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close
+  WARN copy-actions    (the page)
+       the main action "Plan your company event" does not read word for word the same in the closing section
+       fix: few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close
+  WARN heading-scale   section#services > article.pillar:nth-of-type(1) > p.pillar__line  "Festival production1, Artist care2, Hosp"
+       2 lines of plain text set larger than the section headings (80px against h2 18px)  [1440-15-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  WARN section-gaps    section#companies / main#main > section.featured
+       430px between these sections, +34% against the median 320px  [1440-32-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    main#main > section.closing.field / footer.foot.wrap
+       195px between these sections, -39% against the median 320px of gaps at a change of ground  [1440-44-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    main#main > section.closing.field / footer.foot.wrap
+       uneven space at the edge of a band: 35px outside its edge, 160px inside it (the space on either side of a change of ground reads as one gap only when the two match)  [1440-45-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN photo-set       article.pc > a.pc__link > span.pc__media.field > img  "images"
+       3 photographs in more than one look: warm and cool photographs mixed (b* -14 to +10); the odd one out is images  [1440-35-photo-set.jpg]
+       fix: grade the photographs to one look (light, colour, warmth), or replace the odd one out
+  WARN photo-credit    (the page text)
+       1 library source (placehold): the page credits placehold; confirm each shows the client's own product, place or people
+       fix: confirm the library photograph shows the client's own product, place or people; otherwise replace it
+  WARN link-styles     section#services > article.pillar:nth-of-type(1) > h3.kicker > a  "Event Production"
+       text links in 3 looks: no line, bold (2, like "Event Production"); no line, regular (10, like "Festival production"); underline, bold (2, like "All projects")  [1440-16-link-styles.jpg]
+       fix: give text links one look wherever they sit: one underline, one weight
+  WARN heading-align   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       3 section headings sit on the left, 1 centred: "Let’s make something peo"  [1440-43-heading-align.jpg]
+       fix: set every section heading in one place: all on the left grid, or all centred
+  WARN copy-length     section.hero > div.hero__field.field > div.hero__text > h1  "Events for companies that want more than"
+       a headline of 12 words on 4 lines at 80px: a paragraph set in display type  [1440-07-copy-length.jpg]
+       fix: cut the heading to one short line (2 to 12 words) and move the rest into the text under it
+  WARN photo-repeat    article.pc > a.pc__link > span.pc__media.field > img  "images"
+       the photograph images is shown 6 times on the page: a picture the visitor has already seen  [1440-36-photo-repeat.jpg]
+       fix: show each photograph once: a different picture of what this section names, or none
+  WARN one-screen      main#main > section.teaser.wrap  "About undulate"
+       1 section is shorter than the screen, so the next one's heading or picture shows with it: "About undulate" is 616px of the 900px under the nav, and "Let’s make something people ta" shows below it  [1440-40-one-screen.jpg]
+       fix: give each section the screen (min-height: 100svh less the nav, its content centred), or join two short ones into one
+  WARN hero-enter      main#main > section.hero
+       the hero does not enter on load: no data-enter on the hero and no head line setting html.m-enter (motion.md, The hero's entrance)  [1440-08-hero-enter.jpg]
+       fix: put data-enter on the hero <section> and keep the head line from starter.html that sets html.m-enter
+  WARN moment-none     (the page)
+       a service page (--type) deals no moment: every kind carries one, two on a long page (moments.md)
+       fix: deal one (moments.mjs pick --page service --photo) and mount it in its own section
+  WARN empty-area      section#services  "Services"
+       42% of the section is empty: 128px above its first content, 96px of empty rows between its content, 32px under its last (span:nth-of-type(2)), 23% beside content that covers under half the container, in its 1334px of rows (WARN over 35%, FAIL over 50%)  [1440-17-empty-area.jpg]
+       fix: fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)
+  WARN share-meta      head
+       the head lacks og:image, twitter:card, theme-color: a shared link shows no picture or title of its own
+       fix: copy the head block of starter.html: og tags, twitter:card, the icon and theme-color (references/system.md, Head)
+  FAIL hidden-content  section#services > article.pillar:nth-of-type(1) > h3.kicker > a  "Event Production"
+       with no IntersectionObserver callback (a script that never gets that far) 19 lines stay hidden on screen 2, 4 s after load (opacity 0): "Everything that make", "Festival production1", "Festival production": the page shows it only when a script reveals it  [1440-io-01-hidden-content.jpg]
+       fix: show the content at rest: the hidden state only under a class the script adds on its live path, never in the plain CSS (prefers-reduced-motion and a script that never runs show the finished page)
+  FAIL hidden-content  section#services > article.pillar:nth-of-type(2) > h3.kicker > a  "Event Curation"
+       with no IntersectionObserver callback (a script that never gets that far) 12 lines stay hidden on screen 3, 4 s after load (opacity 0): "Who plays, who comes", "Booking5, Promotion6", "Booking": the page shows it only when a script reveals it  [1440-io-02-hidden-content.jpg]
+       fix: show the content at rest: the hidden state only under a class the script adds on its live path, never in the plain CSS (prefers-reduced-motion and a script that never runs show the finished page)
+  FAIL hidden-content  section#companies > ul.companies__list > li:nth-of-type(1) > p  "A launch night with a line-up and settin"
+       with no IntersectionObserver callback (a script that never gets that far) 7 lines stay hidden on screen 4, 4 s after load (opacity 0): "Brand activations", "Culture-led activati", "Company parties": the page shows it only when a script reveals it  [1440-io-03-hidden-content.jpg]
+       fix: show the content at rest: the hidden state only under a class the script adds on its live path, never in the plain CSS (prefers-reduced-motion and a script that never runs show the finished page)
+  FAIL hidden-content  section#companies > ul.companies__list > li:nth-of-type(5) > h3  "Client and partner nights"
+       with no IntersectionObserver callback (a script that never gets that far) 4 lines stay hidden on screen 5, 4 s after load (opacity 0): "Intimate evenings th", "Conference side even", "After-parties and si": the page shows it only when a script reveals it  [1440-io-04-hidden-content.jpg]
+       fix: show the content at rest: the hidden state only under a class the script adds on its live path, never in the plain CSS (prefers-reduced-motion and a script that never runs show the finished page)
+  FAIL hero-screen     main#main > section.hero  "Events for companies that want more than"
+       the hero ends at 864px on a 900px screen, 36px above the fold: it ends at the fold, 1px either way (SR-1)  [1440-rhythm-01-hero-screen.jpg]
+       fix: make the hero exactly one screen (height: 100svh, its content fitted inside), never taller or shorter
+  FAIL hero-screen     section#services  "ServicesEvent ProductionEverything that "
+       36px of the next section shows on the first screen (from 864px on a 900px screen): nothing below the hero shows at load (SR-1)  [1440-rhythm-02-hero-screen.jpg]
+       fix: end the hero at the fold so nothing of the next section shows at load (hero height: 100svh)
+  FAIL hero-screen     main#main > section.hero  "Events for companies that want more than"
+       the hero's content is 164px taller than the hero (scrollHeight 1028, clientHeight 864): it spills out or scrolls inside it (SR-1)  [1440-rhythm-03-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL hero-screen     main#main > section.hero > div.hero__photo
+       the <div> lies outside the hero's box (596-1028px, the hero 0-864px) (SR-1)  [1440-rhythm-04-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL hero-screen     main#main > section.hero > div.hero__photo > img  "Crowd at an undulate night (placeholder)"
+       "Crowd at an undulate night (plac" lies outside the hero's box (596-1028px, the hero 0-864px) (SR-1)  [1440-rhythm-05-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL section-height  footer.foot.wrap  "undulatehello@undulate.exampleInstagramI"
+       the section is 96px tall (0.1 screens), 804px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)  [1440-rhythm-07-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  main#main > section.featured  "Selected projectsAll projectsClub nightb"
+       the section is 1223px tall (1.4 screens), 323px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)  [1440-rhythm-08-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the section is 616px tall (0.7 screens), 284px short of one screen (900px): every section after the hero is one screen or two, 2px either way (and 4 more like it: "Events for companiesThe ", "ServicesEvent Production", "Coming up4 Dec 2026Deep ") (SR-2)  [1440-rhythm-09-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  main#main > section.upcoming.wrap  "Coming up4 Dec 2026Deep Listening Room 0"
+       the section starts at 5713px, 313px below the screen grid (6 x 900px): sections start on whole screens (SR-2)  [1440-rhythm-10-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  section#companies  "Events for companiesThe same curation be"
+       the section starts at 2414px, 286px above the screen grid (3 x 900px): sections start on whole screens (SR-2)  [1440-rhythm-11-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  footer.foot.wrap  "undulatehello@undulate.exampleInstagramI"
+       the section starts at 7934px, 166px above the screen grid (9 x 900px): sections start on whole screens (and 4 more like it: "About undulateundulate i", "Let’s make something peo", "ServicesEvent Production") (SR-2)  [1440-rhythm-12-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  footer.foot.wrap  "undulatehello@undulate.exampleInstagramI"
+       the section's content does not fit it: its lowest content ends 60px below its top, past 24px (the section less 72px of bottom padding) (SR-2)  [1440-rhythm-13-section-height.jpg]
+       fix: fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups
+  FAIL section-height  main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       scroll-snap-type: x on "Club nightbananas are berriesAn ": sections are one or two screens by their height and padding, the scroll is the browser's own (SR-2)
+       fix: take scroll-snap-type off (html, body and every scroller): sections are one or two screens by height and padding, never snapped
+  FAIL section-air     main#main > section.featured / main#main > section.upcoming.wrap
+       1201px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)  [1440-rhythm-14-section-air.jpg]
+       fix: keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)
+  FAIL section-air     main#main > section.featured  "Selected projectsAll projectsClub nightb"
+       the content fills 1.9% of the section's height (24 of 1223px): 55% or more (40% WARN) (SR-3)  [1440-rhythm-15-section-air.jpg]
+       fix: fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block
+  WARN section-air     main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the content fills 47.8% of the section's height (295 of 616px): 55% or more (40% WARN) (SR-3)  [1440-rhythm-33-section-air.jpg]
+       fix: fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block
+  FAIL one-section     main#main > section.featured  "Selected projectsAll projectsClub nightb"
+       the screen at scroll 5400px (stride 6) shows 313px of section 4 and the content of 2 sections, over 24px each beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)  [1440-rhythm-16-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     main#main > section.closing.field  "Let’s make something people talk about.T"
+       the screen at scroll 6446px (the top of section 6) shows 284px of section 7 and the content of 2 sections, over 24px each beside section 6: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)  [1440-rhythm-17-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the screen at scroll 5713px (the top of section 5) shows 167px of section 6 beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (and 8 more like it: scroll 864px, scroll 6300px, scroll 900px) (SR-4)  [1440-rhythm-18-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     main#main > section.hero > div.hero__field.field  "Events for companies that want more than"
+       a band: a box 100% of the section wide on a ground of its own that holds the heading or the intro: the section's own ground is the band (SR-4)  [1440-rhythm-19-one-section.jpg]
+       fix: put every block of <main> in a <section>, and give a band its own section instead of a ground inside one
+  WARN one-heading     h2#companies-heading  "Events for companies"
+       headings of two sections show whole on one screen at 12 of 143 scroll positions (8.4%; at scroll 1750, 1800, 1850, 1900px), here with "Booking5, Promotion6.": at most 3% on a desktop (it sits in a part held on screen as the page scrolls: told as a WARN) (SR-5)  [1440-rhythm-34-one-heading.jpg]
+       fix: make the sections one screen tall so their headings sit a screen apart and two never share one
+  FAIL container-edges main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the content of section 6 runs 615px from the left and 281px from the right (read from its outermost blocks: no .wrap): the page's container starts at 64px; 615 and 281px are not one margin; the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)  [1440-rhythm-20-container-edges.jpg]
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges main#main > section.closing.field  "Let’s make something people talk about.T"
+       the content of section 7 runs 148px from the left and 148px from the right (read from its outermost blocks: no .wrap): the page's container starts at 64px; the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)  [1440-rhythm-21-container-edges.jpg]
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges main#main > section.hero  "Events for companies that want more than"
+       the content of section 1 runs 0px from the left and 0px from the right: the page's container starts at 64px; the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (and 1 more like it: "Selected projectsAll pro") (SR-6)  [1440-rhythm-22-container-edges.jpg]
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges a.visually-hidden  "Skip to content"
+       a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)  [1440-rhythm-23-container-edges.jpg]
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges header.head.wrap  "undulateProjectsAboutGet in touchMenuClo"
+       a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 12 more like it: "undulatehello@undulate.e", main#main > section.hero > div.hero__photo, "Events for companies tha") (SR-6)  [1440-rhythm-24-container-edges.jpg]
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges section#companies > ul.companies__list > li:nth-of-type(2)  "Brand activationsCulture-led activations"
+       6 text blocks start on a left line at x 711, 647px from the container's left: text starts on the container's left, or on one split line (x 621, 732, 843) (also "Brand activations", "Culture-led activations that fee", "Team offsitesOffsites with a cul") (SR-6)  [1440-rhythm-25-container-edges.jpg]
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL container-edges section#companies > ul.companies__list > li:nth-of-type(3)  "Company partiesSummer and winter parties"
+       6 text blocks start on a left line at x 630, 566px from the container's left: text starts on the container's left, or on one split line (x 621, 732, 843) (also "Company parties", "Summer and winter parties that f", "Conference side eventsAfter-part") (and 11 more like it: x 565, x 544, x 458) (SR-6)  [1440-rhythm-26-container-edges.jpg]
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL container-edges main#main > section.closing.field > h2  "Let’s make something people talk about."
+       "Let’s make something people talk" is set centred across 1144px, over half the 1144px container: text that wide is set left (SR-6)  [1440-rhythm-27-container-edges.jpg]
+       fix: set the text left (text-align: start)
+  FAIL row-lines       section#services > article.pillar:nth-of-type(1) > ol.pillar__notes  "1End-to-end production of festivals and "
+       a row of 2 items: its last item ends at 768px, the container's right line at 1376px (2px either way) (SR-7)  [1440-rhythm-28-row-lines.jpg]
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines       section#services > article.pillar:nth-of-type(2) > ol.pillar__notes  "5Line-ups with taste, from electronic mu"
+       a row of 2 items: its first item starts at 458px, the container's left line at 64px; its last item ends at 1162px, the container's right line at 1376px (2px either way) (SR-7)  [1440-rhythm-29-row-lines.jpg]
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines       main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       a row of 3 items: its first item starts at 64px, the container's left line at 0px; its last item ends at 1792px, the container's right line at 1440px; its items are 746/750/770px tall, not one height (2px either way) (SR-7)  [1440-rhythm-30-row-lines.jpg]
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines       main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       a sideways scroller: 416px of it hidden behind overflow-x: auto (SR-7)  [1440-rhythm-31-row-lines.jpg]
+       fix: show every item inside the container, or stack them: no sideways scroller, no half-cut carousel
+  FAIL row-lines       main#main > section.featured > div.featured__strip > div.featured__item:nth-of-type(4)  "Company event · [Company]Company Summer "
+       a row item is cut by a frame round it: 32 x 770px of its 384 x 770px shows (SR-7)  [1440-rhythm-32-row-lines.jpg]
+       fix: show the row item whole: no frame cutting it
+
+390x844  9 screens  51 FAIL  12 WARN
+  FAIL scroll-reveal   section#services > article.pillar:nth-of-type(1)  "Event Production Everything that makes a"
+       2 parts of this section animate in when scrolled into view (fades in from 0.0, rises 24px): article.pillar:nth-of-type(1), article.pillar:nth-of-type(2)  [390-05-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(1)  "Product launches A launch night with a l"
+       6 parts of this section animate in when scrolled into view (fades in from 0.0, rises 24px): li:nth-of-type(1), li:nth-of-type(2), li:nth-of-type(3), li:nth-of-type(4), li:nth-of-type(5), ...  [390-14-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#services > article.pillar:nth-of-type(2)  "Event Curation Who plays, who comes and "
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-12-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(2)  "Brand activations Culture-led activation"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-15-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(3)  "Company parties Summer and winter partie"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-16-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(4)  "Team offsites Offsites with a cultural p"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-20-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(5)  "Client and partner nights Intimate eveni"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-21-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL scroll-reveal   section#companies > ul.companies__list > li:nth-of-type(6)  "Conference side events After-parties and"
+       starts "opacity" (0.9 s) the moment it is scrolled into view (an IntersectionObserver)  [390-22-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  FAIL no-visual       section#services  "Services"
+       no picture, effect or mock in this section; a feature section needs a visual  [390-13-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL no-visual       section#companies  "Events for companies"
+       no picture, effect or mock in this section; a feature section needs a visual  [390-17-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL no-visual       main#main > section.teaser.wrap  "About undulate"
+       no picture, effect or mock in this section; a feature section needs a visual  [390-26-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL same-action     section.hero > div.hero__field.field > div.hero__text > a.button.button--ink  "Plan your company event"
+       "Plan your company event" appears 2 times in different looks: pill, fill #191a18 and pill, fill #4c33f2  [390-01-same-action.jpg]
+       fix: draw one action the same way everywhere (only the nav copy may be one size smaller)
+  FAIL heading-scale   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       an h2 at 41px, as large as the h1 (36.4px) or larger  [390-27-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   section#services > article.pillar:nth-of-type(1) > h3.kicker  "Event Production"
+       an h3 at 18px, as large as the smallest h2 (18px) or larger (and 2 more like it: "Event Curation", "Product launches")  [390-06-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       h2 headings in 3 sizes, 18px ("Selected projects") to 41px (x2.28)  [390-28-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale   section#companies > ul.companies__list > li:nth-of-type(1) > h3  "Product launches"
+       h3 headings in 3 sizes, 18px ("Event Production") to 36.4px (x2.02)  [390-18-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL stagger         section#companies > ul.companies__list  "Product launches A launch night with a l"
+       6 rows start at 2 different left offsets (+0, +32, +0, +32, +0, +32px)  [390-19-stagger.jpg]
+       fix: start every row of the list on one left edge
+  FAIL top-stagger     main#main > section.featured > div.featured__strip  "Club night bananas are berries Booking, "
+       4 boxes side by side start at different heights (+0, +32, +0, +0px)  [390-24-top-stagger.jpg]
+       fix: align the tops of the boxes in the row (one floor, one ceiling)
+  FAIL off-grid        article.pillar:nth-of-type(1) > ol.pillar__notes > li:nth-of-type(1) > span:nth-of-type(2)  "End-to-end production of festivals and m"
+       left edge at 56px, 24px off the page margin at 32px (37 elements, like span.date); 5 more in this section off the grid too (span:nth-of-type(2) at 56px, span:nth-of-type(2) at 56px, span:nth-of-type(2) at 56px, span:nth-of-type(2) at 56px, ...)  [390-07-off-grid.jpg]
+       fix: move it onto the page margin, or the column edge its section uses
+  FAIL text-contrast   section#services > article.pillar:nth-of-type(1) > p.pillar__intro  "Everything that makes an event run: from"
+       body text in #56545c on #faf7f2 reads 6.97:1 (needs 7:1); 11 like it, like "End-to-end production ", "Travel, riders, green ", "Bar concepts, staffing"  [390-08-text-contrast.jpg]
+       fix: body text in the ink at 7:1 or more; grey (4.5:1 or more) only for captions and labels
+  FAIL menu-toggle     header.head.wrap > button.head__menu  "Menu"
+       the menu button ("Menu") has no aria-expanded: a screen reader cannot tell the menu is open or shut  [390-02-menu-toggle.jpg]
+       fix: use the starter's button: <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">; system.js flips it
+  WARN tap-size        header.head.wrap > a.head__logo  "undulate"
+       a 126x32px tap target: under the 44px a phone needs  [390-03-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        header.head.wrap > button.head__menu  "Menu"
+       a 43x24px tap target: under the 44px a phone needs  [390-04-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        section#services > article.pillar:nth-of-type(1) > h3.kicker > a  "Event Production"
+       a 182x19px tap target: under the 44px a phone needs  [390-09-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        main#main > section.featured > div.featured__head.wrap > a.more  "All projects"
+       a 89x24px tap target: under the 44px a phone needs  [390-23-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        footer.foot.wrap > ul > li:nth-of-type(1) > a  "hello@undulate.example"
+       a 182x22px tap target (and 3 more like it on this screen): under the 44px a phone needs  [390-32-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN heading-scale   section#services > article.pillar:nth-of-type(1) > p.pillar__line  "Festival production1, Artist care2, Hosp"
+       2 lines of plain text set larger than the section headings (36.4px against h2 18px)  [390-10-heading-scale.jpg]
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  WARN section-gaps    main#main > section.teaser.wrap / main#main > section.closing.field
+       191px between these sections, +45% against the median 132px of gaps at a change of ground  [390-29-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    main#main > section.teaser.wrap / main#main > section.closing.field
+       uneven space at the edge of a band: 65px outside its edge, 126px inside it (the space on either side of a change of ground reads as one gap only when the two match)  [390-30-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    main#main > section.closing.field / footer.foot.wrap
+       uneven space at the edge of a band: 35px outside its edge, 128px inside it (the space on either side of a change of ground reads as one gap only when the two match)  [390-33-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN link-styles     section#services > article.pillar:nth-of-type(1) > h3.kicker > a  "Event Production"
+       text links in 3 looks: no line, bold (2, like "Event Production"); no line, regular (10, like "Festival production"); underline, bold (2, like "All projects")  [390-11-link-styles.jpg]
+       fix: give text links one look wherever they sit: one underline, one weight
+  WARN heading-align   main#main > section.closing.field > h2  "Let’s make something people talk about."
+       4 section headings sit on the left, 1 centred: "Let’s make something peo"  [390-31-heading-align.jpg]
+       fix: set every section heading in one place: all on the left grid, or all centred
+  WARN photo-repeat    article.pc > a.pc__link > span.pc__media.field > img  "images"
+       the photograph images is shown 6 times on the page: a picture the visitor has already seen  [390-25-photo-repeat.jpg]
+       fix: show each photograph once: a different picture of what this section names, or none
+  FAIL hero-screen     main#main > section.hero  "Events for companies that want more than"
+       the hero's content is 20px taller than the hero (scrollHeight 863, clientHeight 843): it spills out or scrolls inside it (SR-1)  [390-rhythm-01-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL hero-screen     main#main > section.hero > div.hero__photo
+       the <div> lies outside the hero's box (561-863px, the hero 0-843px) (SR-1)  [390-rhythm-02-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL hero-screen     main#main > section.hero > div.hero__photo > img  "Crowd at an undulate night (placeholder)"
+       "Crowd at an undulate night (plac" lies outside the hero's box (561-863px, the hero 0-843px) (SR-1)  [390-rhythm-03-hero-screen.jpg]
+       fix: fit the hero's content inside the hero's box: shorten the text or the picture, never let it spill
+  FAIL hero-screen     main#main > section.hero > div.hero__photo > img  "Crowd at an undulate night (placeholder)"
+       "Crowd at an undulate night (plac" ends at 863px, below the hero's content line at 820px (the 844px screen less 24px) (SR-1)  [390-rhythm-04-hero-screen.jpg]
+       fix: keep the hero's content between the nav and 24px above the fold (and the action bar): shorten the picture or the text; a docked strip 96px at most
+  FAIL section-height  footer.foot.wrap  "undulatehello@undulate.exampleInstagramI"
+       the section is 168px tall (0.2 screens), 676px short of one screen (844px): every section after the hero is one screen or two, 2px either way (SR-2)  [390-rhythm-05-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the section is 464px tall (0.5 screens), 380px short of one screen (844px): every section after the hero is one screen or two, 2px either way (SR-2)  [390-rhythm-06-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  section#services  "ServicesEvent ProductionEverything that "
+       the section is 1314px tall (1.6 screens), 374px short of two screens (1688px): every section after the hero is one screen or two, 2px either way (and 4 more like it: "Events for companiesThe ", "Coming up4 Dec 2026Deep ", "Let’s make something peo") (SR-2)  [390-rhythm-07-section-height.jpg]
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height  section#companies  "Events for companiesThe same curation be"
+       the section starts at 2157px, 375px above the screen grid (3 x 844px): sections start on whole screens (SR-2)  [390-rhythm-08-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  main#main > section.teaser.wrap  "About undulateundulate is run by Jasmin,"
+       the section starts at 4800px, 264px above the screen grid (6 x 844px): sections start on whole screens (SR-2)  [390-rhythm-09-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  main#main > section.closing.field  "Let’s make something people talk about.T"
+       the section starts at 5264px, 200px below the screen grid (6 x 844px): sections start on whole screens (and 3 more like it: "Selected projectsAll pro", "Coming up4 Dec 2026Deep ", "undulatehello@undulate.e") (SR-2)  [390-rhythm-10-section-height.jpg]
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height  footer.foot.wrap  "undulatehello@undulate.exampleInstagramI"
+       the section's content does not fit it: its lowest content ends 135px below its top, past 120px (the section less 48px of bottom padding) (SR-2)  [390-rhythm-11-section-height.jpg]
+       fix: fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups
+  FAIL section-height  main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       scroll-snap-type: x on "Club nightbananas are berriesAn ": sections are one or two screens by their height and padding, the scroll is the browser's own (SR-2)
+       fix: take scroll-snap-type off (html, body and every scroller): sections are one or two screens by height and padding, never snapped
+  FAIL section-air     main#main > section.featured / main#main > section.upcoming.wrap
+       651px of air between the content of these two sections: 112-420px (56-560px WARN) (SR-3)  [390-rhythm-12-section-air.jpg]
+       fix: keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)
+  FAIL section-air     main#main > section.featured  "Selected projectsAll projectsClub nightb"
+       the content fills 3.5% of the section's height (24 of 673px): 55% or more (40% WARN) (SR-3)  [390-rhythm-13-section-air.jpg]
+       fix: fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block
+  FAIL one-section     main#main > section.closing.field > h2  "Let’s make something people talk about."
+       the screen at scroll 4800px (the top of section 6) shows 380px of section 7 and the heading of section 7 whole and the content of 2 sections, over 24px each beside section 6: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)  [390-rhythm-14-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     h2#companies-heading  "Events for companies"
+       the screen at scroll 1688px (stride 2) shows 375px of section 3 and the heading of section 3 whole and the content of 2 sections, over 24px each beside section 2: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)  [390-rhythm-15-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     h2#about-heading  "About undulate"
+       the screen at scroll 4220px (stride 5) shows 264px of section 6 and the heading of section 6 whole and the content of 2 sections, over 24px each beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (and 7 more like it: scroll 5064px, scroll 4150px, scroll 3477px) (SR-4)  [390-rhythm-16-one-section.jpg]
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section     main#main > section.hero > div.hero__field.field  "Events for companies that want more than"
+       a band: a box 100% of the section wide on a ground of its own that holds the heading or the intro: the section's own ground is the band (SR-4)  [390-rhythm-17-one-section.jpg]
+       fix: put every block of <main> in a <section>, and give a band its own section instead of a ground inside one
+  FAIL one-heading     h2#companies-heading  "Events for companies"
+       headings of two sections show whole on one screen at 26 of 105 scroll positions (24.8%; at scroll 1450, 1500, 1550, 1600px), here with "Booking5, Promotion6.": at most 5% on a phone (SR-5)  [390-rhythm-18-one-heading.jpg]
+       fix: make the sections one screen tall so their headings sit a screen apart and two never share one
+  FAIL container-edges main#main > section.hero  "Events for companies that want more than"
+       the content of section 1 runs 0px from the left and 0px from the right: the page's container starts at 32px; the margin is 16-24px at 390px (one container, equal margins, 2px either way) (SR-6)  [390-rhythm-19-container-edges.jpg]
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges main#main > section.featured  "Selected projectsAll projectsClub nightb"
+       the content of section 4 runs 0px from the left and 0px from the right: the page's container starts at 32px; the margin is 16-24px at 390px (one container, equal margins, 2px either way) (and 7 more like it: "undulateProjectsAboutGet", "ServicesEvent Production", "Events for companiesThe ") (SR-6)  [390-rhythm-20-container-edges.jpg]
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges a.visually-hidden  "Skip to content"
+       a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)  [390-rhythm-21-container-edges.jpg]
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges header.head.wrap  "undulateProjectsAboutGet in touchMenuClo"
+       a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 12 more like it: "undulatehello@undulate.e", "Events for companies tha", "Events for companies tha") (SR-6)  [390-rhythm-22-container-edges.jpg]
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges h2#about-heading  "About undulate"
+       the h2 starts 88px right of the container's left: every h1 and h2 starts on it, 2px either way (SR-6)  [390-rhythm-23-container-edges.jpg]
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL container-edges main#main > section.closing.field > h2  "Let’s make something people talk about."
+       1 text block starts on a left line at x 77, 45px from the container's left: text starts on the container's left, or on one split line (x 178, 207, 236) (and 5 more like it: "Let’s make something peo", x 64, "Events for companies tha") (SR-6)  [390-rhythm-24-container-edges.jpg]
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL container-edges main#main > section.closing.field > h2  "Let’s make something people talk about."
+       "Let’s make something people talk" is set centred across 326px, over half the 326px container: text that wide is set left (and 1 more like it: "Tell us about your event") (SR-6)  [390-rhythm-25-container-edges.jpg]
+       fix: set the text left (text-align: start)
+  FAIL container-edges section.hero > div.hero__field.field > div.hero__text > a.button.button--ink  "Plan your company event"
+       a box over half the container wide runs 32-272px, not on the container's lines at 0-390px (and 4 more like it: "Crowd at an undulate nig", "Plan your company event", "Flyer: Deep Listening Ro") (SR-6)  [390-rhythm-26-container-edges.jpg]
+       fix: run the picture or box from the container's left line to its right line, or put it in a row or a split
+  FAIL row-lines       main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       a row of 3 items: its first item starts at 32px, the container's left line at 0px; its last item ends at 1096px, the container's right line at 390px; its items are 478/444/454px tall, not one height (2px either way) (SR-7)  [390-rhythm-27-row-lines.jpg]
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines       footer.foot.wrap > ul  "hello@undulate.exampleInstagramImpressum"
+       a row of 2 items: its last item ends at 315px, the container's right line at 358px (2px either way) (SR-7)  [390-rhythm-28-row-lines.jpg]
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines       main#main > section.featured > div.featured__strip  "Club nightbananas are berriesAn undulate"
+       a sideways scroller: 738px of it hidden behind overflow-x: auto (SR-7)  [390-rhythm-29-row-lines.jpg]
+       fix: show every item inside the container, or stack them: no sideways scroller, no half-cut carousel
+
+first screen at 1280, 1152, 1024, 896, 768  0 FAIL  0 WARN
+
+the page at 320x640, walked for what runs past the screen's edge  0 FAIL
+  WARN tap-size        [320] header.head.wrap > a.head__logo  "undulate"
+       a 126x32px tap target: under the 44px a phone needs  [narrow-320-01-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        [320] header.head.wrap > button.head__menu  "Menu"
+       a 43x24px tap target: under the 44px a phone needs  [narrow-320-02-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        [320] section#services > article.pillar:nth-of-type(1) > h3.kicker > a  "Event Production"
+       a 182x19px tap target: under the 44px a phone needs  [narrow-320-03-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+  WARN tap-size        [320] footer.foot.wrap > ul > li:nth-of-type(1) > a  "hello@undulate.example"
+       a 182x22px tap target: under the 44px a phone needs  [narrow-320-04-tap-size.jpg]
+       fix: make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box
+
+checks
+  PASS assets                 PASS shader-lint            PASS gl-fallback            
+  PASS empty-visual           FAIL hero-fill              FAIL flush                  
+  FAIL placeholder            PASS sample-label           PASS caption                
+  PASS credit-wall            PASS nav                    PASS nav-covers             
+  FAIL spill                  PASS off-viewport           PASS fold-card              
+  PASS hover-spill            PASS overlap-text           PASS collide                
+  WARN tap-size               PASS row-gap                PASS cut-text               
+  PASS fold-cut               PASS marquee                PASS scroll-linked          
+  FAIL scroll-reveal          PASS pinned                 PASS loop-pause             
+  PASS reduced-motion         FAIL hidden-content         PASS webgl                  
+  FAIL no-visual              PASS text-only              PASS card-visual            
+  PASS hidden-visual          PASS card-family            PASS card-layout            
+  PASS nesting                PASS effect-repeat          PASS ui-fit                 
+  PASS ui-centre              PASS dark-ground            PASS button-styles          
+  PASS button-shape           FAIL same-action            PASS button-picture         
+  PASS cta                    PASS pricing-tiers          WARN copy-headline          
+  FAIL copy-fact              FAIL copy-headings          PASS copy-buttons           
+  WARN copy-actions           FAIL heading-scale          FAIL stagger                
+  FAIL top-stagger            FAIL off-grid               PASS col-edge               
+  PASS right-edge             PASS centre-axis            PASS tilt                   
+  PASS contrast               FAIL text-contrast          PASS body-size              
+  PASS busy-ground            FAIL section-gaps           PASS proximity              
+  PASS hole                   PASS links                  PASS forms                  
+  PASS photo-upscale          WARN photo-set              WARN photo-credit           
+  PASS nav-family             PASS nav-labels             WARN link-styles            
+  WARN heading-align          PASS label-centre           PASS fake-button            
+  PASS stranded-action        PASS orphan                 PASS unit-break             
+  PASS tab-wrap               PASS effects-fit            PASS fade-cut               
+  PASS photo-weight           WARN copy-length            PASS nav-current            
+  PASS progress-bar           WARN photo-repeat           PASS button-contrast        
+  PASS photo-print            PASS grounds                PASS split-align            
+  PASS fact-agree             PASS fold-action            PASS action-count           
+  WARN one-screen             PASS hover                  FAIL hover-move             
+  PASS product-shown          PASS same-object            PASS font-load              
+  PASS visual-caption         PASS visual-empty           FAIL effect-kind            
+  WARN hero-enter             WARN moment-none            PASS street-number          
+  PASS postcode               PASS coordinates            PASS company-number         
+  PASS phone-number           FAIL hero-screen            FAIL section-height         
+  FAIL section-air            FAIL one-section            FAIL one-heading            
+  FAIL container-edges        FAIL row-lines              PASS split-pair             
+  PASS motion-layer           PASS count-text             PASS loop-cycle             
+  PASS section-tile           FAIL empty-area             PASS a11y-name              
+  PASS img-alt                PASS field-label            PASS heading-order          
+  PASS tabindex               PASS focus-ring             FAIL focus-visible          
+  PASS focus-hidden           PASS skip-link              FAIL menu-toggle            
+  PASS lang                   PASS page-meta              WARN share-meta             
+  PASS action-repeat          PASS map-link               PASS open-now               
+  PASS assumed                PASS run-on                 PASS form-fields            
+  PASS form-send              
+
+total  119 FAIL  38 WARN  (crops and report.json in out2)

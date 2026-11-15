@@ -1,0 +1,59 @@
+
+== index.html  (525 words)  0 FAIL, 2 WARN
+  WARN copy-stat-strip      stat strip x2
+       - 1 / 2 / 3 / 4 / 1
+       - 5 / 6 / 5
+       fix: a strip only of figures the brief gives (a price, hours, a count); otherwise put each number in the sentence it proves, or leave it out
+  WARN copy-eyebrows        5 eyebrow or kicker labels
+       fix: one or two a page; a heading that names the thing needs no label over it
+  INFO copy-contrast        contrast frames ("X, not Y", isn't, rather than, instead of, without the): 2 of 2
+       - ", not s" in: Culture-led activations that feel native to the scene, not stuck onto it.
+       - ", not a" in: Summer and winter parties that feel like a great night out, not a work event.
+  INFO copy-virtue          virtue words about the business (honest, calm, quiet, actually, simply...; a quiet room or calm water is literal and not counted): 2 of 2
+       - "genuinely" in: undulate brings years of club culture, concept events and festival work to your company's m...
+       - "actually" in: A launch night with a line-up and setting people actually talk about.
+  INFO copy-triads          9 lists of three (about one in 58 words)
+       - curated, produced and genuinely
+       - riders, green rooms and the
+       - door, food and the
+       - Who plays, who comes and why
+  INFO copy-rhythm          17 sentences, mean 25.1 words, spread 17.4, 0% of 4 words or fewer
+
+== about/index.html  (581 words)  0 FAIL, 1 WARN
+  WARN copy-stat-strip      stat strip x1
+       - 1 / 2 / 3 / 4 / 5 / 1
+       fix: a strip only of figures the brief gives (a price, hours, a count); otherwise put each number in the sentence it proves, or leave it out
+  INFO copy-triads          10 lists of three (about one in 58 words)
+       - concept events, listening sessions and festivals
+       - art, technology and food
+       - A launch, a summer party or an
+       - A concept, a setting and a
+  INFO copy-rhythm          20 sentences, mean 26.0 words, spread 22.2, 5% of 4 words or fewer
+
+== projects/index.html  (192 words)  0 FAIL, 0 WARN
+  INFO copy-triads          5 lists of three (about one in 38 words)
+       - fashion, technology and community
+       - lightning talks, DJ and live
+       - installations, performances and a
+       - artists, hospitality and bars
+
+== projects/future-boutique/index.html  (127 words)  0 FAIL, 0 WARN
+  INFO copy-triads          3 lists of three (about one in 42 words)
+       - fashion, technology and community
+       - lightning talks, DJ and live
+       - installations, performances and a
+
+== projects/bananas-are-berries/index.html  (104 words)  0 FAIL, 0 WARN
+
+== across files: the first headings side by side
+  index.html: Events for companies that want more than a venue and a DJ.
+  about/index.html: About
+  projects/index.html: Projects
+  projects/future-boutique/index.html: Future Boutique
+  projects/bananas-are-berries/index.html: bananas are berries
+== heading phrases shared across files
+  "bananas are berries" in 3 files: index.html, projects/index.html, projects/bananas-are-berries/index.html
+  "open air festival" in 2 files: index.html, projects/index.html
+  "air festival production" in 2 files: index.html, projects/index.html
+  "company summer party" in 2 files: index.html, projects/index.html
+  "deep listening room" in 2 files: index.html, projects/index.html
