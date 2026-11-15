@@ -206,15 +206,84 @@ export default config({
       },
     }),
     about: singleton({
-      label: 'About',
+      label: 'About (draft copy, Jasmin to check)',
       path: 'src/content/pages/about',
       format: { contentField: 'body' },
       entryLayout: 'content',
       schema: {
         title: fields.text({ label: 'Title', defaultValue: 'About' }),
+        draftNote: fields.text({
+          label: 'Draft note',
+          description: 'Shown at the top of the page while the copy is unchecked. Empty it once the page is approved.',
+        }),
         portrait: siteImage('Portrait'),
         portraitAlt: fields.text({ label: 'Portrait description' }),
-        body: fields.markdoc({ label: 'Text' }),
+        lead: fields.text({
+          label: 'Opening lines',
+          description: 'Two or three sentences: who Jasmin is and what undulate is.',
+          multiline: true,
+        }),
+        scenes: fields.object(
+          {
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            items: fields.array(
+              fields.object({
+                name: fields.text({ label: 'Scene', validation: { length: { min: 1 } } }),
+                text: fields.text({ label: 'What it brings', multiline: true }),
+              }),
+              { label: 'Scenes', itemLabel: (i) => i.fields.name.value || 'Scene' },
+            ),
+          },
+          { label: 'Section: the scenes she comes from' },
+        ),
+        process: fields.object(
+          {
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            steps: fields.array(
+              fields.object({
+                title: fields.text({ label: 'Step', validation: { length: { min: 1 } } }),
+                text: fields.text({ label: 'What happens', multiline: true }),
+              }),
+              { label: 'Steps', itemLabel: (i) => i.fields.title.value || 'Step' },
+            ),
+          },
+          { label: 'Section: working with companies' },
+        ),
+        series: fields.object(
+          {
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({
+              label: 'Intro',
+              description: 'The series themselves are listed automatically: every project with the Series template.',
+              multiline: true,
+            }),
+          },
+          { label: 'Section: the series she runs' },
+        ),
+        network: fields.object(
+          {
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            people: fields.array(
+              fields.object({
+                name: fields.text({ label: 'Name', validation: { length: { min: 1 } } }),
+                note: fields.text({ label: 'Note', description: 'Optional: role, or where they played.' }),
+              }),
+              { label: 'Artists and collaborators', itemLabel: (i) => i.fields.name.value || 'Name' },
+            ),
+          },
+          { label: 'Section: the network' },
+        ),
+        contact: fields.object(
+          {
+            heading: fields.text({ label: 'Heading' }),
+            text: fields.text({ label: 'Text', multiline: true }),
+          },
+          { label: 'Section: contact' },
+        ),
+        body: fields.markdoc({ label: 'Story: who Jasmin is and how undulate came about' }),
       },
     }),
     impressum: singleton({

@@ -88,13 +88,37 @@ const settings = defineCollection({
     }),
 });
 
+/** A heading and intro for one About section; every part may be empty. */
+const section = <T extends z.ZodRawShape>(extra: T) =>
+  z
+    .object({ heading: optText, intro: optText, ...extra })
+    .nullish()
+    .transform((v) => v ?? undefined);
+
+// about, impressum and privacy share this collection; only about uses the section fields.
 const pages = defineCollection({
   loader: glob({ pattern: '*.mdoc', base: './src/content/pages' }),
   schema: ({ image }) =>
     z.object({
       title: optText,
+      draftNote: optText,
       portrait: image().nullish(),
       portraitAlt: optText,
+      lead: optText,
+      scenes: section({
+        items: z.array(z.object({ name: z.string(), text: optText })).default([]),
+      }),
+      process: section({
+        steps: z.array(z.object({ title: z.string(), text: optText })).default([]),
+      }),
+      series: section({}),
+      network: section({
+        people: z.array(z.object({ name: z.string(), note: optText })).default([]),
+      }),
+      contact: z
+        .object({ heading: optText, text: optText })
+        .nullish()
+        .transform((v) => v ?? undefined),
     }),
 });
 

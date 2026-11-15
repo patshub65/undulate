@@ -1,24 +1,71 @@
 ---
 import { Image } from 'astro:assets';
-import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Prose from '../components/Prose.astro';
-import { getSettings, mailto } from '../lib/content';
-const about = await getEntry('pages', 'about');
-if (!about) throw new Error('Missing src/content/pages/about.mdoc');
+import { getAbout, getSettings, mailto } from '../lib/content';
+const about = await getAbout();
 const { email } = await getSettings();
+const { scenes, process, series, network, contact } = about;
 ---
-<BaseLayout title={about.data.title ?? 'About'}>
+<BaseLayout title={about.title ?? 'About'} description={about.lead}>
   <section class="section container about">
-    {about.data.portrait && <Image src={about.data.portrait} alt={about.data.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
+    {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
     <div>
-      <h1>{about.data.title ?? 'About'}</h1>
-      <Prose entry={about} />
-      <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">Get in touch</a>
+      {about.draftNote && <p class="eyebrow">{about.draftNote}</p>}
+      <h1>{about.title ?? 'About'}</h1>
+      {about.lead && <p class="about__lead">{about.lead}</p>}
+      <Prose entry={about.entry} />
     </div>
+  </section>
+
+  {scenes && scenes.items.length > 0 && (
+    <section class="section container" aria-labelledby="scenes-heading">
+      {scenes.heading && <h2 id="scenes-heading">{scenes.heading}</h2>}
+      {scenes.intro && <p>{scenes.intro}</p>}
+      <dl>
+        {scenes.items.map((s) => (<><dt>{s.name}</dt>{s.text && <dd>{s.text}</dd>}</>))}
+      </dl>
+    </section>
+  )}
+
+  {process && process.steps.length > 0 && (
+    <section class="section container" aria-labelledby="process-heading">
+      {process.heading && <h2 id="process-heading">{process.heading}</h2>}
+      {process.intro && <p>{process.intro}</p>}
+      <ol>
+        {process.steps.map((s) => (<li><strong>{s.title}</strong>{s.text && <> {s.text}</>}</li>))}
+      </ol>
+    </section>
+  )}
+
+  {about.series.length > 0 && (
+    <section class="section container" aria-labelledby="series-heading">
+      {series?.heading && <h2 id="series-heading">{series.heading}</h2>}
+      {series?.intro && <p>{series.intro}</p>}
+      <ul>
+        {about.series.map((p) => (<li><a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.summary}</li>))}
+      </ul>
+    </section>
+  )}
+
+  {network && (network.intro || network.people.length > 0) && (
+    <section class="section container" aria-labelledby="network-heading">
+      {network.heading && <h2 id="network-heading">{network.heading}</h2>}
+      {network.intro && <p>{network.intro}</p>}
+      <ul>
+        {network.people.map((p) => (<li>{p.name}{p.note && <span class="muted"> · {p.note}</span>}</li>))}
+      </ul>
+    </section>
+  )}
+
+  <section class="section container">
+    {contact?.heading && <h2>{contact.heading}</h2>}
+    {contact?.text && <p>{contact.text}</p>}
+    <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">{email}</a>
   </section>
 </BaseLayout>
 <style>
   .about { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
   .about img { border-radius: var(--radius-sm); }
+  .about__lead { font-size: var(--text-lg); }
 </style>
