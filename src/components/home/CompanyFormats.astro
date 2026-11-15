@@ -2,7 +2,6 @@
 import { getCompanyFormats, getSettings, mailto } from '../../lib/content';
 const formats = await getCompanyFormats();
 const { email, companies } = await getSettings();
-const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <section class="companies wrap" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
   <div class="row">
@@ -17,7 +16,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="formats">
       {formats.map((f, i) => (
         <details name="formats" open={i === 0}>
-          <summary><span class="mark">{pad(i + 1)}</span><span class="formats__name">{f.data.name}</span></summary>
+          <summary><span class="formats__name">{f.data.name}</span></summary>
           {f.data.description && <p>{f.data.description}</p>}
         </details>
       ))}
@@ -33,19 +32,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .formats { margin-top: var(--space-5); }
   .formats details { border-top: var(--rule); }
   .formats details:last-child { border-bottom: var(--rule); }
-  .formats summary { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) 1.5rem; align-items: baseline; padding-block: var(--space-3); cursor: pointer; list-style: none; }
+  .formats summary { display: grid; grid-template-columns: minmax(0, 1fr) 1.5rem; align-items: baseline; padding-block: var(--space-3); cursor: pointer; list-style: none; }
   .formats summary::-webkit-details-marker { display: none; }
   .formats summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.25rem; text-align: right; }
   .formats details[open] summary::after { content: '\2212'; }
   .formats__name { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; letter-spacing: -0.01em; transition: color 600ms var(--ease-paper); }
   .formats summary:hover .formats__name, .formats details[open] .formats__name { color: var(--palette-yellow); transition-duration: 120ms; }
-  .formats details p { margin: 0 0 var(--space-4) 2.5rem; max-width: 30rem; font-size: 1.25rem; line-height: 2rem; }
+  .formats details p { margin: 0 0 var(--space-4); max-width: 30rem; font-size: 1.25rem; line-height: 2rem; }
   @media (min-width: 60rem) {
     .companies { padding-block: var(--space-7); }
     .companies .row { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); column-gap: var(--space-6); }
     .companies__head { position: sticky; top: var(--space-5); }
     .formats { margin-top: 0; }
-    .formats summary { grid-template-columns: 4rem minmax(0, 1fr) 1.5rem; }
-    .formats details p { margin-left: 4rem; }
   }
 </style>
