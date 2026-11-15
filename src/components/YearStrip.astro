@@ -1,0 +1,14 @@
+---
+/**
+ * The direction's structural idea: a year as a giant numeral on the ink screen,
+ * with that year's flyers sliding across its foot as an uneven filmstrip.
+ */
+interface Props { year: number | string }
+const { year } = Astro.props;
+---
+<div class="yearstrip">
+  <p class="yearstrip__numeral" aria-hidden="true" data-year data-parallax data-parallax-range="24">{year}</p>
+  <ul class="yearstrip__film" role="list" data-hscroll>
+    <slot />
+  </ul>
+</div>

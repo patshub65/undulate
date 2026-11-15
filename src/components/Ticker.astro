@@ -1,0 +1,42 @@
+---
+/**
+ * "Coming up" ticker under the header: the next dates, running sideways.
+ * A drag strip (data-hscroll); the drift is CSS only and stops under reduced motion.
+ */
+import { formatDate, getUpcomingEvents, isoDate } from '../lib/content';
+const events = await getUpcomingEvents(6);
+const copies = events.length ? Math.max(2, Math.ceil(8 / events.length)) : 0;
+---
+{events.length > 0 && (
+  <aside class="ticker" aria-label="Coming up" data-ticker>
+    <div class="ticker__scroll" data-hscroll>
+      <div class="ticker__track">
+        {[0, 1].map((half) => (
+          <ul role="list" aria-hidden={half ? 'true' : undefined}>
+            {Array.from({ length: copies }).flatMap((_, c) =>
+              events.map((e) => (
+                <li data-event-date={isoDate(e.date)} aria-hidden={c ? 'true' : undefined}>
+                  <a href={`/projects/${e.project.id}/`} tabindex={half || c ? -1 : undefined}>{formatDate(e.date)} · {e.name}</a>
+                </li>
+              )),
+            )}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </aside>
+)}
+<script is:inline>
+  (function () {
+    var today = new Date().toISOString().slice(0, 10);
+    document.querySelectorAll('[data-ticker]').forEach(function (t) {
+      var left = 0;
+      t.querySelectorAll('[data-event-date]').forEach(function (li) {
+        var keep = li.getAttribute('data-event-date') >= today;
+        li.hidden = !keep;
+        if (keep) left++;
+      });
+      t.hidden = left === 0;
+    });
+  })();
+</script>

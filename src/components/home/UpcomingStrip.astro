@@ -4,6 +4,7 @@
  * hides events whose date has passed, in case the site hasn't been rebuilt.
  */
 import EventCard from '../EventCard.astro';
+import YearStrip from '../YearStrip.astro';
 import { getSettings, getUpcomingEvents } from '../../lib/content';
 const { upcomingCount } = await getSettings();
 // Render a few extra so the strip stays full after client-side hiding.
@@ -11,13 +12,15 @@ const limit = upcomingCount ?? 4;
 const events = await getUpcomingEvents(limit + 4);
 ---
 {events.length > 0 && (
-  <section class="section container upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
-    <h2 id="upcoming-heading">Coming up</h2>
-    <ul class="grid upcoming__list" role="list">
+  <section class="section upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+    <div class="container section-head">
+      <h2 id="upcoming-heading" class="label">Coming up</h2>
+    </div>
+    <YearStrip year={events[0].date.getFullYear()}>
       {events.map((event, i) => (
         <li><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly /></li>
       ))}
-    </ul>
+    </YearStrip>
   </section>
 )}
 <script>
@@ -25,14 +28,15 @@ const events = await getUpcomingEvents(limit + 4);
   document.querySelectorAll<HTMLElement>('[data-upcoming]').forEach((section) => {
     const limit = Number(section.dataset.limit);
     let shown = 0;
+    let first = '';
     section.querySelectorAll<HTMLElement>('[data-event-date]').forEach((card) => {
       const keep = card.dataset.eventDate! >= today && shown < limit;
       (card.closest('li') ?? card).hidden = !keep;
-      if (keep) shown++;
+      if (keep) { shown++; first ||= card.dataset.eventDate!; }
     });
     section.hidden = shown === 0;
+    // The numeral follows the first date still ahead.
+    const numeral = section.querySelector<HTMLElement>('[data-year]');
+    if (numeral && first) numeral.textContent = first.slice(0, 4);
   });
 </script>
-<style>
-  .upcoming__list { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
-</style>
