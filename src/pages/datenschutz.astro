@@ -6,5 +6,5 @@ const page = await getEntry('pages', 'privacy');
 if (!page) throw new Error('Missing src/content/pages/privacy.mdoc');
 ---
 <BaseLayout title="Datenschutz">
-  <section class="section container"><Prose entry={page} /></section>
+  <section class="plain"><Prose entry={page} /></section>
 </BaseLayout>

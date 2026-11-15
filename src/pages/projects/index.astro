@@ -6,24 +6,26 @@ const projects = await getProjects();
 const pillars = await getPillars();
 ---
 <BaseLayout title="Projects" description="Series, concept events, festivals and company events by undulate.">
-  <section class="section container">
+  <header class="index-head field wrap">
     <h1>Projects</h1>
     <nav class="filters" aria-label="Filter projects">
-      <ul class="tags">
-        <li><a class="tag" href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
+      <ul class="filters__line filters__line--main">
+        <li><a href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
         {pillars.map((pillar) => (
-          <li><a class="tag" href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
+          <li><a href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
         ))}
       </ul>
       {pillars.map((pillar) => (
-        <ul class="tags filters__specialties" data-for-pillar={pillar.id}>
+        <ul class="filters__line" data-for-pillar={pillar.id}>
           {pillar.specialties.map((s) => (
-            <li><a class="tag" href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
+            <li><a href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
           ))}
         </ul>
       ))}
     </nav>
-    <div class="grid" data-project-list>
+  </header>
+  <section class="index wrap">
+    <div class="index__list" data-project-list>
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
     <p class="muted" data-empty hidden>No projects with this specialty yet.</p>
@@ -64,6 +66,22 @@ const pillars = await getPillars();
   apply(new URLSearchParams(location.search));
 </script>
 <style>
-  .filters { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-  .filters__specialties { font-size: var(--text-sm); }
+  .index-head { padding-top: 8rem; padding-bottom: var(--space-6); background: radial-gradient(80% 90% at 85% 0%, #b893ff 0%, rgb(184 147 255 / 0) 100%), radial-gradient(60% 80% at 0% 0%, #f2a0df 0%, rgb(242 160 223 / 0) 100%), var(--color-bg); }
+  .index-head h1 { font-size: clamp(3.5rem, 2rem + 8vw, 9rem); line-height: 0.95; margin-bottom: var(--space-5); }
+  .filters__line { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); line-height: 2rem; }
+  .filters__line--main { font-weight: 600; }
+  .filters__line a { text-decoration: none; }
+  .filters__line a:hover { color: var(--palette-violet); }
+  .filters__line a[aria-current='true'] { text-decoration: underline wavy var(--palette-violet); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+  .index { padding-bottom: var(--space-7); }
+  .index__list { display: grid; gap: var(--space-6); }
+  .index__list :global(.pc__media) { aspect-ratio: 4 / 3; }
+  @media (min-width: 60rem) {
+    .index-head { padding-top: 13rem; }
+    /* Two uneven columns; the right one starts lower. */
+    .index__list { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-6); row-gap: var(--space-6); align-items: start; }
+    .index__list :global(.pc:nth-child(even)) { margin-top: 10rem; }
+    .index__list :global(.pc:nth-child(even) .pc__media) { aspect-ratio: 4 / 5; }
+    .index__list :global(.pc:nth-child(4n + 3)) { grid-column: 1; width: 78%; margin-left: auto; margin-top: -6rem; }
+  }
 </style>
