@@ -17,7 +17,7 @@ const { title, summary, cover, format, client, identity } = project.data;
     <span class="pc__media field">
       {cover && <Image src={cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 40vw, 80vw" draggable="false" />}
     </span>
-    <span class="pc__label">{FORMAT_LABELS[format]}{client && ` · ${client}`}</span>
+    <span class="pc__label"><span class="ghost">{FORMAT_LABELS[format]}</span>{client && <span>{client}</span>}</span>
     <h3>{title}</h3>
   </a>
   <p class="pc__summary">{summary}</p>
@@ -29,8 +29,9 @@ const { title, summary, cover, format, client, identity } = project.data;
   .pc__media { display: block; overflow: hidden; background: radial-gradient(80% 80% at 50% 40%, color-mix(in oklab, var(--project-accent, #b893ff) 70%, var(--color-bg)), color-mix(in oklab, var(--project-accent, #b893ff) 20%, var(--color-bg))); }
   .pc__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-paper); }
   .pc:hover .pc__media img { transform: scale(1.04); }
-  .pc__label { display: block; margin-top: var(--space-3); font-size: var(--text-xs); line-height: 1.5rem; color: var(--color-text-muted); }
-  .pc h3 { font-size: var(--d-md); line-height: 1.1; margin-bottom: var(--space-2); transition: color 500ms var(--ease-paper); }
+  .pc__label { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin: var(--space-3) 0 var(--space-2); font-size: var(--text-xs); line-height: 1.5rem; color: var(--color-text-muted); }
+  .pc__label .ghost { color: var(--color-label); }
+  .pc h3 { font-size: var(--d-md); line-height: 1.1; letter-spacing: var(--track-d); margin-bottom: var(--space-2); transition: color 500ms var(--ease-paper); }
   .pc:hover h3 { color: var(--palette-violet); transition-duration: 120ms; }
   .pc__summary { margin-bottom: var(--space-2); max-width: 26rem; }
   .pc__roles { font-size: var(--text-xs); line-height: 1.5rem; color: var(--color-text-muted); margin: 0; }

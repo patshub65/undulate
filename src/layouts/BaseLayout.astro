@@ -59,7 +59,7 @@ const nav = [
         <button class="menu__close" popovertarget="menu" popovertargetaction="hide">Close</button>
         <ul>
           <li><a href="/">Home</a></li>
-          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          {nav.map((item) => <li><a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a></li>)}
         </ul>
         <a class="button button--ink" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="menu">{settings.email}</a>
       </div>
@@ -123,22 +123,24 @@ const nav = [
       .head__nav { display: none; }
       .head__nav ul { display: flex; gap: var(--space-5); font-weight: 600; }
       .head__nav a { text-decoration: none; }
-      .head__nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
-      .head__nav a[aria-current='page'] { text-decoration: underline wavy; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+      .head__nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--color-mark); }
+      /* The active page carries the red mark: a short straight bar under the word. */
+      .head__nav a[aria-current='page'] { text-decoration: underline solid var(--color-mark); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
       .head__menu { all: unset; cursor: pointer; padding: 0.625rem 0; margin-block: -0.625rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
       .head__menu:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
       @media (min-width: 60rem) { .head__nav { display: block; } .head__menu { display: none; } }
-      /* Phone menu: the gradient field, full screen, with the links large. */
-      .menu { inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 2.5rem var(--gutter) var(--space-5); background: linear-gradient(180deg, #4c33f2, #b893ff); color: #fff; }
+            /* Phone menu: paper with the hero's haze fading down from the top, links large in ink. */
+      .menu { inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 2.5rem var(--gutter) var(--space-5); background-color: var(--color-bg); color: var(--color-text); --fade: var(--fade-down); --field: radial-gradient(90% 40% at 0% 0%, rgb(242 160 223 / 0.9), rgb(242 160 223 / 0)), linear-gradient(180deg, #ddd0fc, #c2a8ff); }
+      .menu ul a[aria-current='page'] { text-decoration: underline solid var(--color-mark); text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
       .menu:popover-open { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
       .menu__close { all: unset; cursor: pointer; align-self: flex-end; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
       .menu ul { display: grid; gap: var(--space-3); }
       .menu ul a { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; text-decoration: none; }
-      .foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3) var(--space-5); padding-block: var(--space-5); }
+      .foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3) var(--space-5); padding-block: var(--space-5); border-top: var(--hairline); }
       .foot__mark { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; margin: 0; }
       .foot ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
       .foot a { text-decoration: none; }
-      .foot a:hover { text-decoration: underline; }
+      .foot a:hover { text-decoration: underline; text-decoration-color: var(--color-mark); text-decoration-thickness: 2px; }
     </style>
   </body>
 </html>
