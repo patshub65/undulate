@@ -10,6 +10,7 @@ import keystatic from '@keystatic/astro';
 export default defineConfig({
   site: process.env.SITE_URL || 'https://undulate.example',
   output: 'static',
-  adapter: netlify(),
+  // Edge Functions emulation needs a local Deno server and the site has no edge functions; images stay emulated.
+  adapter: netlify({ devFeatures: { images: true, environmentVariables: false, edgeFunctions: false } }),
   integrations: [react(), markdoc(), keystatic()],
 });
