@@ -31,7 +31,7 @@ npm run dev
 | `src/lib/content.ts` | Data layer: every page reads content through this |
 | `src/components/`, `src/layouts/`, `src/styles/` | Presentation: what design variations change |
 
-Content status: **bananas are berries** is a real series with placeholder text. The other four projects are fictional samples, marked `[Sample project]`, to be replaced by Jasmin's 4 to 6 launch projects. All images are placeholders.
+Content status: **bananas are berries** and **Future Boutique** are real series (their flyers are real; the write-ups are placeholders). The other three projects are fictional samples, marked `[Sample project]`, to be replaced by Jasmin's 4 to 6 launch projects. All other images are placeholders.
 
 ## Deploy (Netlify)
 

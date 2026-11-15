@@ -62,7 +62,7 @@ The five should be clearly different from each other:
 ## Deliverables
 
 - One branch per direction, `design/<n>-<name>`, each with its Netlify preview URL.
-- A desktop and a mobile screenshot of Home, a series project page (`/projects/bananas-are-berries/`) and a case study page (`/projects/texture-studies/`).
+- A desktop and a mobile screenshot of Home, a series project page (`/projects/bananas-are-berries/`) and a case study page (`/projects/open-air-festival/`).
 - One line per direction saying what it's going for.
 
 Jasmin shortlists two of the five, and round 2 refines those two.
