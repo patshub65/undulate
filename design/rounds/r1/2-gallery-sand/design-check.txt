@@ -1,0 +1,19 @@
+$ npm run design:check -- http://localhost:4332   (branch design/2-gallery-sand, commit cfa324b)
+ok   / 375
+ok   / 1280
+ok   /projects/ 375
+ok   /projects/ 1280
+ok   /projects/bananas-are-berries/ 375
+ok   /projects/bananas-are-berries/ 1280
+ok   /projects/future-boutique/ 375
+ok   /projects/future-boutique/ 1280
+ok   /projects/open-air-festival/ 375
+ok   /projects/open-air-festival/ 1280
+ok   /projects/company-summer-party/ 375
+ok   /projects/company-summer-party/ 1280
+ok   /about/ 375
+ok   /about/ 1280
+ok   /impressum/ 375
+ok   /impressum/ 1280
+
+all clean
