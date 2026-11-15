@@ -54,7 +54,7 @@ const nav = [
           <li><a href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="header">Get in touch</a></li>
         </ul>
       </nav>
-      <button class="head__menu" popovertarget="menu">Menu</button>
+      <button class="head__menu" popovertarget="menu" aria-expanded="false" aria-controls="menu">Menu</button>
       <div id="menu" popover class="menu field">
         <button class="menu__close" popovertarget="menu" popovertargetaction="hide">Close</button>
         <ul>
@@ -83,6 +83,10 @@ const nav = [
     <script is:inline src="/motion/lenis.min.js"></script>
     <script is:inline src="/motion/motion.js"></script>
     <script is:inline>window.UndulateMotion.init();</script>
+    <script is:inline>
+      // The menu button says whether the menu is open.
+      document.getElementById('menu')?.addEventListener('toggle', (e) => document.querySelector('.head__menu')?.setAttribute('aria-expanded', String(e.newState === 'open')));
+    </script>
 
     <script>
       // Analytics: elements with data-track send a Plausible custom event on click;
@@ -121,7 +125,7 @@ const nav = [
       .head__nav a { text-decoration: none; }
       .head__nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
       .head__nav a[aria-current='page'] { text-decoration: underline wavy; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
-      .head__menu { all: unset; cursor: pointer; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+      .head__menu { all: unset; cursor: pointer; padding: 0.625rem 0; margin-block: -0.625rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
       .head__menu:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
       @media (min-width: 60rem) { .head__nav { display: block; } .head__menu { display: none; } }
       /* Phone menu: the gradient field, full screen, with the links large. */

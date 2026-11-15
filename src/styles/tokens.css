@@ -25,7 +25,7 @@
   --color-bg: #faf7f2;
   --color-surface: #ffffff;
   --color-text: var(--palette-ink);
-  --color-text-muted: #56545c;
+  --color-text-muted: #504e56;
   --color-brand: var(--palette-violet);
   --color-brand-contrast: var(--palette-white);
   --color-accent: var(--palette-lilac);
