@@ -147,6 +147,7 @@ Carried over from Ladenkit's reviews (rounds named `LK ...`). Each says why and,
 - **Not a conference.** Large condensed capitals as the default heading style read as a tech conference; giant type is a single moment on a page, not every section's heading. *(undulate r1)*
 - **No stock type.** A generic serif plus a generic sans (Bodoni, Gloock, Hanken, Albert Sans, Manrope, Archivo) or a stock condensed display (Anton, Bebas, Big Shoulders) is a default, not a decision. *(undulate r1)*
 - **Gradients: subtle, grainy, full width.** A soft abstract gradient with grain across the full width works; wave-shaped edges and blobs do not. *(undulate r1)*
+- **Gradients fade, they don't stop.** A gradient field melts into the ground at its edges; a clean cut across the page reads as a block, not weather. *(undulate r2)*
 - **A neutral ground with bold buttons.** Use few palette colours: a neutral ground and one or two bold colours for buttons and moments, not every colour on every page. *(undulate r1)*
 
 ### Inspiration
@@ -185,3 +186,10 @@ No direction shortlisted. Round 2 starts over from new directions rather than re
 - **4 Gradient Wave** (`hero-roster-names-gradient`, `hero-gradient-condensed-type`, `about-card-over-giant-type`): **kept with potential:** the full-width closing band with a vertical violet-to-lilac gradient and the email as a solid pill, and the project header on a soft radial gradient in the series accent with outline pill specialties. The wave-edge masks are cut, and so is Anton.
 - **5 Editorial** (`index-chapter-rows`, `profile-two-photos-text-column`, `about-text-over-portrait`): cut. Bodoni Moda and Albert Sans are a generic serif-and-sans pairing.
 - **About page:** too thin. It needs several sections about Jasmin and how she works, not one text over a portrait.
+
+### r2 (reviewed by Patrick, 2026-11-15)
+
+**2 Grain** is picked for round 3, as two refined variants. Run Sheet and Blockwork are not taken further (no reason given).
+
+- **2 Grain** (one grainy gradient as the site's weather; kept `r1-4` closing band and project header; `hero-collective-split-photo`): **kept:** the minimalism and the Basteleur headline ("a good font"), though Patrick wants to see other display options beside it. **To change:** gradient fields end in a clean cut where they should fade into the ground; the page needs a bit more colour accent, an off-white ground, and more subtle grainy gradients.
+- **1 Run Sheet** and **3 Blockwork:** not picked.
