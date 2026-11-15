@@ -3,7 +3,7 @@ import { getCompanyFormats, getSettings, mailto } from '../../lib/content';
 const formats = await getCompanyFormats();
 const { email, companies } = await getSettings();
 ---
-<section class="companies wrap" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
+<section class="companies field wrap" id="companies" aria-labelledby="companies-heading" data-track-view="Companies Section View">
   <div class="companies__stay">
     <h2 id="companies-heading">{companies.heading}</h2>
     {companies.intro && <p class="companies__intro">{companies.intro}</p>}
@@ -19,11 +19,16 @@ const { email, companies } = await getSettings();
   </ul>
 </section>
 <style>
-  .companies { padding-block: var(--space-6); display: grid; gap: var(--space-6); }
-  .companies h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; margin-bottom: var(--space-2); }
+  /* A faint mint field rises behind the offer and fades out before the formats. */
+  .companies {
+    padding-block: var(--space-6); display: grid; gap: var(--space-6);
+    --field: radial-gradient(22rem 16rem at 0% 18rem, rgb(51 245 188 / 0.4), rgb(51 245 188 / 0) 100%);
+    --fade: radial-gradient(22rem 16rem at 0% 18rem, #000, transparent 100%);
+  }
+  .companies h2 { font-size: 2rem; line-height: 2.5rem; margin-bottom: var(--space-3); }
   .companies__intro { max-width: 22rem; margin-bottom: var(--space-4); }
   .companies__list { display: grid; gap: var(--space-5); }
-  .companies__list h3 { font-size: var(--d-lg); line-height: 1.04; transition: color 500ms var(--ease-paper); }
+  .companies__list h3 { font-size: var(--d-lg); line-height: 1.04; letter-spacing: var(--track-xl); transition: color 500ms var(--ease-paper); }
   .companies__list li:hover h3 { color: var(--palette-violet); transition-duration: 120ms; }
   .companies__list p { margin: var(--space-2) 0 0; max-width: 24rem; color: var(--color-text-muted); }
   .companies__list li:nth-child(even) { padding-left: var(--space-5); }
@@ -31,7 +36,8 @@ const { email, companies } = await getSettings();
     .companies { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-6); padding-block: var(--space-7); align-items: start; }
     /* The offer stays put; the formats scroll past it. */
     .companies__stay { position: sticky; top: 38vh; }
-    .companies__list { gap: var(--space-6); padding-bottom: 12vh; }
+    .companies__list { gap: var(--space-6); padding-bottom: var(--space-5); }
+    .companies { --field: radial-gradient(36rem 26rem at 8% 50%, rgb(51 245 188 / 0.4), rgb(51 245 188 / 0) 100%); --fade: radial-gradient(36rem 26rem at 8% 50%, #000, transparent 100%); }
     .companies__list li:nth-child(even) { padding-left: 18%; }
     .companies__list li:nth-child(3n) { padding-left: 8%; }
   }

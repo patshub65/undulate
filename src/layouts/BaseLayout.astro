@@ -2,9 +2,13 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../motion/motion.css';
-import '@fontsource/atkinson-hyperlegible-next/latin-400.css';
-import '@fontsource/atkinson-hyperlegible-next/latin-600.css';
-import '@fontsource/atkinson-hyperlegible-mono/latin-400.css';
+import '@fontsource/syne/latin-400.css';
+import '@fontsource/syne/latin-500.css';
+import '@fontsource/syne/latin-600.css';
+import '@fontsource/redaction/latin-400.css';
+import '@fontsource/redaction/latin-400-italic.css';
+import '@fontsource/redaction/latin-700.css';
+import syneDisplay from '@fontsource/syne/files/syne-latin-400-normal.woff2?url';
 import { getSettings, mailto } from '../lib/content';
 
 interface Props {
@@ -31,7 +35,7 @@ const nav = [
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={new URL(path, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/basteleur/Basteleur-Moonlight.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={syneDisplay} as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <script is:inline>
@@ -119,24 +123,24 @@ const nav = [
       /* The header floats over whatever field opens the page. */
       .head { position: absolute; inset: 0 0 auto 0; z-index: 5; display: flex; align-items: baseline; justify-content: space-between; padding-top: 2.5rem; }
       @media (min-width: 60rem) { .head { padding-top: 4rem; } }
-      .head__logo { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; text-decoration: none; }
+      .head__logo { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; line-height: 2rem; letter-spacing: -0.04em; text-decoration: none; }
       .head__nav { display: none; }
-      .head__nav ul { display: flex; gap: var(--space-5); font-weight: 600; }
+      .head__nav ul { display: flex; gap: var(--space-5); font-family: var(--font-label); font-weight: 500; }
       .head__nav a { text-decoration: none; }
       .head__nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
-      .head__nav a[aria-current='page'] { text-decoration: underline wavy; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
-      .head__menu { all: unset; cursor: pointer; padding: 0.625rem 0; margin-block: -0.625rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+      .head__nav a[aria-current='page'] { text-decoration: underline wavy var(--palette-violet); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+      .head__menu { all: unset; cursor: pointer; padding: 0.625rem 0; margin-block: -0.625rem; font-family: var(--font-label); font-weight: 500; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
       .head__menu:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
       @media (min-width: 60rem) { .head__nav { display: block; } .head__menu { display: none; } }
-      /* Phone menu: the gradient field, full screen, with the links large. */
-      .menu { inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 2.5rem var(--gutter) var(--space-5); background: linear-gradient(180deg, #4c33f2, #b893ff); color: #fff; }
+            /* Phone menu: paper with orchid and mint fading in from the corners, links large in ink. */
+      .menu { inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 2.5rem var(--gutter) var(--space-5); background-color: var(--color-bg); color: var(--color-text); --field: radial-gradient(80% 50% at 0% 0%, rgb(242 160 223 / 0.75), rgb(242 160 223 / 0)), radial-gradient(70% 40% at 100% 100%, rgb(51 245 188 / 0.45), rgb(51 245 188 / 0)); --fade: radial-gradient(80% 50% at 0% 0%, #000, transparent), radial-gradient(70% 40% at 100% 100%, #000, transparent); }
       .menu:popover-open { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
-      .menu__close { all: unset; cursor: pointer; align-self: flex-end; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+      .menu__close { all: unset; cursor: pointer; align-self: flex-end; font-family: var(--font-label); font-weight: 500; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
       .menu ul { display: grid; gap: var(--space-3); }
-      .menu ul a { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; text-decoration: none; }
+      .menu ul a { font-family: var(--font-display); font-size: 3rem; line-height: 1; letter-spacing: var(--track-xl); text-decoration: none; }
       .foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3) var(--space-5); padding-block: var(--space-5); }
-      .foot__mark { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; margin: 0; }
-      .foot ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+      .foot__mark { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.04em; font-size: 1.5rem; line-height: 2rem; margin: 0; }
+      .foot ul { font-family: var(--font-label); font-size: 1rem; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
       .foot a { text-decoration: none; }
       .foot a:hover { text-decoration: underline; }
     </style>

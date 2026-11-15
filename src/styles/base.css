@@ -1,14 +1,14 @@
-/* Grain: quiet pages between gradient fields. No rules; air and offsets do the separating. */
+/* Grain, Mosaic: paper pages with several faint colour fields, each fading out; photos overlap in a mosaic. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--color-bg); color: var(--color-text);
-  font-family: var(--font-body); font-size: var(--text-md); line-height: 1.5rem;
+  font-family: var(--font-body); font-size: 1.125rem; line-height: 1.75rem;
   -webkit-font-smoothing: antialiased; hyphens: manual;
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: var(--track-d); }
 p { margin: 0 0 var(--space-3); }
 ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
 :focus-visible { outline: 2px solid var(--palette-violet); outline-offset: 3px; }
@@ -17,24 +17,71 @@ ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
 .wrap { padding-inline: var(--gutter); }
 /* A gradient field carries its grain in a layer of its own, so text stays clean. */
 .field { position: relative; isolation: isolate; }
-.field::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--grain); mix-blend-mode: soft-light; opacity: 0.55; pointer-events: none; }
-.kicker { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.5rem; margin: 0; }
-.date { font-family: var(--font-mono); font-size: var(--text-xs); line-height: 1.5rem; }
+/* The gradient lives in ::before and the grain in ::after; both take the same mask, so field and grain fade together. */
+.field::before, .field::after { content: ''; position: absolute; inset: 0; pointer-events: none; -webkit-mask-image: var(--fade, none); mask-image: var(--fade, none); }
+.field::before { z-index: -2; background: var(--field, none); }
+.field::after { z-index: -1; background: var(--grain); mix-blend-mode: soft-light; opacity: 0.24; }
+/* Labels: small tracked capitals in Syne. */
+.label { font-family: var(--font-label); font-weight: 500; font-size: 0.875rem; line-height: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-label); }
+.field .kicker, .field .label { color: var(--color-text); }
+
+.kicker { font-family: var(--font-label); font-weight: 500; font-size: 0.875rem; line-height: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-label); margin: 0; }
+.date { font-family: var(--font-label); letter-spacing: 0.02em; font-size: var(--text-xs); line-height: 1.5rem; color: var(--color-label); }
 .muted { color: var(--color-text-muted); }
 .button {
   display: inline-block; padding: 1rem 1.75rem; border-radius: 999px; background: var(--color-brand); color: var(--color-brand-contrast);
-  font-weight: 600; font-size: 1rem; line-height: 1.5rem; text-decoration: none;
+  font-family: var(--font-label); font-weight: 500; font-size: 1rem; line-height: 1.5rem; text-decoration: none;
   transition: background-color 500ms var(--ease-paper);
 }
 .button:hover { background: var(--palette-ink); transition-duration: 120ms; }
 .button--ink { background: var(--palette-ink); }
 .button--ink:hover { background: var(--palette-violet); }
-.more { font-weight: 600; text-decoration: underline; text-decoration-color: var(--palette-violet); text-decoration-thickness: 2px; }
-.more:hover { color: var(--palette-violet); }
+.more { font-family: var(--font-label); font-weight: 500; text-decoration: underline; text-decoration-color: var(--palette-violet); text-decoration-thickness: 2px; transition: color 500ms var(--ease-paper); }
+.more:hover { color: var(--palette-violet); transition-duration: 120ms; }
+.prose a { text-decoration-color: var(--palette-violet); }
+.prose a:hover { color: var(--palette-violet); }
 .prose { max-width: 36rem; font-size: 1.125rem; line-height: 2rem; }
 .prose h2 { font-size: 1.75rem; line-height: 2rem; margin: var(--space-5) 0 var(--space-3); }
 .plain { padding: 9rem var(--gutter) var(--space-7); }
 .plain h1 { font-size: var(--d-lg); line-height: 1.05; margin-bottom: var(--space-5); }
+.plain h2 { font-size: 1.5rem; }
+/* The mosaic (from the reference): photos at 0 radius, no shadow, overlapping their neighbours in an uneven layout.
+   Only photos overlap photos; each card's words keep to the part of the column no other photo reaches.
+   Counted over visible cards, so the filters on /projects/ keep the pattern. */
+.mosaic { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-3); align-items: start; }
+.mosaic > * { position: relative; grid-column: 1 / -1; }
+.mosaic > * .pc__media { aspect-ratio: 4 / 5; }
+.mosaic > :nth-child(3n + 1 of :not([hidden])) { grid-column: 1 / span 7; z-index: 1; }
+.mosaic > :nth-child(3n + 1 of :not([hidden])) .pc__label,
+.mosaic > :nth-child(3n + 1 of :not([hidden])) h3,
+.mosaic > :nth-child(3n + 1 of :not([hidden])) p { max-width: 72%; }
+.mosaic > :nth-child(3n + 2 of :not([hidden])) { grid-column: 8 / -1; margin: 7rem calc(-1 * var(--gutter)) 0 -2.5rem; z-index: 2; }
+.mosaic > :nth-child(3n + 2 of :not([hidden])) .pc__label,
+.mosaic > :nth-child(3n + 2 of :not([hidden])) h3,
+.mosaic > :nth-child(3n + 2 of :not([hidden])) p { padding-right: var(--gutter); }
+.mosaic > :nth-child(3n + 3 of :not([hidden])) { grid-column: 3 / -1; margin-block: var(--space-5) var(--space-6); z-index: 1; }
+.mosaic > :nth-child(3n + 3 of :not([hidden])) .pc__media { aspect-ratio: 3 / 2; }
+/* A card left alone at the end of the mosaic takes a wider place, so it reads as meant. */
+.mosaic > :nth-child(3n + 1 of :not([hidden])):nth-last-child(1 of :not([hidden])) { grid-column: 2 / span 10; }
+.mosaic > :nth-child(3n + 1 of :not([hidden])):nth-last-child(1 of :not([hidden])) :is(.pc__label, h3, p) { max-width: none; }
+.mosaic > :nth-child(3n + 1 of :not([hidden])):nth-last-child(1 of :not([hidden])) .pc__media { aspect-ratio: 3 / 2; }
+@media (min-width: 60rem) {
+  .mosaic > :nth-child(3n + 1 of :not([hidden])):nth-last-child(1 of :not([hidden])) { grid-column: 3 / span 7; }
+}
+@media (min-width: 60rem) {
+  .mosaic { column-gap: var(--space-4); }
+  .mosaic > :nth-child(3n + 1 of :not([hidden])) { grid-column: 1 / span 5; }
+  .mosaic > :nth-child(3n + 1 of :not([hidden])) .pc__label,
+  .mosaic > :nth-child(3n + 1 of :not([hidden])) h3,
+  .mosaic > :nth-child(3n + 1 of :not([hidden])) p { max-width: 76%; }
+  /* Negative margins, not shared columns, make the overlap, so the three cards of a group share one row. */
+  .mosaic > :nth-child(3n + 2 of :not([hidden])) { grid-column: 6 / span 4; margin: 10rem 0 0 -6rem; z-index: 2; }
+  .mosaic > :nth-child(3n + 2 of :not([hidden])) .pc__label,
+  .mosaic > :nth-child(3n + 2 of :not([hidden])) h3,
+  .mosaic > :nth-child(3n + 2 of :not([hidden])) p { padding-right: 0; max-width: 76%; }
+  .mosaic > :nth-child(3n + 3 of :not([hidden])) { grid-column: 10 / -1; margin: 24rem 0 var(--space-6) -4rem; z-index: 3; }
+  .mosaic > :nth-child(3n + 3 of :not([hidden])) .pc__media { aspect-ratio: 4 / 5; }
+}
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 [hidden] { display: none !important; }
 .visually-hidden:focus-visible { position: fixed; top: 8px; left: 8px; z-index: 100; width: auto; height: auto; clip: auto; padding: 0.75rem 1rem; background: var(--palette-ink); color: #fff; outline: 2px solid #fff; outline-offset: -4px; }

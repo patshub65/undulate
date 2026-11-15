@@ -1,11 +1,9 @@
 /*
- * Round 2, direction 2: Grain.
- * Warm white ground, ink text, violet buttons, one grainy violet-to-lilac gradient.
- * Basteleur (Velvetyne, OFL) + Atkinson Hyperlegible Next and Mono (fontsource, OFL).
+ * Round 3, variant B: Grain, Mosaic.
+ * Paper ground, ink text, violet buttons. Accents as soft colour inside several faint grain fields,
+ * each fading out on its own: orchid, mint and yellow, beside the violet-to-lilac of the hero and closing.
+ * Syne (display, Bonjour Monde, OFL) + Redaction (text, Jeremy Mickel, OFL), both via fontsource.
  */
-@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur/Basteleur-Moonlight.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur/Basteleur-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-
 :root {
   --palette-yellow: #f2d833;
   --palette-red: #f24a33;
@@ -22,25 +20,36 @@
   --gradient-red: linear-gradient(135deg, #f24a33, #ff2191);
   --gradient-dusk: linear-gradient(135deg, #5f559d, #f2a0df);
 
-  --color-bg: #faf7f2;
-  --color-surface: #ffffff;
+  --palette-orchid: #f2a0df;
+
+  --palette-mint-soft: #33f5bc;
+  --palette-yellow-soft: #f2d833;
+
+  --color-bg: #ede6da;
+  --color-surface: #f6f2ea;
   --color-text: var(--palette-ink);
-  --color-text-muted: #504e56;
+  --color-text-muted: #4d4a52;
+  --color-label: var(--palette-ink);
   --color-brand: var(--palette-violet);
   --color-brand-contrast: var(--palette-white);
   --color-accent: var(--palette-lilac);
-  --color-border: color-mix(in oklab, var(--palette-ink) 16%, var(--color-bg));
+  --color-border: color-mix(in oklab, var(--palette-ink) 14%, var(--color-bg));
+  --hairline: 1px solid var(--color-border);
 
-  --font-display: 'Basteleur', Georgia, serif;
-  --font-body: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
+  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Redaction', Georgia, serif;
+  --font-label: 'Syne', ui-sans-serif, system-ui, sans-serif;
 
   --text-xs: 0.875rem;
   --text-sm: 1rem;
   --text-md: 1.0625rem;
   --text-lg: 1.5rem;
-  --d-md: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
-  --d-lg: clamp(2.25rem, 1.2rem + 4.4vw, 5rem);
+  --d-md: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  --d-lg: clamp(2rem, 1.1rem + 3.8vw, 4.25rem);
+  --d-xl: clamp(2.5rem, 0.8rem + 7vw, 8rem);
+  /* Hierarchy from scale and tracking, one weight (from the reference). Syne is wide, so large sizes close up hard. */
+  --track-d: -0.035em;
+  --track-xl: -0.05em;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -49,12 +58,15 @@
   --space-5: 2rem;
   --space-6: 4rem;
   --space-7: 8rem;
-  --radius-sm: 0;
+  --radius-sm: 4px;
   --radius-md: 0;
+  /* Fields fade into the paper: the mask every gradient field and its grain share. */
+  --fade-down: linear-gradient(180deg, #000 0%, #000 45%, rgb(0 0 0 / 0.55) 72%, transparent 100%);
+  --fade-both: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.6) 18%, #000 38%, #000 70%, rgb(0 0 0 / 0.55) 86%, transparent 100%);
   --gutter: 32px;
 
   /* Grain: an inline turbulence tile, so no request leaves the site. */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media (min-width: 60rem) {
   :root { --gutter: 64px; --space-6: 6rem; --space-7: 10rem; }

@@ -11,7 +11,7 @@ const limit = upcomingCount ?? 4;
 const events = await getUpcomingEvents(limit + 4);
 ---
 {events.length > 0 && (
-  <section class="upcoming wrap" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+  <section class="upcoming field wrap" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
     <h2 id="upcoming-heading" class="kicker">Coming up</h2>
     <ul class="upcoming__list">
       {events.map((event, i) => (
@@ -34,12 +34,17 @@ const events = await getUpcomingEvents(limit + 4);
   });
 </script>
 <style>
-  .upcoming { padding-block: var(--space-6); }
+  /* A faint yellow field behind the next flyer, fading out. */
+  .upcoming {
+    padding-block: var(--space-6);
+    --field: radial-gradient(min(40rem, 90vw) 50% at 30% 50%, rgb(242 216 51 / 0.38), rgb(242 216 51 / 0) 100%);
+    --fade: radial-gradient(min(40rem, 90vw) 50% at 30% 50%, #000, transparent 100%);
+  }
   .upcoming h2 { margin-bottom: var(--space-4); }
   .upcoming__list { display: grid; gap: var(--space-4); }
   /* The next event is the feature: its flyer large, its name in the display face. */
   .upcoming__list li:nth-child(1 of :not([hidden])) :global(.ev__flyer) { width: 78%; }
-  .upcoming__list li:nth-child(1 of :not([hidden])) :global(.ev__name) { font-size: var(--d-lg); line-height: 1.04; margin-block: var(--space-2); }
+  .upcoming__list li:nth-child(1 of :not([hidden])) :global(.ev__name) { font-size: var(--d-lg); line-height: 1.04; letter-spacing: var(--track-xl); margin-block: var(--space-2); }
   /* The rest are a short list with a small flyer. */
   .upcoming__list li:not(:nth-child(1 of :not([hidden]))) :global(.ev__trigger) { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: var(--space-3); align-items: center; }
   .upcoming__list li:not(:nth-child(1 of :not([hidden]))) :global(.ev__meta) { padding-top: 0; }

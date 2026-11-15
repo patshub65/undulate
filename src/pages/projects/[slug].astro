@@ -70,35 +70,43 @@ const hasWriteup = project.body?.trim();
 </BaseLayout>
 <style>
   /* Kept from round 1: the header on a soft radial gradient in the series accent, specialties as outline pills. */
+  /* Now a field: the series accent fades down into the paper, its grain with it. */
   .project__header {
     --a: var(--project-accent, #b893ff);
-    padding-top: 8rem; padding-bottom: var(--space-6);
-    background:
-      radial-gradient(75% 70% at 50% 28%, color-mix(in oklab, var(--a) 62%, var(--color-bg)) 0%, color-mix(in oklab, var(--a) 0%, transparent) 100%),
-      linear-gradient(180deg, color-mix(in oklab, var(--a) 26%, var(--color-bg)) 0%, var(--color-bg) 100%);
+    padding-top: 8rem; padding-bottom: 8rem;
+    --fade: var(--fade-down);
+    --field:
+      radial-gradient(75% 60% at 70% 20%, color-mix(in oklab, var(--a) 44%, var(--color-bg)) 0%, color-mix(in oklab, var(--a) 0%, transparent) 100%),
+      linear-gradient(180deg, color-mix(in oklab, var(--a) 28%, var(--color-bg)) 0%, color-mix(in oklab, var(--a) 16%, var(--color-bg)) 100%);
   }
   .project__logo { width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; margin-bottom: var(--space-3); }
-  .project__header h1 { font-size: clamp(2.5rem, 1rem + 7.4vw, 8.5rem); line-height: 0.98; margin: var(--space-3) 0 var(--space-4); max-width: 9em; }
+  .project__header h1 { font-size: clamp(2.25rem, 0.9rem + 6.6vw, 7.5rem); line-height: 1; letter-spacing: var(--track-xl); margin: var(--space-3) 0 var(--space-4); max-width: 9em; }
   .project__summary { font-size: 1.25rem; line-height: 2rem; max-width: 36rem; margin-bottom: var(--space-4); }
   .project__pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .project__pills a { display: block; padding: 0.25rem 1rem; border: 1px solid var(--palette-ink); border-radius: 999px; text-decoration: none; font-size: var(--text-xs); line-height: 1.5rem; transition: background-color 500ms var(--ease-paper), color 500ms var(--ease-paper); }
+  .project__pills a { display: block; padding: 0.25rem 1rem; font-family: var(--font-label); font-weight: 500; border: 1px solid var(--palette-ink); border-radius: 999px; text-decoration: none; font-size: var(--text-xs); line-height: 1.5rem; transition: background-color 500ms var(--ease-paper), color 500ms var(--ease-paper); }
   .project__pills a:hover { background: var(--palette-ink); color: var(--color-bg); transition-duration: 120ms; }
-  .project__cover { padding-left: var(--gutter); margin-bottom: var(--space-6); }
+  .project__cover { padding-left: var(--gutter); margin-top: -4rem; margin-bottom: var(--space-6); position: relative; }
   .project__cover img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
   .project__section { padding-bottom: var(--space-6); }
   .project__section h2 { margin-bottom: var(--space-4); }
-  .project__photos { display: grid; gap: var(--space-5); padding-bottom: var(--space-6); }
-  .project__photos :global(img) { width: 100%; }
+  /* Photos as an overlapping mosaic: each one steps across and over the last, no gaps between them. */
+  .project__photos { display: grid; padding-bottom: var(--space-6); }
+  .project__photos :global(img) { position: relative; width: 78%; }
+  .project__photos :global(img:nth-child(even)) { justify-self: end; margin: -3rem calc(-1 * var(--gutter)) 0 0; width: 70%; z-index: 1; }
+  .project__photos :global(img:nth-child(odd):not(:first-child)) { margin-top: -2rem; }
   .project__cta { padding-block: var(--space-6) var(--space-7); }
-  .project__cta p { font-family: var(--font-display); font-size: var(--d-md); line-height: 1.1; max-width: 14em; margin-bottom: var(--space-4); }
+  .project__cta p { font-family: var(--font-display); font-size: var(--d-md); line-height: 1.1; letter-spacing: var(--track-d); max-width: 14em; margin-bottom: var(--space-4); }
   @media (min-width: 60rem) {
-    .project__header { padding-top: 13rem; padding-bottom: var(--space-7); }
-    .project__cover { padding-left: 20%; margin-top: -4rem; margin-bottom: var(--space-7); }
+    .project__header { padding-top: 13rem; padding-bottom: 12rem; }
+    .project__cover { padding-left: 20%; margin-top: -8rem; margin-bottom: var(--space-7); }
     .project__section { padding-bottom: var(--space-7); }
     .project--series .project__section:first-of-type { margin-left: 12%; }
     .project__writeup { margin-left: 42%; }
-    .project__photos { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-5); align-items: start; padding-bottom: var(--space-7); }
-    .project__photos :global(img:nth-child(even)) { margin-top: 8rem; }
+    .project__photos { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; padding-bottom: var(--space-7); }
+    .project__photos :global(img) { width: 100%; }
+    .project__photos :global(img:nth-child(odd):not(:first-child)) { margin-top: -6rem; }
+    .project__photos :global(img:nth-child(even)) { width: calc(100% + 6rem); margin: 8rem 0 0 -6rem; }
+    .project__photos :global(img:nth-child(4n + 3)) { margin-left: 12%; width: 88%; }
     .project__cta { margin-left: 42%; }
   }
 </style>

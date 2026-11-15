@@ -6,7 +6,7 @@ const { pillars: intros } = await getSettings();
 let n = 0;
 const numbered = pillars.map((p) => ({ ...p, specialties: p.specialties.map((s) => ({ s, n: ++n })) }));
 ---
-<section class="pillars wrap" id="services" aria-labelledby="services-heading">
+<section class="pillars field wrap" id="services" aria-labelledby="services-heading">
   <h2 id="services-heading" class="visually-hidden">Services</h2>
   {numbered.map((pillar) => (
     <article class="pillar" data-reveal>
@@ -26,17 +26,24 @@ const numbered = pillars.map((p) => ({ ...p, specialties: p.specialties.map((s) 
   ))}
 </section>
 <style>
-  .pillars { padding-top: var(--space-7); padding-bottom: var(--space-6); display: grid; gap: var(--space-6); }
+  /* Two faint fields, orchid by the first pillar and yellow by the second, each fading out on all sides. */
+  .pillars {
+    padding-top: var(--space-7); padding-bottom: var(--space-6); display: grid; gap: var(--space-6);
+    /* Sized in rem and placed inside the section, so each field has faded to nothing before the section's edge. */
+    --field: radial-gradient(28rem 18rem at 90% 22rem, rgb(242 160 223 / 0.55), rgb(242 160 223 / 0) 100%), radial-gradient(26rem 16rem at 0% calc(100% - 20rem), rgb(242 216 51 / 0.38), rgb(242 216 51 / 0) 100%);
+    --fade: radial-gradient(28rem 18rem at 90% 22rem, #000, transparent 100%), radial-gradient(26rem 16rem at 0% calc(100% - 20rem), #000, transparent 100%);
+  }
   .pillar h3 a { text-decoration: none; }
   .pillar h3 a:hover { color: var(--palette-violet); }
   .pillar__intro { max-width: 26rem; margin: var(--space-2) 0 var(--space-4); color: var(--color-text-muted); }
-  .pillar__line { font-family: var(--font-display); font-size: var(--d-lg); line-height: 1.08; margin-bottom: var(--space-5); text-wrap: balance; }
+  .pillar__line { font-family: var(--font-display); font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3.5rem); line-height: 1.16; letter-spacing: var(--track-d); margin-bottom: var(--space-5); text-wrap: balance; }
   .pillar__line a { text-decoration: none; transition: color 500ms var(--ease-paper); }
   .pillar__line a:hover { color: var(--palette-violet); transition-duration: 120ms; }
-  .pillar__line sup { font-family: var(--font-mono); font-size: max(0.26em, 0.875rem); vertical-align: 1.2em; margin-left: 0.1em; line-height: 0; }
+  .pillar__line sup { font-family: var(--font-label); font-size: max(0.26em, 0.875rem); vertical-align: 0.9em; margin-left: 0.1em; letter-spacing: 0; line-height: 0; }
   @media (min-width: 60rem) { sup { vertical-align: 1.8em; } }
   .pillar__notes { display: grid; gap: var(--space-3) var(--space-5); max-width: 44rem; }
   .pillar__notes li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); color: var(--color-text-muted); }
+  .pillar__notes .date { padding-top: 0.125rem; }
   @media (min-width: 60rem) {
     .pillars { padding-top: 16rem; padding-bottom: var(--space-7); gap: var(--space-7); }
     .pillar { max-width: 62%; }
