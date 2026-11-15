@@ -1,21 +1,16 @@
 ---
-/**
- * Next events across all projects. Built at deploy time; a small script also
- * hides events whose date has passed, in case the site hasn't been rebuilt.
- */
 import EventCard from '../EventCard.astro';
 import { getSettings, getUpcomingEvents } from '../../lib/content';
 const { upcomingCount } = await getSettings();
-// Render a few extra so the strip stays full after client-side hiding.
 const limit = upcomingCount ?? 4;
 const events = await getUpcomingEvents(limit + 4);
 ---
 {events.length > 0 && (
-  <section class="section container upcoming" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
-    <h2 id="upcoming-heading">Coming up</h2>
-    <ul class="grid upcoming__list" role="list">
+  <section class="upcoming wrap" aria-labelledby="upcoming-heading" data-upcoming data-limit={limit}>
+    <h2 id="upcoming-heading" class="mark">Coming up</h2>
+    <ul class="upcoming__list">
       {events.map((event, i) => (
-        <li><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly /></li>
+        <li><EventCard event={event} id={`upcoming-${i}`} showProject upcomingOnly layout="row" /></li>
       ))}
     </ul>
   </section>
@@ -34,5 +29,8 @@ const events = await getUpcomingEvents(limit + 4);
   });
 </script>
 <style>
-  .upcoming__list { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  .upcoming { padding-bottom: var(--space-6); }
+  .upcoming h2 { font-weight: 400; letter-spacing: 0.04em; padding-bottom: var(--space-2); }
+  .upcoming__list { border-bottom: var(--rule); }
+  @media (min-width: 60rem) { .upcoming { padding-bottom: var(--space-7); } }
 </style>

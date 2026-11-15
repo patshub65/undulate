@@ -7,12 +7,16 @@ const { project } = Astro.props;
 const events = [...project.data.events].sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 {events.length > 0 && (
-  <ul class="grid event-grid" role="list">
+  <ul class="event-grid">
     {events.map((event, i) => (
       <li><EventCard event={event} id={`${project.id}-${i}`} /></li>
     ))}
   </ul>
 )}
 <style>
-  .event-grid { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  .event-grid { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); align-items: start; }
+  @media (min-width: 60rem) {
+    .event-grid { grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); max-width: 66rem; }
+    .event-grid li:nth-child(even) { margin-top: var(--space-6); }
+  }
 </style>

@@ -4,14 +4,42 @@ import { getFeaturedProjects } from '../../lib/content';
 const projects = await getFeaturedProjects();
 ---
 {projects.length > 0 && (
-  <section class="section container" aria-labelledby="featured-heading">
-    <h2 id="featured-heading">Selected projects</h2>
-    <div class="grid featured">
-      {projects.map((p) => <ProjectCard project={p} />)}
+  <section class="featured wrap" aria-labelledby="featured-heading">
+    <div class="featured__head">
+      <h2 id="featured-heading" class="mark">Selected projects</h2>
+      <p class="mark muted">{projects.length} projects</p>
     </div>
-    <p><a href="/projects/">All projects →</a></p>
+    <div class="featured__list">
+      {projects.map((p) => <div class="featured__item" data-reveal><ProjectCard project={p} /></div>)}
+    </div>
+    <p class="featured__all"><a class="link" href="/projects/">All projects</a></p>
   </section>
 )}
 <style>
-  .featured { margin-bottom: var(--space-4); }
+  .featured { padding-block: var(--space-6); }
+  .featured__head { display: flex; justify-content: space-between; gap: var(--space-3); border-bottom: var(--rule); padding-bottom: var(--space-2); margin-bottom: var(--space-5); }
+  .featured__head h2 { font-weight: 400; letter-spacing: 0.04em; }
+  .featured__item + .featured__item { margin-top: var(--space-6); }
+  .featured__item :global(.pc__media) { aspect-ratio: 4 / 3; margin-bottom: var(--space-3); }
+  .featured__item:nth-child(even) :global(.pc__media) { margin-left: var(--space-6); margin-right: calc(-1 * var(--gutter)); aspect-ratio: 1; }
+  .featured__all { margin: var(--space-6) 0 0; }
+  @media (min-width: 60rem) {
+    .featured { padding-block: var(--space-7); }
+    .featured__head { margin-bottom: var(--space-6); }
+    .featured__item :global(.pc) { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); align-items: end; }
+    .featured__item :global(.pc__media) { margin: 0; grid-row: 1; }
+    .featured__item :global(.pc__body) { grid-row: 1; padding-bottom: var(--space-3); }
+    /* Four placements, then they repeat: the rows never line up. */
+    .featured__item:nth-child(4n + 1) :global(.pc__media) { grid-column: 1 / 8; aspect-ratio: 16 / 10; }
+    .featured__item:nth-child(4n + 1) :global(.pc__body) { grid-column: 9 / 13; }
+    .featured__item:nth-child(4n + 2) :global(.pc__media) { grid-column: 8 / 13; aspect-ratio: 4 / 5; margin-right: calc(-1 * var(--gutter)); margin-left: 0; }
+    .featured__item:nth-child(4n + 2) :global(.pc__body) { grid-column: 3 / 7; align-self: start; padding-top: var(--space-6); }
+    .featured__item:nth-child(4n + 3) :global(.pc__media) { grid-column: 3 / 8; aspect-ratio: 1; }
+    .featured__item:nth-child(4n + 3) :global(.pc__body) { grid-column: 9 / 13; }
+    .featured__item:nth-child(4n + 4) :global(.pc__media) { grid-column: 6 / 13; aspect-ratio: 16 / 9; }
+    .featured__item:nth-child(4n + 4) :global(.pc__body) { grid-column: 1 / 5; }
+    .featured__item + .featured__item { margin-top: var(--space-7); }
+    .featured__item:nth-child(4n + 2) { margin-top: -2rem; }
+    .featured__all { margin-left: var(--rail); }
+  }
 </style>

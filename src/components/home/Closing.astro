@@ -2,12 +2,27 @@
 import { getSettings, mailto } from '../../lib/content';
 const { email, closing } = await getSettings();
 ---
-<section class="section container closing">
-  {closing.heading && <h2>{closing.heading}</h2>}
-  {closing.text && <p class="muted">{closing.text}</p>}
-  <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
+<section class="closing wrap">
+  <div class="row">
+    <div class="rail"><p class="mark">Write</p></div>
+    <div>
+      {closing.heading && <h2>{closing.heading}</h2>}
+      {closing.text && <p class="closing__text">{closing.text}</p>}
+    </div>
+  </div>
+  <a class="closing__mail" style={`--chars: ${email.length}`} href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
 </section>
 <style>
-  .closing { text-align: center; }
-  .closing p { max-width: 34rem; margin-inline: auto; }
+  .closing { padding-block: var(--space-6) var(--space-5); border-top: var(--rule); }
+  .closing h2 { font-size: 2rem; line-height: 2.5rem; font-style: italic; margin-bottom: var(--space-3); max-width: 16em; }
+  .closing__text { max-width: 28rem; }
+  /* The one giant line: a mono glyph is 0.6em wide, so the address fits the measure exactly. */
+  .closing__mail {
+    display: block; margin-top: var(--space-5); padding-block: 0.12em; white-space: nowrap; text-decoration: none;
+    font-family: var(--font-mono); font-size: calc((100vw - 2 * var(--gutter) - 4px) / (var(--chars) * 0.6)); line-height: 1.1;
+    background: linear-gradient(var(--color-brand), var(--color-brand)) no-repeat 0 100% / 100% 0.1em;
+    transition: background-size 600ms var(--ease-paper);
+  }
+  .closing__mail:hover { background-size: 100% 100%; transition-duration: 200ms; }
+  @media (min-width: 60rem) { .closing { padding-top: var(--space-7); } .closing__mail { margin-top: var(--space-6); } }
 </style>

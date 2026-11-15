@@ -8,23 +8,32 @@ const { specialties, pillars } = await getProjectServices(project);
 const { title, summary, cover, format, client, identity } = project.data;
 ---
 <article
-  class="project-card"
+  class:list={['pc', !cover && 'pc--bare']}
   data-pillars={pillars.map((p) => p.id).join(' ')}
   data-specialties={specialties.map((s) => s.id).join(' ')}
   style={identity.accent ? `--project-accent: ${identity.accent}` : undefined}
 >
-  <a href={`/projects/${project.id}/`} class="project-card__link">
-    {cover && <Image src={cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />}
-    <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
-    <h3>{title}</h3>
-  </a>
-  <p class="muted">{summary}</p>
-  <ul class="tags" aria-label="Specialties">
-    {specialties.map((s) => <li class="tag">{s.data.name}</li>)}
-  </ul>
+  {cover && (
+    <a class="pc__media" href={`/projects/${project.id}/`} tabindex="-1" aria-hidden="true">
+      <Image src={cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 55vw, 100vw" />
+    </a>
+  )}
+  <div class="pc__body">
+    <p class="mark"><span class="pc__chip"></span>{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
+    <h3><a href={`/projects/${project.id}/`}>{title}</a></h3>
+    <p class="pc__summary">{summary}</p>
+    <ul class="mark muted slashes" aria-label="Specialties">
+      {specialties.map((s) => <li>{s.data.name}</li>)}
+    </ul>
+  </div>
 </article>
 <style>
-  .project-card { border-top: 3px solid var(--project-accent, var(--color-border)); padding-top: var(--space-3); }
-  .project-card__link { text-decoration: none; display: block; }
-  .project-card__link img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
+  .pc__media { display: block; overflow: hidden; }
+  .pc__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-paper); }
+  .pc:hover .pc__media img { transform: scale(1.04); }
+  .pc__chip { display: inline-block; width: 0.75rem; height: 0.75rem; margin-right: 0.5rem; background: var(--project-accent, transparent); border: 1px solid var(--palette-ink); vertical-align: -1px; }
+  .pc h3 { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; margin: var(--space-2) 0 var(--space-3); }
+  .pc h3 a { text-decoration: none; }
+  .pc h3 a:hover { font-style: italic; }
+  .pc__summary { max-width: 28rem; }
 </style>

@@ -1,7 +1,7 @@
 ---
 /**
- * A single event: its flyer as a button that opens a native popover with
- * the details and optional link. Events never have pages of their own.
+ * A single event: a button that opens a native popover with the details.
+ * layout "row" is the timetable line (homepage), "flyer" the uncropped artwork (project pages).
  */
 import { Image } from 'astro:assets';
 import { formatDate, isoDate, type EventItem } from '../lib/content';
@@ -9,33 +9,42 @@ import { formatDate, isoDate, type EventItem } from '../lib/content';
 interface Props {
   event: Omit<EventItem, 'project'> & { project?: EventItem['project'] };
   id: string;
-  /** Show the project name (used in the cross-project upcoming strip). */
   showProject?: boolean;
-  /** Hide on the client once the date passes (for the upcoming strip). */
   upcomingOnly?: boolean;
+  layout?: 'row' | 'flyer';
 }
-const { event, id, showProject = false, upcomingOnly = false } = Astro.props;
+const { event, id, showProject = false, upcomingOnly = false, layout = 'flyer' } = Astro.props;
 const popoverId = `event-${id}`;
 ---
-<article class="event-card" data-event-date={upcomingOnly ? isoDate(event.date) : undefined}>
-  <button class="event-card__trigger" popovertarget={popoverId} data-track="Event Open" data-track-label={event.name}>
-    {event.flyer ? (
-      <Image src={event.flyer} alt={`Flyer: ${event.name}`} widths={[320, 540, 800]} sizes="(min-width: 60rem) 25vw, 50vw" />
+<article class={`ev ev--${layout}`} data-event-date={upcomingOnly ? isoDate(event.date) : undefined}>
+  <button class="ev__trigger" popovertarget={popoverId} data-track="Event Open" data-track-label={event.name}>
+    {layout === 'row' ? (
+      <>
+        <time class="ev__date" datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
+        <span class="ev__name">{event.name}</span>
+        <span class="ev__where">{event.venue ?? (showProject && event.project ? event.project.title : '')}</span>
+        {event.flyer && <Image class="ev__thumb" src={event.flyer} alt="" width={160} />}
+      </>
     ) : (
-      <span class="event-card__noflyer">{event.name}</span>
+      <>
+        {event.flyer ? (
+          <Image class="ev__flyer" src={event.flyer} alt={`Flyer: ${event.name}`} widths={[320, 540, 800]} sizes="(min-width: 60rem) 25vw, 60vw" />
+        ) : (
+          <span class="ev__noflyer">{event.name}</span>
+        )}
+        <span class="ev__meta">
+          <time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
+          <span>{event.name}</span>
+        </span>
+      </>
     )}
-    <span class="event-card__meta">
-      <time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>
-      <span class="event-card__name">{event.name}</span>
-      {showProject && event.project && <span class="muted">{event.project.title}</span>}
-    </span>
   </button>
 
-  <div id={popoverId} popover class="event-popover">
-    <button class="event-popover__close" popovertarget={popoverId} popovertargetaction="hide" aria-label="Close">×</button>
-    <p class="eyebrow"><time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>{event.venue && ` · ${event.venue}`}</p>
+  <div id={popoverId} popover class="ev-pop">
+    <button class="ev-pop__close" popovertarget={popoverId} popovertargetaction="hide" aria-label="Close">Close</button>
+    <p class="mark"><time datetime={isoDate(event.date)}>{formatDate(event.date)}</time>{event.venue && ` · ${event.venue}`}</p>
     <h3>{event.name}</h3>
-    {event.details && <p class="event-popover__details">{event.details}</p>}
+    {event.details && <p class="ev-pop__details">{event.details}</p>}
     {showProject && event.project && (
       <p><a href={`/projects/${event.project.id}/`}>More from {event.project.title}</a></p>
     )}
@@ -46,18 +55,31 @@ const popoverId = `event-${id}`;
 </article>
 
 <style>
-  .event-card__trigger { all: unset; cursor: pointer; display: block; width: 100%; }
-  .event-card__trigger:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
-  .event-card__trigger img, .event-card__noflyer { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius-sm); }
-  .event-card__noflyer { display: grid; place-items: center; background: var(--color-surface); border: 1px solid var(--color-border); }
-  .event-card__meta { display: grid; gap: 0.1rem; padding-top: var(--space-2); font-size: var(--text-sm); }
-  .event-card__name { font-weight: 600; }
-  .event-popover {
-    max-width: min(28rem, 100% - 2 * var(--gutter));
-    padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md);
-    background: var(--color-surface); color: var(--color-text);
+  .ev__trigger { all: unset; box-sizing: border-box; cursor: pointer; display: block; width: 100%; }
+  .ev__trigger:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
+
+  .ev--row .ev__trigger { display: grid; grid-template-columns: minmax(0, 1fr) 3.5rem; gap: 0 var(--space-3); align-items: center; padding-block: var(--space-3); border-top: var(--rule); }
+  .ev__date, .ev__where { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; text-transform: uppercase; grid-column: 1; }
+  .ev__where { color: var(--color-text-muted); }
+  .ev__name { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; grid-column: 1; }
+  .ev__thumb { grid-column: 2; grid-row: 1 / span 3; width: 100%; height: auto; transition: transform 900ms var(--ease-paper); transform-origin: right center; }
+  .ev--row .ev__trigger:hover .ev__name { font-style: italic; }
+  .ev--row .ev__trigger:hover .ev__thumb { transform: scale(1.5) rotate(-3deg); transition-duration: 200ms; }
+  @media (min-width: 60rem) {
+    .ev--row .ev__trigger { grid-template-columns: var(--rail) minmax(0, 1fr) 14rem 5rem; align-items: baseline; padding-block: var(--space-4); }
+    .ev__date, .ev__name, .ev__where { grid-column: auto; }
+    .ev__thumb { grid-column: 4; grid-row: 1; align-self: center; }
   }
-  .event-popover::backdrop { background: rgb(0 0 0 / 0.5); }
-  .event-popover__close { position: absolute; top: var(--space-2); right: var(--space-2); background: none; border: 0; font-size: 1.5rem; cursor: pointer; color: inherit; }
-  .event-popover__details { white-space: pre-line; }
+
+  .ev__flyer { width: 100%; height: auto; }
+  .ev__noflyer { display: grid; place-items: center; aspect-ratio: 4 / 5; padding: var(--space-3); border: var(--rule); font-size: 1.5rem; line-height: 2rem; text-align: center; }
+  .ev__meta { display: grid; padding-top: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; text-transform: uppercase; }
+  .ev__meta time { color: var(--color-text-muted); }
+  .ev--flyer .ev__trigger:hover .ev__meta span { background: var(--palette-yellow); }
+
+  .ev-pop { width: min(30rem, 100% - 2 * var(--gutter)); padding: var(--space-5); border: 1px solid var(--palette-ink); background: var(--color-bg); color: var(--color-text); }
+  .ev-pop::backdrop { background: rgb(25 26 24 / 0.6); }
+  .ev-pop h3 { font-size: 2rem; line-height: 2.5rem; margin: var(--space-2) 0 var(--space-3); }
+  .ev-pop__close { all: unset; cursor: pointer; float: right; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; text-decoration: underline; }
+  .ev-pop__details { white-space: pre-line; }
 </style>

@@ -1,19 +1,33 @@
 ---
 import { Image } from 'astro:assets';
-
 import { getAbout, getSettings } from '../../lib/content';
 const { aboutTeaser } = await getSettings();
 const about = await getAbout();
 ---
-<section class="section container about-teaser" aria-labelledby="about-heading">
-  {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800]} sizes="(min-width: 50rem) 30vw, 100vw" />}
-  <div>
-    <h2 id="about-heading">About undulate</h2>
-    {aboutTeaser && <p>{aboutTeaser}</p>}
-    <a href="/about/">More about Jasmin →</a>
+<section class="teaser wrap row" aria-labelledby="about-heading">
+  <div class="rail"><h2 id="about-heading" class="mark">About undulate</h2></div>
+  <div class="teaser__body">
+    {about.portrait && (
+      <div class="teaser__portrait" data-parallax data-parallax-range="16">
+        <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[240, 480]} sizes="12rem" />
+      </div>
+    )}
+    {aboutTeaser && <p class="big">{aboutTeaser}</p>}
+    <a class="link" href="/about/">More about Jasmin</a>
   </div>
 </section>
 <style>
-  .about-teaser { display: grid; gap: var(--space-5); align-items: center; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
-  .about-teaser img { border-radius: var(--radius-sm); max-height: 32rem; object-fit: cover; }
+  .teaser { padding-block: var(--space-6); border-top: var(--rule); }
+  .teaser h2 { font-weight: 400; letter-spacing: 0.04em; }
+  .teaser__portrait { width: 7rem; margin: 0 0 var(--space-4) auto; }
+  .teaser__portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .teaser .big { margin-bottom: var(--space-4); }
+  @media (min-width: 60rem) {
+    .teaser { padding-block: var(--space-7); }
+    .teaser__body { display: grid; grid-template-columns: minmax(0, 1fr) 12rem; column-gap: var(--space-6); }
+    .teaser__body > :not(.teaser__portrait) { grid-column: 1; }
+    .teaser__body .teaser__portrait { grid-column: 2; grid-row: 1 / span 3; width: 12rem; margin: -11rem 0 0; }
+    .teaser .big { max-width: 22em; }
+    .teaser .link { justify-self: start; }
+  }
 </style>

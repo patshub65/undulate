@@ -3,26 +3,46 @@ import { getPillars, getSettings, projectsUrl } from '../../lib/content';
 const pillars = await getPillars();
 const { pillars: intros } = await getSettings();
 ---
-<section class="section container" id="services" aria-labelledby="services-heading">
+<section class="pillars wrap" id="services" aria-labelledby="services-heading">
   <h2 id="services-heading" class="visually-hidden">Services</h2>
-  <div class="pillars">
-    {pillars.map((pillar) => (
-      <article class="pillar">
-        <h3><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
-        {intros[pillar.id] && <p class="muted">{intros[pillar.id]}</p>}
-        <ul class="pillar__specialties" role="list">
+  {pillars.map((pillar) => (
+    <article class="pillar row">
+      <div class="rail">
+        <div class="pillar__head">
+          <p class="mark muted">{pillar.specialties.length} specialties</p>
+          <h3><a href={projectsUrl({ pillar: pillar.id })} data-track="Pillar Click" data-track-label={pillar.name}>{pillar.name}</a></h3>
+        </div>
+      </div>
+      <div>
+        {intros[pillar.id] && <p class="pillar__intro big">{intros[pillar.id]}</p>}
+        <ul class="ledger" data-reveal-stagger>
           {pillar.specialties.map((s) => (
-            <li>
-              <a href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}><strong>{s.data.name}</strong></a>
-              {s.data.description && <span class="muted"> · {s.data.description}</span>}
+            <li data-reveal>
+              <a class="ledger__name" href={projectsUrl({ specialty: s.id })} data-track="Specialty Click" data-track-label={s.data.name}>{s.data.name}</a>
+              {s.data.description && <span class="ledger__text">{s.data.description}</span>}
             </li>
           ))}
         </ul>
-      </article>
-    ))}
-  </div>
+      </div>
+    </article>
+  ))}
 </section>
 <style>
-  .pillars { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
-  .pillar__specialties { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .pillars { padding-top: 7rem; padding-bottom: var(--space-6); }
+  .pillar + .pillar { margin-top: var(--space-6); }
+  .pillar h3 { font-size: 1.5rem; line-height: 2rem; font-style: italic; }
+  .pillar h3 a { text-decoration: none; }
+  .pillar h3 a:hover { background: var(--palette-yellow); }
+  .pillar__intro { max-width: 22em; margin-bottom: var(--space-5); }
+  .ledger li { display: grid; gap: 0 var(--space-5); padding-block: var(--space-3); border-top: var(--rule); }
+  .ledger li:last-child { border-bottom: var(--rule); }
+  .ledger__name { font-size: 1.5rem; line-height: 2rem; text-decoration: none; justify-self: start; }
+  .ledger__name:hover { background: var(--palette-yellow); }
+  .ledger__text { color: var(--color-text-muted); }
+  @media (min-width: 60rem) {
+    .pillars { padding-top: 14rem; padding-bottom: var(--space-7); }
+    .pillar + .pillar { margin-top: var(--space-7); margin-left: 8%; }
+    .pillar__head { position: sticky; top: var(--space-5); }
+    .ledger li { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; }
+  }
 </style>

@@ -6,24 +6,30 @@ const projects = await getProjects();
 const pillars = await getPillars();
 ---
 <BaseLayout title="Projects" description="Series, concept events, festivals and company events by undulate.">
-  <section class="section container">
-    <h1>Projects</h1>
-    <nav class="filters" aria-label="Filter projects">
-      <ul class="tags">
-        <li><a class="tag" href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
-        {pillars.map((pillar) => (
-          <li><a class="tag" href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
-        ))}
-      </ul>
-      {pillars.map((pillar) => (
-        <ul class="tags filters__specialties" data-for-pillar={pillar.id}>
-          {pillar.specialties.map((s) => (
-            <li><a class="tag" href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
+  <section class="index wrap">
+    <div class="row index__head">
+      <div class="rail"><p class="mark muted">{projects.length} projects</p></div>
+      <h1>Projects</h1>
+    </div>
+    <nav class="filters row" aria-label="Filter projects">
+      <p class="rail mark muted">Filter</p>
+      <div>
+        <ul class="filters__line mark">
+          <li><a href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
+          {pillars.map((pillar) => (
+            <li><a href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
           ))}
         </ul>
-      ))}
+        {pillars.map((pillar) => (
+          <ul class="filters__line mark" data-for-pillar={pillar.id}>
+            {pillar.specialties.map((s) => (
+              <li><a href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
+            ))}
+          </ul>
+        ))}
+      </div>
     </nav>
-    <div class="grid" data-project-list>
+    <div class="index__list" data-project-list>
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
     <p class="muted" data-empty hidden>No projects with this specialty yet.</p>
@@ -64,6 +70,24 @@ const pillars = await getPillars();
   apply(new URLSearchParams(location.search));
 </script>
 <style>
-  .filters { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-  .filters__specialties { font-size: var(--text-sm); }
+  .index { padding-bottom: var(--space-7); }
+  .index h1 { font-size: clamp(3rem, 2rem + 5vw, 6rem); line-height: 1; letter-spacing: -0.02em; font-style: italic; }
+  .index__head { padding-top: var(--space-5); align-items: baseline; }
+  .filters { padding-block: var(--space-5); }
+  .filters__line { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); }
+  .filters__line a { text-decoration: none; }
+  .filters__line a:hover { background: var(--palette-yellow); }
+  .filters__line a[aria-current='true'] { text-decoration: underline; text-decoration-thickness: 2px; }
+  .index__list :global(.pc) { display: grid; gap: var(--space-3); padding-block: var(--space-4); border-top: var(--rule); }
+  .index__list :global(.pc:last-child) { border-bottom: var(--rule); }
+  .index__list :global(.pc__media) { aspect-ratio: 16 / 10; }
+  @media (min-width: 60rem) {
+    .index__head { padding-top: var(--space-6); }
+    .index__list :global(.pc) { grid-template-columns: var(--rail) minmax(0, 1fr); gap: 0; align-items: start; padding-block: var(--space-5); }
+    .index__list :global(.pc__media) { width: 11rem; aspect-ratio: 4 / 5; }
+    .index__list :global(.pc__body) { grid-column: 2; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: var(--space-6); }
+    .index__list :global(.pc__body > .mark:first-child), .index__list :global(.pc h3) { grid-column: 1; }
+    .index__list :global(.pc__summary), .index__list :global(.pc__body > ul) { grid-column: 2; }
+    .index__list :global(.pc__summary) { grid-row: 1 / span 2; align-self: end; }
+  }
 </style>

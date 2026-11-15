@@ -6,66 +6,152 @@ import { getAbout, getSettings, mailto } from '../lib/content';
 const about = await getAbout();
 const { email } = await getSettings();
 const { scenes, process, series, network, contact } = about;
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <BaseLayout title={about.title ?? 'About'} description={about.lead}>
-  <section class="section container about">
-    {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
-    <div>
-      {about.draftNote && <p class="eyebrow">{about.draftNote}</p>}
-      <h1>{about.title ?? 'About'}</h1>
-      {about.lead && <p class="about__lead">{about.lead}</p>}
-      <Prose entry={about.entry} />
+  <section class="about-head wrap row">
+    <div class="rail">
+      <h1 class="mark">{about.title ?? 'About'}</h1>
+    </div>
+    <div class="about-head__body">
+      {about.portrait && (
+        <div class="about-head__portrait" data-parallax data-parallax-range="20">
+          <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 60rem) 26vw, 60vw" loading="eager" />
+        </div>
+      )}
+      {about.lead && <p class="about-head__lead">{about.lead}</p>}
+      {about.draftNote && <p class="about-head__draft">{about.draftNote}</p>}
     </div>
   </section>
 
+  <section class="sheet wrap row">
+    <div class="rail"><p class="mark muted">Story</p></div>
+    <Prose entry={about.entry} />
+  </section>
+
   {scenes && scenes.items.length > 0 && (
-    <section class="section container" aria-labelledby="scenes-heading">
-      {scenes.heading && <h2 id="scenes-heading">{scenes.heading}</h2>}
-      {scenes.intro && <p>{scenes.intro}</p>}
-      <dl>
-        {scenes.items.map((s) => (<><dt>{s.name}</dt>{s.text && <dd>{s.text}</dd>}</>))}
-      </dl>
+    <section class="sheet wrap row" aria-labelledby="scenes-heading">
+      <div class="rail"><p class="mark muted">{scenes.items.length} scenes</p></div>
+      <div>
+        {scenes.heading && <h2 id="scenes-heading">{scenes.heading}</h2>}
+        {scenes.intro && <p class="sheet__intro">{scenes.intro}</p>}
+        <dl class="scenes" data-reveal-stagger>
+          {scenes.items.map((s) => (
+            <div data-reveal><dt>{s.name}</dt>{s.text && <dd>{s.text}</dd>}</div>
+          ))}
+        </dl>
+      </div>
     </section>
   )}
 
   {process && process.steps.length > 0 && (
-    <section class="section container" aria-labelledby="process-heading">
-      {process.heading && <h2 id="process-heading">{process.heading}</h2>}
-      {process.intro && <p>{process.intro}</p>}
-      <ol>
-        {process.steps.map((s) => (<li><strong>{s.title}</strong>{s.text && <> {s.text}</>}</li>))}
-      </ol>
+    <section class="sheet sheet--ink wrap row" aria-labelledby="process-heading">
+      <div class="rail"><p class="mark">{process.steps.length} steps</p></div>
+      <div>
+        {process.heading && <h2 id="process-heading">{process.heading}</h2>}
+        {process.intro && <p class="sheet__intro">{process.intro}</p>}
+        <ol class="steps">
+          {process.steps.map((s, i) => (
+            <li>
+              <span class="mark">{pad(i + 1)}</span>
+              <h3>{s.title}</h3>
+              {s.text && <p>{s.text}</p>}
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   )}
 
   {about.series.length > 0 && (
-    <section class="section container" aria-labelledby="series-heading">
-      {series?.heading && <h2 id="series-heading">{series.heading}</h2>}
-      {series?.intro && <p>{series.intro}</p>}
-      <ul>
-        {about.series.map((p) => (<li><a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.summary}</li>))}
-      </ul>
+    <section class="sheet wrap row" aria-labelledby="series-heading">
+      <div class="rail"><p class="mark muted">{about.series.length} series</p></div>
+      <div>
+        {series?.heading && <h2 id="series-heading">{series.heading}</h2>}
+        {series?.intro && <p class="sheet__intro">{series.intro}</p>}
+        <ul class="series">
+          {about.series.map((p) => (
+            <li style={p.data.identity.accent ? `--project-accent: ${p.data.identity.accent}` : undefined}>
+              <a href={`/projects/${p.id}/`}><span class="series__chip"></span>{p.data.title}</a>
+              <span class="series__text">{p.data.summary}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   )}
 
   {network && (network.intro || network.people.length > 0) && (
-    <section class="section container" aria-labelledby="network-heading">
-      {network.heading && <h2 id="network-heading">{network.heading}</h2>}
-      {network.intro && <p>{network.intro}</p>}
-      <ul>
-        {network.people.map((p) => (<li>{p.name}{p.note && <span class="muted"> · {p.note}</span>}</li>))}
-      </ul>
+    <section class="sheet wrap row" aria-labelledby="network-heading">
+      <div class="rail"><p class="mark muted">{network.people.length} names</p></div>
+      <div>
+        {network.heading && <h2 id="network-heading">{network.heading}</h2>}
+        {network.intro && <p class="sheet__intro">{network.intro}</p>}
+        <ul class="people">
+          {network.people.map((p) => (
+            <li><span class="people__name">{p.name}</span>{p.note && <span class="mark muted">{p.note}</span>}</li>
+          ))}
+        </ul>
+      </div>
     </section>
   )}
 
-  <section class="section container">
-    {contact?.heading && <h2>{contact.heading}</h2>}
-    {contact?.text && <p>{contact.text}</p>}
-    <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">{email}</a>
+  <section class="sheet wrap row">
+    <div class="rail"><p class="mark muted">Contact</p></div>
+    <div>
+      {contact?.heading && <h2>{contact.heading}</h2>}
+      {contact?.text && <p class="sheet__intro">{contact.text}</p>}
+      <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">{email}</a>
+    </div>
   </section>
 </BaseLayout>
 <style>
-  .about { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
-  .about img { border-radius: var(--radius-sm); }
-  .about__lead { font-size: var(--text-lg); }
+  .about-head { padding-top: var(--space-5); padding-bottom: var(--space-6); }
+  .about-head h1 { font-weight: 400; letter-spacing: 0.04em; }
+  .about-head__lead { font-size: clamp(1.75rem, 1rem + 3.4vw, 3.5rem); line-height: 1.143; letter-spacing: -0.015em; margin-bottom: var(--space-4); }
+  .about-head__draft { font-family: var(--font-mono); font-size: 1rem; line-height: 1.5rem; max-width: 30rem; padding: var(--space-3); border: 1px dashed var(--palette-ink); margin: 0; }
+  .about-head__portrait { width: 60%; margin: 0 calc(-1 * var(--gutter)) var(--space-5) auto; }
+  .about-head__portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .sheet { padding-block: var(--space-5) var(--space-6); border-top: var(--rule); }
+  .sheet h2 { font-size: 2rem; line-height: 2.5rem; font-style: italic; margin-bottom: var(--space-3); }
+  .sheet__intro { font-size: 1.25rem; line-height: 2rem; max-width: 36rem; margin-bottom: var(--space-5); }
+  .sheet--ink { background: var(--palette-ink); color: var(--color-bg); border-top: 0; --color-border: color-mix(in oklab, var(--color-bg) 36%, var(--palette-ink)); }
+
+  .scenes { margin: 0; }
+  .scenes > div { display: grid; gap: 0 var(--space-5); padding-block: var(--space-3); border-top: var(--rule); }
+  .scenes > div:last-child { border-bottom: var(--rule); }
+  .scenes dt { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; }
+  .scenes dd { margin: 0; color: var(--color-text-muted); align-self: end; }
+
+  .steps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); padding-block: var(--space-3); border-top: var(--rule); }
+  .steps li:last-child { border-bottom: var(--rule); }
+  .steps h3 { font-size: 1.5rem; line-height: 2rem; }
+  .steps p { grid-column: 2; margin: var(--space-1) 0 0; max-width: 30rem; }
+
+  .series li { padding-block: var(--space-3); border-top: var(--rule); display: grid; gap: var(--space-2) var(--space-5); }
+  .series li:last-child { border-bottom: var(--rule); }
+  .series a { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; font-style: italic; text-decoration: none; justify-self: start; }
+  .series a:hover { background: var(--palette-yellow); }
+  .series__chip { display: inline-block; width: 0.4em; height: 0.4em; margin-right: 0.3em; background: var(--project-accent, transparent); border: 1px solid var(--palette-ink); vertical-align: 0.12em; }
+  .series__text { color: var(--color-text-muted); max-width: 30rem; }
+
+  .people { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); }
+  .people li { display: grid; }
+  .people__name { font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1.167; }
+
+  @media (min-width: 60rem) {
+    .about-head { padding-top: var(--space-6); padding-bottom: var(--space-7); }
+    .about-head__body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 3fr); column-gap: var(--space-6); align-items: start; }
+    .about-head__body > :not(.about-head__portrait) { grid-column: 1; }
+    .about-head__body .about-head__portrait { grid-column: 2; grid-row: 1 / span 3; width: auto; margin: -4rem calc(-1 * var(--gutter)) -12rem 0; position: relative; z-index: 1; }
+    .sheet { padding-block: var(--space-6) var(--space-7); }
+    .scenes > div { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); align-items: baseline; }
+    .steps li { grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.4fr); align-items: baseline; width: 68%; }
+    /* Each step starts further in: the list walks toward the night. */
+    .steps li:nth-child(2) { margin-left: 8%; } .steps li:nth-child(3) { margin-left: 16%; }
+    .steps li:nth-child(4) { margin-left: 24%; } .steps li:nth-child(n + 5) { margin-left: 32%; }
+    .steps li, .steps li:last-child { border-bottom: 0; }
+    .steps p { grid-column: 3; margin: 0; }
+    .series li { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: baseline; }
+  }
 </style>
