@@ -1,0 +1,1 @@
+all text on fields passes AA at its weakest sampled point
