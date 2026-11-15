@@ -20,7 +20,7 @@ ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
 /* The gradient lives in ::before and the grain in ::after; both take the same mask, so field and grain fade together. */
 .field::before, .field::after { content: ''; position: absolute; inset: 0; pointer-events: none; -webkit-mask-image: var(--fade, none); mask-image: var(--fade, none); }
 .field::before { z-index: -2; background: var(--field, none); }
-.field::after { z-index: -1; background: var(--grain); mix-blend-mode: soft-light; opacity: 0.32; }
+.field::after { z-index: -1; background: var(--grain); mix-blend-mode: soft-light; opacity: 0.26; }
 /* Labels: small, tracked capitals in dusk. Ghost labels add a hairline box with a slight radius. */
 .label { font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; line-height: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-label); }
 .field .kicker, .field .label { color: var(--color-text); }
