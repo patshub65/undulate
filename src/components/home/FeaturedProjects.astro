@@ -4,14 +4,20 @@ import { getFeaturedProjects } from '../../lib/content';
 const projects = await getFeaturedProjects();
 ---
 {projects.length > 0 && (
-  <section class="section container" aria-labelledby="featured-heading">
-    <h2 id="featured-heading">Selected projects</h2>
-    <div class="grid featured">
+  <section class="featured" aria-labelledby="featured-heading">
+    <div class="featured__head">
+      <h2 id="featured-heading" class="label">Selected projects</h2>
+      <a class="label" href="/projects/">All projects</a>
+    </div>
+    <div class="featured__list">
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
-    <p><a href="/projects/">All projects →</a></p>
   </section>
 )}
 <style>
-  .featured { margin-bottom: var(--space-4); }
+  .featured { margin-top: var(--space-6); border-bottom: var(--line); }
+  .featured__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); padding: 0 var(--gutter) var(--space-3); }
+  .featured__head h2 { font-weight: 700; }
+  .featured__head a:hover { background: var(--palette-yellow); }
+  @media (min-width: 60rem) { .featured { margin-top: var(--space-7); } }
 </style>

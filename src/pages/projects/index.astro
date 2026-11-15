@@ -6,27 +6,30 @@ const projects = await getProjects();
 const pillars = await getPillars();
 ---
 <BaseLayout title="Projects" description="Series, concept events, festivals and company events by undulate.">
-  <section class="section container">
-    <h1>Projects</h1>
+  <section class="index">
+    <div class="index__head cell cell--l cell--r">
+      <p class="label">{projects.length} projects</p>
+      <h1>Projects</h1>
+    </div>
     <nav class="filters" aria-label="Filter projects">
-      <ul class="tags">
-        <li><a class="tag" href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
+      <ul class="filters__row">
+        <li><a href={projectsUrl()} data-filter="" aria-current="true">All</a></li>
         {pillars.map((pillar) => (
-          <li><a class="tag" href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
+          <li><a href={projectsUrl({ pillar: pillar.id })} data-filter={`pillar:${pillar.id}`}>{pillar.name}</a></li>
         ))}
       </ul>
       {pillars.map((pillar) => (
-        <ul class="tags filters__specialties" data-for-pillar={pillar.id}>
+        <ul class="filters__row filters__row--sub" data-for-pillar={pillar.id}>
           {pillar.specialties.map((s) => (
-            <li><a class="tag" href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
+            <li><a href={projectsUrl({ specialty: s.id })} data-filter={`specialty:${s.id}`}>{s.data.name}</a></li>
           ))}
         </ul>
       ))}
     </nav>
-    <div class="grid" data-project-list>
-      {projects.map((p) => <ProjectCard project={p} />)}
+    <div class="index__list" data-project-list>
+      {projects.map((p) => <ProjectCard project={p} showSummary />)}
     </div>
-    <p class="muted" data-empty hidden>No projects with this specialty yet.</p>
+    <p class="cell cell--l" data-empty hidden>No projects with this specialty yet.</p>
   </section>
 </BaseLayout>
 
@@ -64,6 +67,22 @@ const pillars = await getPillars();
   apply(new URLSearchParams(location.search));
 </script>
 <style>
-  .filters { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-  .filters__specialties { font-size: var(--text-sm); }
+  .index { border-top: var(--line); }
+  .index__head { padding-block: var(--space-5); background: var(--grain), linear-gradient(100deg, var(--color-bg) 0%, var(--color-bg) 30%, #d6c6f3 78%, #c3a6ff 100%); background-blend-mode: soft-light, normal; }
+  .index__head h1 { font-size: clamp(2.5rem, 1rem + 7vw, 7rem); line-height: 1; margin-top: var(--space-3); }
+  /* Filters are table cells, not pills. */
+  .filters__row { display: flex; flex-wrap: wrap; border-top: var(--line); font-family: var(--font-display); font-size: var(--text-xs); line-height: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .filters__row li { flex: 1 1 auto; border-right: var(--line); margin-bottom: -1px; border-bottom: var(--line); }
+  .filters__row a { display: block; padding: 0.75rem var(--gutter); text-decoration: none; transition: background-color 500ms var(--ease-paper); }
+  .filters__row a:hover { background: var(--palette-yellow); transition-duration: 120ms; }
+  .filters__row a[aria-current='true'] { background: var(--palette-ink); color: var(--color-bg); }
+  .filters__row--sub { text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-size: 1rem; }
+  .index__list { margin-top: var(--space-6); border-bottom: var(--line); margin-bottom: var(--space-6); }
+  @media (min-width: 60rem) {
+    .index__head { padding-block: var(--space-6); }
+    .index__head h1 { margin-top: var(--space-5); }
+    .filters__row a { padding-inline: var(--pad); }
+    .filters__row li:first-child a { padding-left: var(--gutter); }
+    .index__list { margin-top: var(--space-7); margin-bottom: var(--space-7); }
+  }
 </style>

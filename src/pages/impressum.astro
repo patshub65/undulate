@@ -6,5 +6,5 @@ const page = await getEntry('pages', 'impressum');
 if (!page) throw new Error('Missing src/content/pages/impressum.mdoc');
 ---
 <BaseLayout title="Impressum">
-  <section class="section container"><Prose entry={page} /></section>
+  <section class="plain"><Prose entry={page} /></section>
 </BaseLayout>

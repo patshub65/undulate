@@ -2,12 +2,26 @@
 import { getSettings, mailto } from '../../lib/content';
 const { email, closing } = await getSettings();
 ---
-<section class="section container closing">
-  {closing.heading && <h2>{closing.heading}</h2>}
-  {closing.text && <p class="muted">{closing.text}</p>}
-  <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
+<section class="closing">
+  <a class="closing__band cell cell--l cell--r" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">
+    {closing.heading && <h2>{closing.heading}</h2>}
+    <span class="closing__foot">
+      {closing.text && <span class="closing__text">{closing.text}</span>}
+      <span class="closing__mail">{email}</span>
+    </span>
+  </a>
 </section>
 <style>
-  .closing { text-align: center; }
-  .closing p { max-width: 34rem; margin-inline: auto; }
+  /* The whole band is one link. */
+  .closing { border-top: var(--line); }
+  .closing__band { display: grid; gap: var(--space-6); padding-block: var(--space-6); background: var(--palette-violet); color: #fff; text-decoration: none; transition: background-color 500ms var(--ease-paper), color 500ms var(--ease-paper); }
+  .closing__band:hover { background: var(--palette-yellow); color: var(--palette-ink); transition-duration: 120ms; }
+  .closing h2 { font-size: clamp(2rem, 0.8rem + 5.4vw, 5.5rem); line-height: 1.05; max-width: 12em; }
+  .closing__foot { display: grid; gap: var(--space-3); }
+  .closing__text { font-size: 1.25rem; line-height: 2rem; max-width: 28rem; }
+  .closing__mail { font-family: var(--font-display); font-weight: 700; font-size: var(--d-sm); line-height: 1.5; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.25em; overflow-wrap: anywhere; }
+  @media (min-width: 60rem) {
+    .closing__band { padding-block: var(--space-7) var(--space-6); gap: var(--space-7); }
+    .closing__foot { grid-template-columns: 1fr auto; align-items: end; }
+  }
 </style>
