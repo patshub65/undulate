@@ -156,7 +156,7 @@ a.tag[aria-current='true'] { background: var(--palette-ink); border-color: var(-
 }
 
 /* Flyers */
-.flyers { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-3); }
+.flyers { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-3); align-items: start; }
 .flyers--strip { display: flex; gap: var(--space-3); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
 .flyers--strip::-webkit-scrollbar { display: none; }
 .flyers--strip > li { flex: 0 0 60vw; scroll-snap-align: start; }
@@ -167,10 +167,10 @@ a.tag[aria-current='true'] { background: var(--palette-ink); border-color: var(-
 }
 .event-card__trigger { all: unset; cursor: pointer; display: block; width: 100%; }
 .event-card__trigger:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
-.event-card__flyer { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: var(--color-surface); }
-.event-card__flyer img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-paper); pointer-events: none; }
+.event-card__flyer { display: block; overflow: hidden; background: var(--color-surface); }
+.event-card__flyer img { width: 100%; height: auto; transition: transform 600ms var(--ease-paper); pointer-events: none; }
 .event-card__trigger:hover img { transform: scale(1.04); }
-.event-card__noflyer { display: grid; place-items: center; height: 100%; padding: var(--space-3); text-align: center; font-family: var(--font-display); font-size: 1.5rem; line-height: 2rem; }
+.event-card__noflyer { display: grid; place-items: center; aspect-ratio: 3 / 4; padding: var(--space-3); text-align: center; font-family: var(--font-display); font-size: 1.5rem; line-height: 2rem; }
 .event-card__meta { display: grid; padding-top: var(--space-2); font-size: var(--text-sm); line-height: 1.5rem; color: var(--color-text-muted); }
 .event-card__name { color: var(--color-text); font-weight: 500; transition: color var(--dur-hover) var(--ease-inout); }
 .event-card__trigger:hover .event-card__name { color: var(--color-brand); }
