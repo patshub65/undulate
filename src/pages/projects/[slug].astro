@@ -25,55 +25,80 @@ const hasWriteup = project.body?.trim();
 ---
 <BaseLayout title={title} description={summary}>
   <article class={`project project--${template}`} style={identity.accent ? `--project-accent: ${identity.accent}` : undefined}>
-    <header class="section container project__header">
-      {identity.logo && <Image class="project__logo" src={identity.logo} alt={`${title} logo`} width={160} />}
-      <p class="eyebrow">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
+    <header class="project__header field wrap">
+      {identity.logo && <Image class="project__logo" src={identity.logo} alt={`${title} logo`} width={128} />}
+      <p class="kicker">{FORMAT_LABELS[format]}{client && ` · ${client}`}</p>
       <h1>{title}</h1>
       <p class="project__summary">{summary}</p>
-      <ul class="tags" aria-label="Services">
-        {pillars.map((p) => <li><a class="tag" href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
-        {specialties.map((s) => <li><a class="tag" href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
+      <ul class="project__pills" aria-label="Services">
+        {pillars.map((p) => <li><a href={projectsUrl({ pillar: p.id })}>{p.name}</a></li>)}
+        {specialties.map((s) => <li><a href={projectsUrl({ specialty: s.id })}>{s.data.name}</a></li>)}
       </ul>
     </header>
 
     {cover && template === 'case-study' && (
-      <div class="container"><Image class="project__cover" src={cover} alt="" widths={[800, 1600]} sizes="100vw" /></div>
+      <div class="project__cover"><Image src={cover} alt="" widths={[800, 1600, 2400]} sizes="(min-width: 60rem) 80vw, 100vw" /></div>
     )}
 
     {template === 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
+      <section class="project__section wrap" aria-labelledby="events-heading">
+        <h2 id="events-heading" class="kicker">Events</h2>
         <EventGrid project={project} />
       </section>
     )}
 
-    {hasWriteup && <section class="section container"><Prose entry={project} /></section>}
+    {hasWriteup && <section class="project__section project__writeup wrap"><Prose entry={project} /></section>}
 
     {photos.length > 0 && (
-      <section class="section container" aria-label="Photos">
-        <div class="grid project__photos">
-          {photos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[600, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />)}
-        </div>
+      <section class="project__photos wrap" aria-label="Photos">
+        {photos.map((p) => p.image && <Image src={p.image} alt={p.alt ?? ''} widths={[600, 1200, 1800]} sizes="(min-width: 60rem) 50vw, 100vw" data-reveal />)}
       </section>
     )}
 
     {template !== 'series' && hasEvents && (
-      <section class="section container" aria-labelledby="events-heading">
-        <h2 id="events-heading">Events</h2>
+      <section class="project__section wrap" aria-labelledby="events-heading">
+        <h2 id="events-heading" class="kicker">Events</h2>
         <EventGrid project={project} />
       </section>
     )}
 
-    <section class="section container project__cta">
+    <section class="project__cta wrap">
       <p>Want something like this for your company?</p>
       <a class="button" href={mailto(email, `Enquiry about ${title}`)} data-track="Email Click" data-track-location="project" data-track-label={title}>Get in touch</a>
     </section>
   </article>
 </BaseLayout>
 <style>
-  .project__header { border-top: 4px solid var(--project-accent, transparent); }
-  .project__summary { font-size: var(--text-lg); max-width: 40rem; }
-  .project__logo { margin-bottom: var(--space-3); }
-  .project__cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); }
-  .project__photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-sm); }
+  /* Kept from round 1: the header on a soft radial gradient in the series accent, specialties as outline pills. */
+  .project__header {
+    --a: var(--project-accent, #b893ff);
+    padding-top: 8rem; padding-bottom: var(--space-6);
+    background:
+      radial-gradient(75% 70% at 50% 28%, color-mix(in oklab, var(--a) 62%, var(--color-bg)) 0%, color-mix(in oklab, var(--a) 0%, transparent) 100%),
+      linear-gradient(180deg, color-mix(in oklab, var(--a) 26%, var(--color-bg)) 0%, var(--color-bg) 100%);
+  }
+  .project__logo { width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; margin-bottom: var(--space-3); }
+  .project__header h1 { font-size: clamp(2.5rem, 1rem + 7.4vw, 8.5rem); line-height: 0.98; margin: var(--space-3) 0 var(--space-4); max-width: 9em; }
+  .project__summary { font-size: 1.25rem; line-height: 2rem; max-width: 36rem; margin-bottom: var(--space-4); }
+  .project__pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .project__pills a { display: block; padding: 0.25rem 1rem; border: 1px solid var(--palette-ink); border-radius: 999px; text-decoration: none; font-size: var(--text-xs); line-height: 1.5rem; transition: background-color 500ms var(--ease-paper), color 500ms var(--ease-paper); }
+  .project__pills a:hover { background: var(--palette-ink); color: var(--color-bg); transition-duration: 120ms; }
+  .project__cover { padding-left: var(--gutter); margin-bottom: var(--space-6); }
+  .project__cover img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .project__section { padding-bottom: var(--space-6); }
+  .project__section h2 { margin-bottom: var(--space-4); }
+  .project__photos { display: grid; gap: var(--space-5); padding-bottom: var(--space-6); }
+  .project__photos :global(img) { width: 100%; }
+  .project__cta { padding-block: var(--space-6) var(--space-7); }
+  .project__cta p { font-family: var(--font-display); font-size: var(--d-md); line-height: 1.1; max-width: 14em; margin-bottom: var(--space-4); }
+  @media (min-width: 60rem) {
+    .project__header { padding-top: 13rem; padding-bottom: var(--space-7); }
+    .project__cover { padding-left: 20%; margin-top: -4rem; margin-bottom: var(--space-7); }
+    .project__section { padding-bottom: var(--space-7); }
+    .project--series .project__section:first-of-type { margin-left: 12%; }
+    .project__writeup { margin-left: 42%; }
+    .project__photos { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-5); align-items: start; padding-bottom: var(--space-7); }
+    .project__photos :global(img:nth-child(even)) { margin-top: 8rem; }
+    .project__cta { margin-left: 42%; }
+  }
 </style>

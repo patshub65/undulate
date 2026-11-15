@@ -2,12 +2,15 @@
 import { getSettings, mailto } from '../../lib/content';
 const { email, closing } = await getSettings();
 ---
-<section class="section container closing">
+<section class="closing field wrap">
   {closing.heading && <h2>{closing.heading}</h2>}
-  {closing.text && <p class="muted">{closing.text}</p>}
-  <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
+  {closing.text && <p>{closing.text}</p>}
+  <a class="button button--ink" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
 </section>
 <style>
-  .closing { text-align: center; }
-  .closing p { max-width: 34rem; margin-inline: auto; }
+  /* Kept from round 1: the full-width violet-to-lilac band with the email as a solid ink pill. */
+  .closing { text-align: center; padding-block: var(--space-7); background: linear-gradient(180deg, #4c33f2 0%, #7b5cf6 38%, #b893ff 68%, #b893ff 100%); }
+  .closing h2 { color: #fff; font-size: clamp(2.5rem, 1rem + 6.4vw, 6.5rem); line-height: 1; max-width: 11em; margin: 0 auto var(--space-6); }
+  .closing p { max-width: 26rem; margin: 0 auto var(--space-4); font-size: 1.25rem; line-height: 2rem; }
+  .closing .button:hover { background: #fff; color: var(--palette-ink); }
 </style>

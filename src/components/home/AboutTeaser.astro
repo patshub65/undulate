@@ -1,19 +1,28 @@
 ---
 import { Image } from 'astro:assets';
-
 import { getAbout, getSettings } from '../../lib/content';
 const { aboutTeaser } = await getSettings();
 const about = await getAbout();
 ---
-<section class="section container about-teaser" aria-labelledby="about-heading">
-  {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800]} sizes="(min-width: 50rem) 30vw, 100vw" />}
-  <div>
-    <h2 id="about-heading">About undulate</h2>
-    {aboutTeaser && <p>{aboutTeaser}</p>}
-    <a href="/about/">More about Jasmin →</a>
+<section class="teaser wrap" aria-labelledby="about-heading">
+  <div class="teaser__col">
+    <div class="teaser__byline">
+      {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} width={192} height={192} />}
+      <h2 id="about-heading" class="kicker">About undulate</h2>
+    </div>
+    {aboutTeaser && <p class="teaser__text">{aboutTeaser}</p>}
+    <a class="more" href="/about/">More about Jasmin</a>
   </div>
 </section>
 <style>
-  .about-teaser { display: grid; gap: var(--space-5); align-items: center; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
-  .about-teaser img { border-radius: var(--radius-sm); max-height: 32rem; object-fit: cover; }
+  .teaser { padding-block: var(--space-6); }
+  .teaser__col { max-width: 34rem; }
+  .teaser__byline { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .teaser__byline img { width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; }
+  .teaser__text { font-size: 1.5rem; line-height: 2rem; margin-bottom: var(--space-4); }
+  @media (min-width: 60rem) {
+    .teaser { padding-block: var(--space-7); }
+    .teaser__col { margin-left: 42%; }
+    .teaser__byline img { width: 6rem; height: 6rem; }
+  }
 </style>

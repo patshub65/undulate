@@ -1,10 +1,12 @@
 /*
- * Design tokens. Every design variation restyles the site mainly by changing
- * these values; components should use tokens, not raw values.
- * Colours are placeholders until the drafted logo colours are added.
+ * Round 2, direction 2: Grain.
+ * Warm white ground, ink text, violet buttons, one grainy violet-to-lilac gradient.
+ * Basteleur (Velvetyne, OFL) + Atkinson Hyperlegible Next and Mono (fontsource, OFL).
  */
+@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur/Basteleur-Moonlight.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur/Basteleur-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
 :root {
-  /* undulate logo palette (docs/BRIEF.md). Variations map roles to these. */
   --palette-yellow: #f2d833;
   --palette-red: #f24a33;
   --palette-mint: #33f5bc;
@@ -13,60 +15,47 @@
   --palette-sand: #d4c5b4;
   --palette-ink: #191a18;
   --palette-white: #ffffff;
+  --palette-lilac: #b893ff;
   --gradient-mint: linear-gradient(135deg, #33f5bc, #008fa5);
   --gradient-ink: linear-gradient(135deg, #191a18, #686b6a);
   --gradient-violet: linear-gradient(135deg, #4c33f2, #b893ff);
   --gradient-red: linear-gradient(135deg, #f24a33, #ff2191);
   --gradient-dusk: linear-gradient(135deg, #5f559d, #f2a0df);
 
-  /* Brand roles */
-  --color-brand: var(--palette-violet);
-  --color-brand-contrast: var(--palette-white);
-  --color-accent: var(--palette-mint);
-
-  /* Neutral frame */
-  --color-bg: #f7f5f2;
+  --color-bg: #faf7f2;
   --color-surface: #ffffff;
   --color-text: var(--palette-ink);
-  --color-text-muted: #5f5d66;
-  --color-border: #e2dfda;
+  --color-text-muted: #56545c;
+  --color-brand: var(--palette-violet);
+  --color-brand-contrast: var(--palette-white);
+  --color-accent: var(--palette-lilac);
+  --color-border: color-mix(in oklab, var(--palette-ink) 16%, var(--color-bg));
 
-  /* Type (self-hosted fonts only: place files in /public/fonts and add @font-face) */
-  --font-display: ui-sans-serif, system-ui, sans-serif;
-  --font-body: ui-sans-serif, system-ui, sans-serif;
-  --text-xs: 0.875rem; /* 14px: the smallest size design-check allows */
-  --text-sm: 0.9rem;
-  --text-md: 1rem;
-  --text-lg: 1.25rem;
-  --text-xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
-  --text-hero: clamp(2.25rem, 1.5rem + 4vw, 4.5rem);
-  --leading-tight: 1.1;
-  --leading-body: 1.55;
+  --font-display: 'Basteleur', Georgia, serif;
+  --font-body: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
 
-  /* Space and shape */
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.5rem;
+  --d-md: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+  --d-lg: clamp(2.25rem, 1.2rem + 4.4vw, 5rem);
+
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
   --space-4: 1.5rem;
-  --space-5: 2.5rem;
+  --space-5: 2rem;
   --space-6: 4rem;
-  --space-7: 6rem;
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --content-width: 72rem;
-  --gutter: 32px; /* breathing room: 32px phone, 64px desktop (design skill) */
-}
+  --space-7: 8rem;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --gutter: 32px;
 
+  /* Grain: an inline turbulence tile, so no request leaves the site. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 @media (min-width: 60rem) {
-  :root { --gutter: 64px; }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #121114;
-    --color-surface: #1c1b20;
-    --color-text: #f1eff4;
-    --color-text-muted: #a9a6b2;
-    --color-border: #2e2c34;
-  }
+  :root { --gutter: 64px; --space-6: 6rem; --space-7: 10rem; }
 }

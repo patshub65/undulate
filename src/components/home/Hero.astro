@@ -4,19 +4,43 @@ import { getSettings, mailto } from '../../lib/content';
 const { email, hero } = await getSettings();
 ---
 <section class="hero">
-  {hero.image && (
-    <Image class="hero__image" src={hero.image} alt={hero.imageAlt ?? ''} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" />
-  )}
-  <div class="container hero__content">
-    <h1>{hero.headline}</h1>
-    {hero.subline && <p class="hero__subline">{hero.subline}</p>}
-    <a class="button" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+  <div class="hero__field field wrap">
+    <div class="hero__text">
+      <h1>{hero.headline}</h1>
+      {hero.subline && <p class="hero__subline">{hero.subline}</p>}
+      <a class="button button--ink" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="hero">{hero.cta}</a>
+    </div>
   </div>
+  {hero.image && (
+    <div class="hero__photo" data-parallax data-parallax-range="20">
+      <Image src={hero.image} alt={hero.imageAlt ?? ''} widths={[500, 900, 1400]} sizes="(min-width: 60rem) 30vw, 62vw" loading="eager" fetchpriority="high" />
+    </div>
+  )}
 </section>
 <style>
-  .hero { position: relative; display: grid; min-height: min(85vh, 50rem); align-items: end; color: #fff; overflow: hidden; }
-  .hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgb(0 0 0 / 0.65)); }
-  .hero__content { position: relative; z-index: 1; padding-block: var(--space-6); }
-  .hero__subline { font-size: var(--text-lg); max-width: 38rem; }
+  .hero { position: relative; }
+  /* One field: lilac haze, a violet glow kept clear of the words, fading into the ground. */
+  .hero__field {
+    display: grid; align-items: end; padding-top: 7.5rem; padding-bottom: 7rem;
+    background:
+      radial-gradient(70% 38% at 100% 100%, #4c33f2 0%, rgb(76 51 242 / 0) 100%),
+      radial-gradient(90% 40% at 0% 0%, #f2a0df 0%, rgb(242 160 223 / 0) 100%),
+      linear-gradient(180deg, #d9c8ff 0%, #c6adff 55%, #b893ff 100%);
+  }
+  .hero h1 { font-size: var(--d-lg); line-height: 1.04; max-width: 12.5em; margin-bottom: var(--space-4); }
+  .hero__subline { font-size: 1.125rem; line-height: 1.5rem; max-width: 30rem; margin-bottom: var(--space-4); }
+  .hero__photo { width: 62%; margin: -5rem var(--gutter) 0 auto; position: relative; z-index: 1; }
+  .hero__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  @media (min-width: 60rem) {
+    .hero__field {
+      min-height: min(100svh, 54rem); padding-top: 12rem; padding-bottom: var(--space-6);
+      background:
+        radial-gradient(46% 62% at 92% 78%, #4c33f2 0%, rgb(76 51 242 / 0) 100%),
+        radial-gradient(50% 60% at 0% 0%, #f2a0df 0%, rgb(242 160 223 / 0) 100%),
+        linear-gradient(180deg, #d9c8ff 0%, #c6adff 55%, #b893ff 100%);
+    }
+    .hero__text { max-width: 62%; }
+    .hero__subline { font-size: 1.5rem; line-height: 2rem; max-width: 36rem; margin-bottom: var(--space-5); }
+    .hero__photo { position: absolute; right: var(--gutter); bottom: -9rem; width: 24%; margin: 0; }
+  }
 </style>

@@ -8,64 +8,142 @@ const { email } = await getSettings();
 const { scenes, process, series, network, contact } = about;
 ---
 <BaseLayout title={about.title ?? 'About'} description={about.lead}>
-  <section class="section container about">
-    {about.portrait && <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 50rem) 40vw, 100vw" />}
-    <div>
-      {about.draftNote && <p class="eyebrow">{about.draftNote}</p>}
-      <h1>{about.title ?? 'About'}</h1>
-      {about.lead && <p class="about__lead">{about.lead}</p>}
-      <Prose entry={about.entry} />
+  <section class="about-head">
+    <div class="about-head__field field wrap">
+      <h1 class="kicker">{about.title ?? 'About'}</h1>
+      {about.lead && <p class="about-head__lead">{about.lead}</p>}
     </div>
+    {about.portrait && (
+      <div class="about-head__portrait" data-parallax data-parallax-range="20">
+        <Image src={about.portrait} alt={about.portraitAlt ?? ''} widths={[400, 800, 1200]} sizes="(min-width: 60rem) 24vw, 56vw" loading="eager" />
+      </div>
+    )}
+  </section>
+
+  <section class="story wrap">
+    {about.draftNote && <p class="story__draft">{about.draftNote}</p>}
+    <Prose entry={about.entry} />
   </section>
 
   {scenes && scenes.items.length > 0 && (
-    <section class="section container" aria-labelledby="scenes-heading">
-      {scenes.heading && <h2 id="scenes-heading">{scenes.heading}</h2>}
-      {scenes.intro && <p>{scenes.intro}</p>}
-      <dl>
-        {scenes.items.map((s) => (<><dt>{s.name}</dt>{s.text && <dd>{s.text}</dd>}</>))}
-      </dl>
+    <section class="part part--left wrap" aria-labelledby="scenes-heading">
+      {scenes.heading && <h2 id="scenes-heading" class="kicker">{scenes.heading}</h2>}
+      {scenes.intro && <p class="part__intro">{scenes.intro}</p>}
+      <p class="scenes__line">
+        {scenes.items.map((s, i) => (<>{s.name}<sup>{i + 1}</sup>{i < scenes.items.length - 1 ? ', ' : '.'}</>))}
+      </p>
+      <ol class="scenes__notes">
+        {scenes.items.map((s, i) => s.text && (<li><span class="date">{i + 1}</span><span>{s.text}</span></li>))}
+      </ol>
     </section>
   )}
 
   {process && process.steps.length > 0 && (
-    <section class="section container" aria-labelledby="process-heading">
-      {process.heading && <h2 id="process-heading">{process.heading}</h2>}
-      {process.intro && <p>{process.intro}</p>}
-      <ol>
-        {process.steps.map((s) => (<li><strong>{s.title}</strong>{s.text && <> {s.text}</>}</li>))}
+    <section class="part process wrap" aria-labelledby="process-heading">
+      <div class="process__stay">
+        {process.heading && <h2 id="process-heading" class="kicker">{process.heading}</h2>}
+        {process.intro && <p class="part__intro">{process.intro}</p>}
+      </div>
+      <ol class="process__steps">
+        {process.steps.map((s, i) => (
+          <li data-reveal>
+            <span class="date">{i + 1} / {process.steps.length}</span>
+            <h3>{s.title}</h3>
+            {s.text && <p>{s.text}</p>}
+          </li>
+        ))}
       </ol>
     </section>
   )}
 
   {about.series.length > 0 && (
-    <section class="section container" aria-labelledby="series-heading">
-      {series?.heading && <h2 id="series-heading">{series.heading}</h2>}
-      {series?.intro && <p>{series.intro}</p>}
-      <ul>
-        {about.series.map((p) => (<li><a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.summary}</li>))}
+    <section class="part wrap" aria-labelledby="series-heading">
+      {series?.heading && <h2 id="series-heading" class="kicker">{series.heading}</h2>}
+      {series?.intro && <p class="part__intro">{series.intro}</p>}
+      <ul class="series">
+        {about.series.map((p) => (
+          <li style={p.data.identity.accent ? `--project-accent: ${p.data.identity.accent}` : undefined}>
+            <a class="field" href={`/projects/${p.id}/`}>
+              <span class="series__name">{p.data.title}</span>
+              <span class="series__text">{p.data.summary}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </section>
   )}
 
   {network && (network.intro || network.people.length > 0) && (
-    <section class="section container" aria-labelledby="network-heading">
-      {network.heading && <h2 id="network-heading">{network.heading}</h2>}
-      {network.intro && <p>{network.intro}</p>}
-      <ul>
-        {network.people.map((p) => (<li>{p.name}{p.note && <span class="muted"> · {p.note}</span>}</li>))}
+    <section class="part part--right wrap" aria-labelledby="network-heading">
+      {network.heading && <h2 id="network-heading" class="kicker">{network.heading}</h2>}
+      {network.intro && <p class="part__intro">{network.intro}</p>}
+      <ul class="people">
+        {network.people.map((p) => (
+          <li><span class="people__name">{p.name}</span>{p.note && <span class="muted">{p.note}</span>}</li>
+        ))}
       </ul>
     </section>
   )}
 
-  <section class="section container">
+  <section class="contact field wrap">
     {contact?.heading && <h2>{contact.heading}</h2>}
     {contact?.text && <p>{contact.text}</p>}
-    <a class="button" href={mailto(email)} data-track="Email Click" data-track-location="about">{email}</a>
+    <a class="button button--ink" href={mailto(email)} data-track="Email Click" data-track-location="about">{email}</a>
   </section>
 </BaseLayout>
 <style>
-  .about { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
-  .about img { border-radius: var(--radius-sm); }
-  .about__lead { font-size: var(--text-lg); }
+  .about-head { position: relative; }
+  .about-head__field {
+    padding-top: 8rem; padding-bottom: 8rem;
+    background: radial-gradient(60% 34% at 100% 100%, #4c33f2 0%, rgb(76 51 242 / 0) 100%), radial-gradient(90% 50% at 0% 0%, #f2a0df 0%, rgb(242 160 223 / 0) 100%), linear-gradient(180deg, #d9c8ff, #b893ff);
+  }
+  .about-head__lead { font-family: var(--font-display); font-size: var(--d-md); line-height: 1.12; margin: var(--space-3) 0 0; max-width: 15em; }
+  .about-head__portrait { width: 56%; margin: -6rem var(--gutter) 0 auto; position: relative; z-index: 1; }
+  .about-head__portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .story { padding-block: var(--space-6); }
+  .story__draft { max-width: 30rem; padding: var(--space-2) var(--space-3); margin-bottom: var(--space-5); border-left: 4px solid var(--palette-violet); color: var(--color-text-muted); }
+  .part { padding-block: var(--space-6); }
+  .part__intro { max-width: 30rem; margin: var(--space-2) 0 var(--space-4); color: var(--color-text-muted); }
+  .scenes__line { font-family: var(--font-display); font-size: var(--d-lg); line-height: 1.08; margin-bottom: var(--space-5); }
+  .scenes__line sup { font-family: var(--font-mono); font-size: max(0.26em, 0.875rem); vertical-align: 1.2em; margin-left: 0.1em; line-height: 0; }
+  @media (min-width: 60rem) { sup { vertical-align: 1.8em; } }
+  .scenes__notes { display: grid; gap: var(--space-3) var(--space-5); max-width: 44rem; }
+  .scenes__notes li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); color: var(--color-text-muted); }
+  .process__steps { display: grid; gap: var(--space-5); margin-top: var(--space-4); }
+  .process__steps h3 { font-size: var(--d-lg); line-height: 1.04; }
+  .process__steps p { max-width: 24rem; margin: var(--space-2) 0 0; color: var(--color-text-muted); }
+  .process__steps li:nth-child(even) { padding-left: var(--space-5); }
+  .series { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
+  .series a { display: grid; align-content: end; min-height: 16rem; padding: var(--space-4); text-decoration: none; background: radial-gradient(90% 90% at 50% 20%, color-mix(in oklab, var(--project-accent, #b893ff) 62%, var(--color-bg)), color-mix(in oklab, var(--project-accent, #b893ff) 16%, var(--color-bg))); }
+  .series__name { font-family: var(--font-display); font-size: 2rem; line-height: 2.5rem; margin-bottom: var(--space-2); }
+  .series__text { max-width: 24rem; }
+  .people { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); margin-top: var(--space-4); }
+  .people li { display: grid; }
+  .people__name { font-family: var(--font-display); font-size: var(--d-md); line-height: 1.1; }
+  .people .muted { font-size: var(--text-xs); }
+  .contact { text-align: center; padding-block: var(--space-7); background: linear-gradient(180deg, #4c33f2 0%, #7b5cf6 38%, #b893ff 68%); }
+  .contact h2 { color: #fff; font-size: clamp(2.5rem, 1rem + 6.4vw, 6.5rem); line-height: 1; margin: 0 auto var(--space-6); }
+  .contact p { max-width: 26rem; margin: 0 auto var(--space-4); font-size: 1.25rem; line-height: 2rem; }
+  .contact .button:hover { background: #fff; color: var(--palette-ink); }
+  @media (min-width: 60rem) {
+    .about-head__field { padding-top: 13rem; padding-bottom: var(--space-7); min-height: 40rem; }
+    .about-head__lead { max-width: 56%; }
+    .about-head__portrait { position: absolute; right: var(--gutter); bottom: -10rem; width: 24%; margin: 0; }
+    .story { padding-block: var(--space-7); margin-left: 22%; max-width: 46rem; box-sizing: content-box; }
+    .part { padding-block: var(--space-7) 0; }
+    .part--left { max-width: 72%; }
+    .part--right { margin-left: 30%; }
+    .scenes__notes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .process { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-6); align-items: start; }
+    .process__stay { position: sticky; top: 38vh; }
+    .process__steps { gap: var(--space-6); margin-top: 0; }
+    .process__steps li:nth-child(even) { padding-left: 18%; }
+    .process__steps li:nth-child(3n) { padding-left: 8%; }
+    .series { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
+    .series li { grid-column: span 5; }
+    .series li:nth-child(3n + 2) { grid-column: span 4; margin-top: var(--space-6); }
+    .series li:nth-child(3n + 3) { grid-column: span 3; margin-top: var(--space-4); }
+    .series a { min-height: 26rem; }
+    .contact { margin-top: var(--space-7); }
+  }
 </style>

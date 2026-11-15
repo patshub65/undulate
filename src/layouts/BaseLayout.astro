@@ -2,6 +2,9 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../motion/motion.css';
+import '@fontsource/atkinson-hyperlegible-next/latin-400.css';
+import '@fontsource/atkinson-hyperlegible-next/latin-600.css';
+import '@fontsource/atkinson-hyperlegible-mono/latin-400.css';
 import { getSettings, mailto } from '../lib/content';
 
 interface Props {
@@ -28,6 +31,7 @@ const nav = [
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={new URL(path, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/basteleur/Basteleur-Moonlight.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <script is:inline>
@@ -40,23 +44,24 @@ const nav = [
   </head>
   <body>
     <a class="visually-hidden" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="container site-header__inner">
-        <a class="site-header__logo" href="/" aria-label="undulate home">undulate</a>
-        <nav aria-label="Main">
-          <ul class="site-header__nav">
-            {nav.map((item) => (
-              <li>
-                <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
-              </li>
-            ))}
-            <li>
-              <a class="button" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="header">
-                Get in touch
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <header class="head wrap">
+      <a class="head__logo" href="/" aria-label="undulate home">undulate</a>
+      <nav class="head__nav" aria-label="Main">
+        <ul>
+          {nav.map((item) => (
+            <li><a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+          <li><a href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="header">Get in touch</a></li>
+        </ul>
+      </nav>
+      <button class="head__menu" popovertarget="menu">Menu</button>
+      <div id="menu" popover class="menu field">
+        <button class="menu__close" popovertarget="menu" popovertargetaction="hide">Close</button>
+        <ul>
+          <li><a href="/">Home</a></li>
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+        <a class="button button--ink" href={mailto(settings.email, 'Company event enquiry')} data-track="Email Click" data-track-location="menu">{settings.email}</a>
       </div>
     </header>
 
@@ -64,16 +69,14 @@ const nav = [
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="container site-footer__inner">
-        <p>
-          <a href={mailto(settings.email)} data-track="Email Click" data-track-location="footer">{settings.email}</a>
-          {settings.instagram && <> · <a href={settings.instagram} rel="noopener">Instagram</a></>}
-        </p>
-        <p class="muted">
-          <a href="/impressum/">Impressum</a> · <a href="/datenschutz/">Datenschutz</a>
-        </p>
-      </div>
+    <footer class="foot wrap">
+      <p class="foot__mark">undulate</p>
+      <ul>
+        <li><a href={mailto(settings.email)} data-track="Email Click" data-track-location="footer">{settings.email}</a></li>
+        {settings.instagram && <li><a href={settings.instagram} rel="noopener">Instagram</a></li>}
+        <li><a href="/impressum/">Impressum</a></li>
+        <li><a href="/datenschutz/">Datenschutz</a></li>
+      </ul>
     </footer>
 
     <!-- Motion layer (public/motion/): classic scripts, as Lenis breaks when bundled as a module. -->
@@ -109,16 +112,29 @@ const nav = [
     </script>
 
     <style>
-      .site-header__inner, .site-footer__inner {
-        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-        gap: var(--space-3); padding-block: var(--space-3);
-      }
-      .site-header__logo { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); text-decoration: none; }
-      .site-header__nav { display: flex; align-items: center; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
-      .site-header__nav a:not(.button) { text-decoration: none; }
-      .site-header__nav a[aria-current='page'] { text-decoration: underline; }
-      .site-footer { border-top: 1px solid var(--color-border); margin-top: var(--space-6); font-size: var(--text-sm); }
-      .site-footer p { margin: 0; }
+      /* The header floats over whatever field opens the page. */
+      .head { position: absolute; inset: 0 0 auto 0; z-index: 5; display: flex; align-items: baseline; justify-content: space-between; padding-top: 2.5rem; }
+      @media (min-width: 60rem) { .head { padding-top: 4rem; } }
+      .head__logo { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; text-decoration: none; }
+      .head__nav { display: none; }
+      .head__nav ul { display: flex; gap: var(--space-5); font-weight: 600; }
+      .head__nav a { text-decoration: none; }
+      .head__nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+      .head__nav a[aria-current='page'] { text-decoration: underline wavy; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+      .head__menu { all: unset; cursor: pointer; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+      .head__menu:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
+      @media (min-width: 60rem) { .head__nav { display: block; } .head__menu { display: none; } }
+      /* Phone menu: the gradient field, full screen, with the links large. */
+      .menu { inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 2.5rem var(--gutter) var(--space-5); background: linear-gradient(180deg, #4c33f2, #b893ff); color: #fff; }
+      .menu:popover-open { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
+      .menu__close { all: unset; cursor: pointer; align-self: flex-end; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+      .menu ul { display: grid; gap: var(--space-3); }
+      .menu ul a { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; text-decoration: none; }
+      .foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3) var(--space-5); padding-block: var(--space-5); }
+      .foot__mark { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 2rem; margin: 0; }
+      .foot ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+      .foot a { text-decoration: none; }
+      .foot a:hover { text-decoration: underline; }
     </style>
   </body>
 </html>
