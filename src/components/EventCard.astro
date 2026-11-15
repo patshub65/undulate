@@ -49,13 +49,13 @@ const popoverId = `event-${id}`;
   .ev__flyer { display: block; width: 100%; height: auto; }
   .ev__noflyer { aspect-ratio: 4 / 5; background: radial-gradient(80% 80% at 50% 40%, color-mix(in oklab, var(--project-accent, #b893ff) 70%, var(--color-bg)), color-mix(in oklab, var(--project-accent, #b893ff) 20%, var(--color-bg))); }
   .ev__meta { display: grid; padding-top: var(--space-3); }
-  .ev__name { font-family: var(--font-display); font-size: 1.5rem; line-height: 2rem; transition: color 500ms var(--ease-paper); }
+  .ev__name { font-family: var(--font-display); font-size: 1.5rem; line-height: 2rem; letter-spacing: var(--track-d); transition: color 500ms var(--ease-paper); }
   .ev__trigger:hover .ev__name { color: var(--palette-violet); transition-duration: 120ms; }
   .ev__where { color: var(--color-text-muted); }
 
-  .ev-pop { width: min(30rem, 100% - 2 * var(--gutter)); padding: var(--space-5); border: 0; border-radius: 1.5rem; background: var(--color-bg); color: var(--color-text); }
+  .ev-pop { width: min(30rem, 100% - 2 * var(--gutter)); padding: var(--space-5); border: 0; border-radius: 0; background: var(--color-bg); color: var(--color-text); }
   .ev-pop::backdrop { background: rgb(76 51 242 / 0.55); }
-  .ev-pop h3 { font-size: 2.25rem; line-height: 2.5rem; margin: var(--space-2) 0 var(--space-3); }
-  .ev-pop__close { all: unset; cursor: pointer; float: right; font-weight: 600; text-decoration: underline; }
+  .ev-pop h3 { font-size: 2rem; line-height: 2.5rem; margin: var(--space-2) 0 var(--space-3); }
+  .ev-pop__close { all: unset; cursor: pointer; float: right; font-family: var(--font-label); font-weight: 500; text-decoration: underline; }
   .ev-pop__details { white-space: pre-line; }
 </style>

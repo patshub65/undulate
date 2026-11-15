@@ -4,36 +4,22 @@ import { getFeaturedProjects } from '../../lib/content';
 const projects = await getFeaturedProjects();
 ---
 {projects.length > 0 && (
-  <section class="featured" aria-labelledby="featured-heading">
-    <div class="featured__head wrap">
+  <section class="featured wrap" aria-labelledby="featured-heading">
+    <div class="featured__head">
       <h2 id="featured-heading" class="kicker">Selected projects</h2>
       <a class="more" href="/projects/">All projects</a>
     </div>
-    <div class="featured__strip" data-hscroll>
-      {projects.map((p) => <div class="featured__item"><ProjectCard project={p} /></div>)}
+    <div class="mosaic">
+      {projects.map((p) => <ProjectCard project={p} />)}
     </div>
   </section>
 )}
 <style>
   .featured { padding-block: var(--space-6); }
-  .featured__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-4); }
-  /* A drag strip of tall covers; widths and drops are uneven on purpose. */
-  .featured__strip { display: flex; gap: var(--space-4); padding: 0 var(--gutter) var(--space-3); scroll-padding-inline: var(--gutter); scrollbar-width: none; align-items: flex-start; }
-  .featured__strip::-webkit-scrollbar { display: none; }
-  .featured__item { flex: none; width: 15rem; scroll-snap-align: start; }
-  .featured__item :global(.pc__media) { height: 20rem; }
-  .featured__item:nth-child(3n + 2) { width: 19rem; margin-top: var(--space-5); }
-  .featured__item:nth-child(3n + 3) { width: 13rem; }
-  .featured__item:nth-child(3n + 3) :global(.pc__media) { height: 16rem; }
-  .featured__item :global(.pc__summary) { display: none; }
+  .featured__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-5); }
+  .featured :global(.pc__summary) { display: none; }
   @media (min-width: 60rem) {
     .featured { padding-block: var(--space-7); }
-    .featured__strip { gap: var(--space-5); }
-    .featured__item { width: 24rem; }
-    .featured__item :global(.pc__media) { height: 32rem; }
-    .featured__item:nth-child(3n + 2) { width: 34rem; margin-top: var(--space-6); }
-    .featured__item:nth-child(3n + 3) { width: 20rem; }
-    .featured__item:nth-child(3n + 3) :global(.pc__media) { height: 26rem; }
-    .featured__item :global(.pc__summary) { display: block; }
+    .featured :global(.pc__summary) { display: block; }
   }
 </style>

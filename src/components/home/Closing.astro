@@ -8,9 +8,19 @@ const { email, closing } = await getSettings();
   <a class="button button--ink" href={mailto(email, 'Company event enquiry')} data-track="Email Click" data-track-location="closing">{email}</a>
 </section>
 <style>
-  /* Kept from round 1: the full-width violet-to-lilac band with the email as a solid ink pill. */
-  .closing { text-align: center; padding-block: var(--space-7); background: linear-gradient(180deg, #4c33f2 0%, #7b5cf6 38%, #b893ff 68%, #b893ff 100%); }
-  .closing h2 { color: #fff; font-size: clamp(2.5rem, 1rem + 6.4vw, 6.5rem); line-height: 1; max-width: 11em; margin: 0 auto var(--space-6); }
-  .closing p { max-width: 26rem; margin: 0 auto var(--space-4); font-size: 1.25rem; line-height: 2rem; }
-  .closing .button:hover { background: #fff; color: var(--palette-ink); }
+  /* Kept from round 1, now left-aligned and fading in from the paper and out again: lilac and orchid haze,
+     violet held low behind the pill, a breath of mint at the far edge. Ink heading, the page's one giant moment. */
+  .closing {
+    padding-block: 12rem 10rem;
+    --fade: var(--fade-both);
+    --field:
+      radial-gradient(44% 20% at 18% 82%, rgb(76 51 242 / 0.7) 0%, rgb(76 51 242 / 0) 100%),
+      radial-gradient(50% 44% at 100% 30%, rgb(242 160 223 / 0.8) 0%, rgb(242 160 223 / 0) 100%),
+      radial-gradient(40% 30% at 92% 90%, rgb(51 245 188 / 0.35) 0%, rgb(51 245 188 / 0) 100%),
+      linear-gradient(180deg, #d9cbfc 0%, #cbb6fd 100%);
+  }
+  .closing h2 { font-size: var(--d-xl); line-height: 1; letter-spacing: var(--track-xl); max-width: 10em; margin: 0 0 var(--space-5); }
+  .closing p { max-width: 26rem; margin: 0 0 var(--space-4); font-size: 1.25rem; line-height: 2rem; }
+  .closing .button:hover { background: var(--palette-violet); }
+  @media (min-width: 60rem) { .closing { padding-block: 16rem 14rem; } .closing p { margin-left: 30%; } .closing .button { margin-left: 30%; } }
 </style>
