@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # View all three round 2 directions side by side without running Astro dev three times.
-# Builds each design/r2-* branch once (in one hidden worktree, one after another), then serves
-# the three static builds from a single Node process on ports 4341 to 4343. Ctrl+C stops it.
+# Builds each design/r2-* branch once (in one worktree next to your checkout, one after
+# another), then serves the three static builds from a single Node process on ports 4341 to 4343.
+# Ctrl+C stops it.
 # A branch is only rebuilt when its latest commit changes. Uncommitted edits are not shown:
 # for live editing, use `npm run dev` in your normal checkout.
 #
@@ -11,15 +12,21 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(git -C "$HERE" rev-parse --show-toplevel)"
-WORK="$ROOT/.r2-view"
+WORK="$(dirname "$ROOT")/$(basename "$ROOT")-r2-view"
 BRANCHES="design/r2-1-run-sheet design/r2-2-grain design/r2-3-blockwork"
 REBUILD=""; [ "${1:-}" = "--rebuild" ] && REBUILD=1
 cd "$ROOT"
 
-# Keep the build folder out of git status.
-EXCLUDE="$(git rev-parse --git-path info/exclude)"
-mkdir -p "$(dirname "$EXCLUDE")"
-grep -qx '/.r2-view/' "$EXCLUDE" 2>/dev/null || echo '/.r2-view/' >> "$EXCLUDE"
+# The build folder sits next to the checkout, not inside it: Astro cannot resolve
+# `astro/tsconfigs/strict` when a folder in the path starts with a dot, and a folder
+# inside the checkout would be picked up by its tsconfig "**/*" include.
+# Clear out the hidden folder earlier versions of this script used.
+OLD="$ROOT/.r2-view"
+if [ -d "$OLD" ]; then
+  echo "Removing the old build folder $OLD..."
+  git worktree remove --force "$OLD/src" 2>/dev/null || true
+  rm -rf "$OLD"
+fi
 
 echo "Fetching the design branches..."
 git fetch -q origin $BRANCHES 2>/dev/null || echo "  (fetch failed, using the branches you already have)"
