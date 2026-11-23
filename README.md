@@ -35,12 +35,50 @@ Content status: **bananas are berries** and **Future Boutique** are real series 
 
 ## Deploy (Netlify)
 
-1. In Netlify, choose **Add new site → Import from Git** and pick this repo. The build settings come from `netlify.toml`.
-2. Set the environment variables `SITE_URL` (the final domain) and `PUBLIC_PLAUSIBLE_DOMAIN` (the domain as registered in Plausible).
-3. **Keystatic GitHub mode:** run `npm run dev` locally and open `/keystatic`. Because production uses GitHub storage, follow Keystatic's "Create GitHub App" flow. It creates the GitHub app and prints `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET` and `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`. Add all four to Netlify's environment variables. The app's callback URL must be `https://<domain>/api/keystatic/github/oauth/callback`.
-4. Install the GitHub app on this repo and give Jasmin's GitHub account write access. She then logs in at `https://<domain>/keystatic`.
-5. **Daily rebuild:** create a Netlify build hook and call it once a day, for example from a scheduled GitHub Action, so that past events leave the "Coming up" strip. A small script on the page already hides past events between builds.
-6. Point Jasmin's domain at Netlify (**Domain management**).
+The site is the Netlify project **`undulate`** (https://undulate.netlify.app). It is linked to this repo and builds from `netlify.toml`.
+
+- **Production branch:** `main`. Every commit to `main`, including each save in Keystatic, rebuilds the live site.
+- **Deploy previews:** every pull request gets a preview at `https://deploy-preview-<PR number>--undulate.netlify.app`. Design variants are reviewed this way: open a **draft** PR from the design branch into `main` and don't merge it.
+- **Why the repo is public:** on Netlify's free plan, a private repo only builds commits whose author is a member of the Netlify team. That blocked previews of commits made by Claude and would block Jasmin's Keystatic edits. If the repo goes private again, every commit author needs a seat on the Netlify team.
+
+### Environment variables
+
+Set these in Netlify under **Site configuration → Environment variables**, with all scopes:
+
+| Variable | Value |
+|---|---|
+| `SITE_URL` | The live URL: `https://undulate.netlify.app` for now, then the final domain |
+| `PUBLIC_PLAUSIBLE_DOMAIN` | The domain as registered in Plausible |
+| `KEYSTATIC_GITHUB_CLIENT_ID` | From the GitHub App (see below) |
+| `KEYSTATIC_GITHUB_CLIENT_SECRET` | From the GitHub App |
+| `KEYSTATIC_SECRET` | Any long random string (40+ characters) |
+| `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | The GitHub App's slug, the `<slug>` in `github.com/apps/<slug>` |
+
+`PUBLIC_` variables are fixed at build time, so trigger a new deploy after changing them (**Deploys → Trigger deploy**).
+
+### Keystatic (the editor at `/keystatic`)
+
+Production builds store content in GitHub, and local dev edits the files on disk (see `keystatic.config.ts`). Keystatic's automatic "Create GitHub App" screen only appears in GitHub mode, so local dev never shows it. Create the app by hand instead:
+
+1. On GitHub, go to **Settings → Developer settings → GitHub Apps → New GitHub App** and fill in:
+   - **Homepage URL:** the live URL.
+   - **Callback URL:** `https://<live domain>/api/keystatic/github/oauth/callback`. An app can hold several callback URLs, so add one for each domain the editor should work on.
+   - **Request user authorization (OAuth) during installation:** on.
+   - **Webhook:** off.
+   - **Repository permissions:** Contents *Read and write*, Pull requests *Read and write*.
+   - **Where it can be installed:** only on this account.
+2. On the app page, copy the **Client ID**, generate a **client secret** and note the **slug**. Put them in the Netlify variables above.
+3. Under **Install App**, install it on this repo only.
+4. Trigger a deploy. Then open `https://<live domain>/keystatic` and log in with GitHub. A save commits to `main`, and Netlify rebuilds.
+
+The editor only works on the domains listed as callback URLs, so it doesn't work on deploy-preview links.
+
+### Before Jasmin uses it, and before launch
+
+1. **Visitor access:** Netlify protects new projects with a Netlify team login. Turn it off for production under **Site configuration → Access & security → Visitor access**. Otherwise Jasmin and the public can't open the site.
+2. **Jasmin's account:** give her GitHub account write access to this repo (**Settings → Collaborators**). She then logs in at `/keystatic` the same way.
+3. **Daily rebuild:** create a Netlify build hook and call it once a day, for example from a scheduled GitHub Action, so that past events leave the "Coming up" strip. A small script on the page already hides past events between builds.
+4. **Domain:** point Jasmin's domain at Netlify (**Domain management**). Then update `SITE_URL` and add the domain's callback URL to the GitHub App.
 
 ## Compliance (Germany)
 
